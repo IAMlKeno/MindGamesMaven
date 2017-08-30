@@ -1,0 +1,20 @@
+.developIdeaDiv{
+    font-size: larger;
+    position:absolute; 
+    top:90%; 
+    left: 2%;
+    width: 95%;
+}
+
+.developIdeaButton {
+    width: 20%;
+    z-index: 9;
+}
+
+#cancelEdit{
+    float: right;
+}
+
+.modal-textbox-div{
+    display: block;
+}

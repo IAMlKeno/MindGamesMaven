@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<hibernate-mapping package="com.portfolio.elkeno_jones.mindgamesmaven.model">
+    <class name="Idea" table="idea">
+        <id name="id" column="ideaId">
+            <generator class="native"/>
+        </id>
+        <property name="alias" column="alias" />
+        <property name="dateCreated" column="dateCreated" />
+        <property name="descriptionLong" column="descriptionLong" />
+        <property name="descriptionShort" column="descriptionShort" />
+        <property name="ideaTitle" column="ideaTitle" />
+        <property name="isCompleted" column="isCompleted" />
+        <property name="isInProgress" column="isInProgress" />
+        <property name="rating" column="rating" />
+        <property name="userId" column="userId" />
+    </class> 
+</hibernate-mapping>

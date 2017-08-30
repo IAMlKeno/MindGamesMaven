@@ -1,0 +1,9 @@
+.ideaCardActionButtons{
+    text-align: center;
+}
+
+.mdl-card__supporting-text{
+    border: 2px groove black;
+    margin:2%;
+    width: 85%;
+}

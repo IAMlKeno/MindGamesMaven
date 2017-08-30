@@ -1,0 +1,23 @@
+.ideaGrid{
+    margin: auto;
+    white-space: nowrap;
+    overflow: auto;
+    display: -webkit-inline-box;
+    width: 100%;
+}
+
+.ideaCard{
+    margin: auto;
+    display:inline-block;
+    margin: 5px;
+}
+.ideaForm{
+    float: right;
+    margin-right: 2cm;
+    margin-top: 2cm;
+}
+
+.statusCheckbox{
+    text-align: left;
+    margin-left: 5px;
+}
