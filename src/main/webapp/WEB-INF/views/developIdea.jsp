@@ -105,13 +105,13 @@
         <%@include file="../jspf/featureModal.jspf" %>
 
         <script>
-            var url = "http://localhost:8080<c:url value="/save" />";
+            var url = "<c:url value="/save" />";
             $("#saveIdea").click(function(){
                 window.location.assign(url);
             });
             
             $("#cancelEdit").click(function(){
-               window.history.back(); 
+               window.location.assign("/MindGamesMaven/ideaHub");
             });
         </script>
         <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>

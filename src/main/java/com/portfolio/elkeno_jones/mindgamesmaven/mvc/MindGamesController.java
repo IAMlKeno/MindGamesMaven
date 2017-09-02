@@ -151,7 +151,7 @@ public class MindGamesController {
                 }
             }
             if(saveSuccessful && ideaSaveSuccessful){
-                String location = "http://localhost:8080/MindGamesMaven";
+                String location = "/MindGamesMaven";
                 model.addAttribute("redirectUrl", location + IDEA_HUB_URL);
                 redirectUrl = REDIRECT_VIEW;
             } else {

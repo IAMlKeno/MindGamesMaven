@@ -17,6 +17,8 @@ import javax.persistence.Id;
 @Entity
 public class User implements Serializable {
     private String firstName;
+    private String lastName;
+
     private Date lastLoginDate;
     private String password;
     @Id
@@ -64,5 +66,13 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+    
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

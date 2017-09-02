@@ -28,7 +28,7 @@
     <link href="<c:url value="/resources/modal/modalStyle.css" />" rel="stylesheet">
     <c:url var="style" value="/resources/main.css" />
     <link href="${style}" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
     
     <style>
         #view-source {

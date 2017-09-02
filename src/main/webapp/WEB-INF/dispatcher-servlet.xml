@@ -44,15 +44,15 @@
     -->
     <bean name="indexController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="home" />
+          p:viewName="redirect" />
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-            destroy-method="close">
+          destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url"
-            value="jdbc:mysql://localhost:3306/mindgames" />
-            <property name="username" value="root" />
-            <property name="password" value="" />
+                  value="jdbc:mysql://localhost:3306/mindgames" />
+        <property name="username" value="root" />
+        <property name="password" value="" />
     </bean>
 
     <!-- Hibernate 4 SessionFactory Bean definition -->
@@ -69,7 +69,7 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
-                    </prop>
+                </prop>
                 <prop key="hibernate.show_sql">true</prop>
             </props>
         </property>
@@ -84,7 +84,7 @@
     <bean id="userDao" class="com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDaoImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
-<!--    <bean id="ideaService" class="com.journaldev.spring.service.PersonServiceImpl">
+    <!--    <bean id="ideaService" class="com.journaldev.spring.service.PersonServiceImpl">
         <property name="ideaDaoImpl" ref="personDAO"></property>
     </bean>-->
     <context:component-scan base-package="com.portfolio.elkeno_jones.mindgamesmaven" />
@@ -97,5 +97,30 @@
     
     <!--**** RESOUCES *****-->
     <mvc:resources mapping="/WEB-INF/resources/*" location="/resources"
-	cache-period="31556926"/>
+                   cache-period="31556926"/>
+    
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+
+    <bean id="localeResolver"
+              class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="en" />
+        <property name="cookieName" value="myAppLocaleCookie"></property>
+        <property name="cookieMaxAge" value="3600"></property>
+    </bean>
+
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="locale" />
+        </bean>
+    </mvc:interceptors>
+    
+    <!--If Sessions are incorporated, this can be used to get the local-->
+    <!--<bean id="localeResolver"
+	class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+	<property name="defaultLocale" value="en" />
+    </bean> -->
 </beans>
