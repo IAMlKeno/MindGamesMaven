@@ -41,7 +41,7 @@ Contributor(s):
 -->
 <hibernate-mapping package="com.portfolio.elkeno_jones.mindgamesmaven.model">
     <class name="User" table="user">
-        <id name="id" column="USERID">
+        <id name="id" column="userId">
             <generator class="native"/>
         </id>
         <property name="firstName" column="firstName" />

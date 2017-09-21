@@ -23,7 +23,7 @@
                 <div class="mdl-card mdl-shadow--2dp" 
                      style="text-align: center; border: 2px groove darkgray; margin: auto; width: 50%">
 
-                    <form:form action="" modelAttribute="user" method="POST">
+                    <form:form action="/MindGamesMaven/login" modelAttribute="user" method="POST">
                         <div class="mdl-card__title ideaTitleDiv" style="border:2px groove black; margin:2%">
                             <h4 class="mdl-card__title-text ideaTitle">
                                 <spring:message code="phrases.login_message" />

@@ -64,6 +64,7 @@
                 <value>com.portfolio.elkeno_jones.mindgamesmaven.model.Idea</value>
                 <value>com.portfolio.elkeno_jones.mindgamesmaven.model.Feature</value>
                 <value>com.portfolio.elkeno_jones.mindgamesmaven.model.User</value>
+                <value>com.portfolio.elkeno_jones.mindgamesmaven.model.SecurityObj</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -84,8 +85,11 @@
     <bean id="userDao" class="com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDaoImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
-    <!--    <bean id="ideaService" class="com.journaldev.spring.service.PersonServiceImpl">
-        <property name="ideaDaoImpl" ref="personDAO"></property>
+<!--    <bean id="securityDao" class="com.portfolio.elkeno_jones.mindgamesmaven.dao.SecurityDaoImpl">
+        <property name="securityDaoImpl" ref="securityDao"></property>
+    </bean>-->
+<!--    <bean id="security" class="com.portfolio.elkeno_jones.mindgamesmaven.service.SecurityImpl">
+        <property name="securityImpl" ref="securityDao"></property>
     </bean>-->
     <context:component-scan base-package="com.portfolio.elkeno_jones.mindgamesmaven" />
 

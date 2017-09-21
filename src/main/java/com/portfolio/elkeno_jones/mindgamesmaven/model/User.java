@@ -18,7 +18,6 @@ import javax.persistence.Id;
 public class User implements Serializable {
     private String firstName;
     private String lastName;
-
     private Date lastLoginDate;
     private String password;
     @Id

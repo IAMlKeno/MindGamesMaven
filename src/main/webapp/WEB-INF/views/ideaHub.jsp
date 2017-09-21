@@ -11,6 +11,7 @@
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <%@include file="../jspf/fragments/menu.jspf" %>
         <main class="mdl-layout__content mdl-color--grey-100" style="min-height:600px">
+            <h1>${token} - ${userId}</h1>
             <div class="newIdeaButtonDiv" style="text-align: center; margin: 3% 0 3% 0">
                 <input type="submit" id="ideaSubmitButton" 
                     class="mdl-button mdl-js-button mdl-button--colored 
@@ -19,6 +20,7 @@
             </div>
             <div class="mdl-grid ideaGrid">
                 <!-- using card to hold idea example-->
+                <c:if test="${empty ideaList}" >No ideas yet. Hit the Add new idea button to start!</c:if>
                 <c:forEach items="${ideaList}" var="ideaWrapper">
                     <idea:ideaCard ideaWrapper="${ideaWrapper}" />
                 </c:forEach>

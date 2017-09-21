@@ -21,12 +21,12 @@
                         ${redirectUrl}
                     </c:when>
                     <c:otherwise>
-                       /MindGamesMaven/auth
+                       /auth
                     </c:otherwise>
                 </c:choose>
             </c:set>
             $(function(){
-                window.location.assign("${redirect}");
+                window.location.assign("<c:url value='${redirect}' />");
             });
         </script>
     </body>

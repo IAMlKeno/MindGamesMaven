@@ -21,5 +21,11 @@
     p:password="${jdbc.password}" /-->
 
     <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
+    
+    <bean id="secDao" class="com.portfolio.elkeno_jones.mindgamesmaven.dao.SecurityDaoImpl" />
+    
+    <bean id="security" class="com.portfolio.elkeno_jones.mindgamesmaven.service.SecurityImpl">
+        <property name="ses" ref="secDao" />
+    </bean>
 
 </beans>

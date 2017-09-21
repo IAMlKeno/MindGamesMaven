@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Entity;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +47,24 @@ public class UserDaoImpl implements UserDao {
         }
         
         return saveSuccessful;
+    }
+    
+    @Override
+    @Transactional
+    public User findUserByUsername(String username){
+        User user;
+        
+        try{
+            user = (User) sessionFactory.getCurrentSession()
+                    .createCriteria(User.class)
+                    .add(Restrictions.eq("username", username))
+                    .uniqueResult();
+        } catch (HibernateException he){
+            System.out.println("[Hibernate Execption] " + he.getMessage());
+            return null;
+        }
+        
+        return user;
     }
 
     public SessionFactory getSessionFactory() {

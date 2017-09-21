@@ -2,44 +2,46 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
 <!-- Modal content -->
 <div id="registerFormModal" class="modal">
 
     <!-- Modal content -->
     <div class="modal-content">
         <c:set var="action">
-            <c:url value='/develop/newIdea' />
+            <c:url value='/register' />
         </c:set>
         <form:form action="${action}" commandName="user" method="POST">
             <div class="modal-header">
                 <span class="close">&times;</span>
-                <h2>Registration</h2>
+                <h2><spring:message code="header.register" /></h2>
             </div>
             <div class="modal-body">
                 <div class="modalForm">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <form:input path="firstName" class="mdl-textfield__input" />
                         <form:label path="firstName" class="mdl-textfield__label">
-                            First Name
+                            <spring:message code="label.first_name" />
                         </form:label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <form:input path="lastName" class="mdl-textfield__input" />
                         <form:label path="lastName" class="mdl-textfield__label"> <!--TODO: add last name to bean-->
-                            Last Name
+                            <spring:message code="label.last_name" />
                         </form:label>
                     </div>
                     <br /><br />
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <form:input path="username" class="mdl-textfield__input" />
                         <form:label path="username" class="mdl-textfield__label">
-                            Username
+                            <spring:message code="label.username" />
                         </form:label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <form:input path="password" class="mdl-textfield__input" type="password" />
                         <form:label path="password" class="mdl-textfield__label">
-                            Username
+                            <spring:message code="label.password" />
                         </form:label>
                     </div>
                 </div>
@@ -49,7 +51,7 @@
                        mdl-button--colored mdl-button--raised" style="width: 40%" value="Let&#39;s Begin!"/>
                 <span>&nbsp;</span>
                 <input type="button" id="modalCancelButton" class="mdl-button mdl-js-button 
-                       mdl-button--accent mdl-button--raised" style="width: 40%" value="Cancel"/>
+                       mdl-button--accent mdl-button--raised" style="width: 40%" value="<spring:message code="button_label.cancel"/>"/>
             </div>
         </form:form>
     </div>
