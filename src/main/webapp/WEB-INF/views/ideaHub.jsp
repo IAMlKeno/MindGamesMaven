@@ -12,11 +12,10 @@
     <%@include file="../jspf/fragments/menu.jspf" %>
         <main class="mdl-layout__content mdl-color--grey-100" style="min-height:600px">
             <h1>${token} - ${userId}</h1>
-            <div class="newIdeaButtonDiv" style="text-align: center; margin: 3% 0 3% 0">
+            <div class="newIdeaButtonDiv">
                 <input type="submit" id="ideaSubmitButton" 
                     class="mdl-button mdl-js-button mdl-button--colored 
-                    mdl-button--raised" value="Add New Idea" 
-                    style="width:50%" />
+                    mdl-button--raised" value="Add New Idea" />
             </div>
             <div class="mdl-grid ideaGrid">
                 <!-- using card to hold idea example-->

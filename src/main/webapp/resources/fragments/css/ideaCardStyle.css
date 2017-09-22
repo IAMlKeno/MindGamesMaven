@@ -1,0 +1,16 @@
+.ideaTitleDiv {
+    border:2px groove black; 
+    margin:2%;
+}
+
+.rating {
+    margin-left:auto;
+}
+
+.ideaFeatureTitle {
+    text-align: left;
+}
+
+.developIdeaButton {
+    width:80%;
+}

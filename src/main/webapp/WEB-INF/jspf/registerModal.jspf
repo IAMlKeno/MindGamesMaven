@@ -6,7 +6,6 @@
 
 <!-- Modal content -->
 <div id="registerFormModal" class="modal">
-
     <!-- Modal content -->
     <div class="modal-content">
         <c:set var="action">
@@ -27,7 +26,7 @@
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <form:input path="lastName" class="mdl-textfield__input" />
-                        <form:label path="lastName" class="mdl-textfield__label"> <!--TODO: add last name to bean-->
+                        <form:label path="lastName" class="mdl-textfield__label">
                             <spring:message code="label.last_name" />
                         </form:label>
                     </div>
@@ -46,12 +45,12 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer" style="text-align:center">
+            <div class="modal-footer registerFooter">
                 <input type="submit" id="modalAcceptButton" class="mdl-button mdl-js-button 
-                       mdl-button--colored mdl-button--raised" style="width: 40%" value="Let&#39;s Begin!"/>
+                       mdl-button--colored mdl-button--raised" value="Let&#39;s Begin!"/>
                 <span>&nbsp;</span>
                 <input type="button" id="modalCancelButton" class="mdl-button mdl-js-button 
-                       mdl-button--accent mdl-button--raised" style="width: 40%" value="<spring:message code="button_label.cancel"/>"/>
+                       mdl-button--accent mdl-button--raised" value="<spring:message code="button_label.cancel"/>"/>
             </div>
         </form:form>
     </div>

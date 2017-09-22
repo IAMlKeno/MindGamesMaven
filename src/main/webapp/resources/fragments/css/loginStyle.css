@@ -1,0 +1,28 @@
+.ideaTitleDiv {
+    border:2px groove black; 
+    margin:2%   
+}
+
+.loginActionButtons input {
+    width:40%;
+}
+
+.loginHeader {
+    text-align: center; 
+    border: 1px solid darkgray; 
+    margin: auto;
+}
+
+.loginDiv {
+    text-align: center;
+    border: 2px groove darkgray;
+    margin: auto; 
+    width: 50%;
+}
+
+.registerFooter {
+    text-align: center;
+}
+.registerFooter input{
+    width: 40%;
+}

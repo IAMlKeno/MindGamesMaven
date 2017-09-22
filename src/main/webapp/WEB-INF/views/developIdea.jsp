@@ -37,7 +37,7 @@
         <link href="<c:url value="/resources/js-mindmap-master/style.css" />" type="text/css" rel="stylesheet"/>
 
         <!-- jQuery -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"" type="text/javascript"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
         <!-- UI, for draggable nodes -->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js"></script>
 

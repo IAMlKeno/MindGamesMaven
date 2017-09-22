@@ -7,3 +7,12 @@
     margin:2%;
     width: 85%;
 }
+
+.newIdeaButtonDiv {
+    text-align: center; 
+    margin: 3% 0 3% 0;
+}
+
+#ideaSubmitButton{
+    width:50%;
+}

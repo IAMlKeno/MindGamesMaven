@@ -136,4 +136,8 @@ public class CoreController {
         return "accessDenied";
     }
 
+    @RequestMapping(value = "/")
+    public String indexer(){
+        return REDIRECT_VIEW;
+    }
 }

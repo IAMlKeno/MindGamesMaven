@@ -9,22 +9,21 @@
 <%@include file="../jspf/fragments/head.jspf" %>
 <script src="<c:url value="/resources/modal/modal.js" />" type="text/javascript"></script>
 
-<body>
+<link rel="stylesheet" href="<c:url value="/resources/fragments/css/loginStyle.css" />">
 
+<body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <%@include file="../jspf/fragments/menu.jspf" %>
         <main class="mdl-layout__content mdl-color--grey-100" style="min-height:600px">
             <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--6-col" style="text-align: center; border: 1px solid darkgray; margin: auto">
+                <div class="mdl-cell mdl-cell--6-col loginHeader">
                     <h1><spring:message code="header.login_header" /></h1>
                 </div>
             </div>
             <div class="mdl-grid">
-                <div class="mdl-card mdl-shadow--2dp" 
-                     style="text-align: center; border: 2px groove darkgray; margin: auto; width: 50%">
-
+                <div class="mdl-card mdl-shadow--2dp loginDiv">
                     <form:form action="/MindGamesMaven/login" modelAttribute="user" method="POST">
-                        <div class="mdl-card__title ideaTitleDiv" style="border:2px groove black; margin:2%">
+                        <div class="mdl-card__title ideaTitleDiv">
                             <h4 class="mdl-card__title-text ideaTitle">
                                 <spring:message code="phrases.login_message" />
                             </h4>
@@ -44,13 +43,13 @@
                                 </form:label>
                             </div>
                         </div>
-                        <div class="mdl-card__actions ideaCardActionButtons">
+                        <div class="mdl-card__actions loginActionButtons">
                             <input type="submit" class="mdl-button mdl-js-button 
                                    mdl-button--colored mdl-button--raised developIdeaButton" 
-                                   value="<spring:message code='label.sign_in' />" style="width:40%" />
+                                   value="<spring:message code='label.sign_in' />" />
                             <input type="button" id="signupButton" class="mdl-button mdl-js-button 
                                    mdl-button--colored mdl-button--raised" 
-                                   value="<spring:message code='label.sign_up' />" style="width:40%" />
+                                   value="<spring:message code='label.sign_up' />" />
                         </div>
                     </form:form>
                 </div>

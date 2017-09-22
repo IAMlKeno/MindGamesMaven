@@ -1,9 +1,3 @@
-<%-- 
-    Document   : ideaCard
-    Created on : 20-Aug-2017, 5:35:26 PM
-    Author     : Elkeno
---%>
-
 <%@tag description="put the tag description here" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -11,14 +5,16 @@
         type="com.portfolio.elkeno_jones.mindgamesmaven.model.IdeaWithFeatures" 
         required="true" %>
 
+<link rel="stylesheet" href="<c:url value="/resources/fragments/css/ideaCardStyle.css" />">
+
 <form action="<c:url value='/develop' />" method="POST">
     <input type="hidden" name="ideaId" value="${ideaWrapper.idea.ideaId}" />
     <div class="mdl-card mdl-shadow--2dp ideaCard">
-        <div class="mdl-card__title ideaTitleDiv" style="border:2px groove black; margin:2%">
+        <div class="mdl-card__title ideaTitleDiv">
             <h4 class="mdl-card__title-text ideaTitle">
                 ${ideaWrapper.idea.ideaTitle}
             </h4>
-            <span class="rating" style="margin-left:auto">&#40;${ideaWrapper.idea.rating}&#41;</span>
+            <span class="rating">&#40;${ideaWrapper.idea.rating}&#41;</span>
         </div>
             <div class="statusCheckbox">
                 Is in progress: <input type="checkbox" <c:if test="${ideaWrapper.idea.isInProgress}">checked</c:if> />
@@ -27,7 +23,7 @@
                 Is Complete: <input type="checkbox" <c:if test="${ideaWrapper.idea.isCompleted}">checked</c:if> />
             </div>
         <div class="mdl-card__supporting-text">
-            <h5 class="ideaFeatureTitle" style="text-align: left">
+            <h5 class="ideaFeatureTitle">
                 Features:
             </h5>
             <c:forEach items="${ideaWrapper.features}" var="feature">
@@ -48,7 +44,7 @@
         <div class="mdl-card__actions ideaCardActionButtons">
             <input type="submit" class="mdl-button mdl-js-button 
                 mdl-button--colored mdl-button--raised developIdeaButton" 
-                value="Develop Idea" style="width:80%" />
+                value="Develop Idea" />
         </div>
     </div>
 </form>
