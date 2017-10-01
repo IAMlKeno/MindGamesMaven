@@ -26,22 +26,23 @@
                     <form:hidden path="newFeature.ideaId" value="${ideaWrapper.idea.ideaId}" />
                     Enter a title for the feature:<br />
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
-                        <form:input path="newFeature.descriptionShort" class="mdl-textfield__input" />
+                        <form:input path="newFeature.descriptionShort" class="mdl-textfield__input notEmpty" />
                         <form:label path="newFeature.descriptionShort" class="mdl-textfield__label">
                             Feature Title...
                         </form:label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
                         <div class="mdl-textfield mdl-js-textfield">
-                            <form:textarea path="newFeature.descriptionLong" class="mdl-textfield__input" rows= "6"></form:textarea>
+                            <form:textarea path="newFeature.descriptionLong" class="mdl-textfield__input notEmpty" rows= "6"></form:textarea>
                             <form:label path="newFeature.descriptionLong" class="mdl-textfield__label">Description</form:label>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="submit" id="modalAcceptButton" class="mdl-button mdl-js-button 
-                       mdl-button--colored mdl-button--raised" value="Add"/>
+                <input type="button" id="modalAcceptButton" class="mdl-button mdl-js-button 
+                       mdl-button--colored mdl-button--raised" value="Add"
+                       onclick="validate(this)" />
                 <span>&nbsp;</span>
                 <input type="button" id="modalCancelButton" class="mdl-button mdl-js-button 
                        mdl-button--accent mdl-button--raised" value="Cancel"/>

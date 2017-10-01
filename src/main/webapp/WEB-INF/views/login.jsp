@@ -29,24 +29,30 @@
                             </h4>
                         </div>
                         <div class="mdl-card__supporting-text">
+                            <c:if test="${not empty loginAuth && loginAuth eq false}">
+                                <div class="loginError" style="color:red">
+                                    Username or password invalid...
+                                </div>
+                            </c:if>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <form:input path="username" class="mdl-textfield__input" />
+                                <form:input path="username" class="mdl-textfield__input notEmpty" />
                                 <form:label path="username" class="mdl-textfield__label">
                                     <spring:message code="label.username" />
                                 </form:label>
                             </div>
 
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <form:input path="password" class="mdl-textfield__input" type="password" />
+                                <form:input path="password" class="mdl-textfield__input notEmpty" type="password" />
                                 <form:label path="password" class="mdl-textfield__label">
                                     <spring:message code="label.password" />
                                 </form:label>
                             </div>
                         </div>
                         <div class="mdl-card__actions loginActionButtons">
-                            <input type="submit" class="mdl-button mdl-js-button 
+                            <input type="button" class="mdl-button mdl-js-button 
                                    mdl-button--colored mdl-button--raised developIdeaButton" 
-                                   value="<spring:message code='label.sign_in' />" />
+                                   value="<spring:message code='label.sign_in' />" 
+                                   onclick="validate(this)"/>
                             <input type="button" id="signupButton" class="mdl-button mdl-js-button 
                                    mdl-button--colored mdl-button--raised" 
                                    value="<spring:message code='label.sign_up' />" />
@@ -56,6 +62,35 @@
             </div>
         </main>
         <script>
+            function validate(formButton) {
+                var isValid = true;
+                var errMessage = "";
+                var regex = /[<>=\/\\'"]/;
+                var theForm = $(formButton).parents("form");
+                $(theForm).find(".notEmpty").each(function(){
+                   var inputValue = $(this).val();
+                   var inputLabel = $(this).next("label").text().trim();
+                   if(inputValue === ""){
+                       isValid = false;
+                       errMessage += inputLabel + " is mandatory \n";
+                   } else if (regex.exec(inputValue)) {
+                       isValid = false;
+                       errMessage += inputLabel + " contains invalid characters \n";
+                   }
+                });
+                
+                if (!isValid) { 
+                    alert(errMessage);
+                } else {
+                    submitForm(theForm);
+                }
+                return isValid;
+            }
+            
+            function submitForm(form) {
+                form.submit();
+            }
+            
             $(document).ready(function () {
                 $("#signupButton").click(function () {
                     $("body").find("#registerFormModal").css("display", "block");

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,16 +53,31 @@ public class CoreController {
         String landingPage = "";
 
         HttpSession session = req.getSession(true);
-        session.setAttribute("userToken", "Test");
-        landingPage = LOGIN_VIEW;
-        model.addAttribute("user", new User());
+        if (session.getAttribute("userToken") != null) {
+            Integer userId = (Integer) session.getAttribute("userId");
+            String token = (String) session.getAttribute("userToken");
+            if (sec.checkAccess(token, userId)) {
+                model.addAttribute("redirectUrl", IDEA_HUB_URL);
+                landingPage = REDIRECT_VIEW;
+            } else {
+                model.addAttribute("user", new User());
+                landingPage = LOGIN_VIEW;
+            }
+        } else {
+            model.addAttribute("user", new User());
+            landingPage = LOGIN_VIEW;
+        }
         return landingPage;
     }
 
     @RequestMapping(value = LOGIN_URL, method = RequestMethod.POST)
     public String loginPage(HttpServletRequest req,
             Model model,
-            @ModelAttribute("user") User user) {
+            @ModelAttribute("user") User user, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return REDIRECT_VIEW;
+        }
         String username = user.getUsername();
         String password = user.getPassword();
         String token;
@@ -69,7 +85,7 @@ public class CoreController {
 
         User userVo = userDao.findUserByUsername(username);
 
-        if (userVo.getPassword().equals(password)) {
+        if (userVo != null && userVo.getPassword().equals(password)) {
             token = sec.generateSessionToken(username);
             HttpSession session = req.getSession(true);
             session.setAttribute("userToken", token);
@@ -80,6 +96,8 @@ public class CoreController {
 
             loginView = REDIRECT_VIEW;
         } else {
+            boolean loginAuth = false;
+            model.addAttribute("loginAuth", loginAuth);
             loginView = LOGIN_VIEW;
         }
 
@@ -110,6 +128,7 @@ public class CoreController {
         if (!userDao.saveUser(userVo)) {
             String errMessage = "Error registering new user!";
             model.addAttribute("errMessage", errMessage);
+            model.addAttribute("redirectUrl", "auth");
             redirectUrl = ERROR_VIEW;
         } else {
             redirectUrl = IDEA_HUB_VIEW;
@@ -119,7 +138,7 @@ public class CoreController {
 
             User dbUser = userDao.findUserByUsername(username);
             userVo.setUserId(dbUser.getUserId());
-            
+
             session.setAttribute("userToken", token);
             session.setAttribute("userId", userVo.getUserId());
             sec.beginSession(userVo.getUserId(), token);
@@ -137,7 +156,7 @@ public class CoreController {
     }
 
     @RequestMapping(value = "/")
-    public String indexer(){
+    public String indexer() {
         return REDIRECT_VIEW;
     }
 }

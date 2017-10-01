@@ -74,7 +74,8 @@ public class MindGamesController {
         String token = (String) session.getAttribute("userToken");
 
         if (!sec.checkAccess(token, userId)) {
-            model.addAttribute("errMessage", "ACCESS DENIED");
+            model.addAttribute("errMessage", "ACCESS DENIED...");
+            model.addAttribute("redirectErrorUrl", "auth");
 
             return ERROR_VIEW;
         }
@@ -108,6 +109,7 @@ public class MindGamesController {
 
         if (!sec.checkAccess(token, userId)) {
             model.addAttribute("errMessage", "ACCESS DENIED");
+            model.addAttribute("redirectErrorUrl", "auth");
 
             return ERROR_VIEW;
         }
@@ -147,6 +149,7 @@ public class MindGamesController {
         Integer userId = (Integer) ses.getAttribute("userId");
         if (!sec.checkAccess(token, userId)) {
             model.addAttribute("errMessage", "ACCESS DENIED");
+            model.addAttribute("redirectErrorUrl", "auth");
 
             return ERROR_VIEW;
         }
@@ -173,6 +176,7 @@ public class MindGamesController {
 
         if (!sec.checkAccess(token, userId)) {
             model.addAttribute("errMessage", "ACCESS DENIED");
+            model.addAttribute("redirectErrorUrl", "auth");
 
             return ERROR_VIEW;
         }
@@ -180,7 +184,7 @@ public class MindGamesController {
         try {
             try {
                 if (ideaWrapper.getIdea().getUserId() == null) {
-                    ideaWrapper.getIdea().setUserId(1);
+                    ideaWrapper.getIdea().setUserId(userId);
                 }
 
                 ideaWrapper.setIdea(
@@ -206,6 +210,7 @@ public class MindGamesController {
             } else {
                 redirectUrl = ERROR_VIEW;
                 String errMessage = "Failed to save idea and features";
+                model.addAttribute("redirectUrl", "auth");
                 model.addAttribute("errMessage", errMessage);
             }
         } catch (Exception e) {
@@ -223,6 +228,7 @@ public class MindGamesController {
         Integer userId = (Integer) ses.getAttribute("userId");
         if (!sec.checkAccess(token, userId)) {
             model.addAttribute("errMessage", "ACCESS DENIED");
+            model.addAttribute("redirectErrorUrl", "auth");
 
             return ERROR_VIEW;
         }

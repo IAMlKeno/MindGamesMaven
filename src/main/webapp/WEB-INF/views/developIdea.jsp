@@ -91,14 +91,14 @@
             <input type="button" id="newFeatureButton" class="mdl-button mdl-js-button 
                    mdl-button--colored mdl-button--raised developIdeaButton" 
                    value="New Feature"/>
-            
+
             <button id="saveIdea" class="mdl-button mdl-js-button 
-                   mdl-button--colored mdl-button--raised developIdeaButton">
+                    mdl-button--colored mdl-button--raised developIdeaButton">
                 Done
             </button>
-            
+
             <button id="cancelEdit" class="mdl-button mdl-js-button 
-                   mdl-button--colored mdl-button--raised developIdeaButton">
+                    mdl-button--colored mdl-button--raised developIdeaButton">
                 Cancel
             </button>
         </div>
@@ -106,13 +106,42 @@
 
         <script>
             var url = "<c:url value="/save" />";
-            $("#saveIdea").click(function(){
+            $("#saveIdea").click(function () {
                 window.location.assign(url);
             });
-            
-            $("#cancelEdit").click(function(){
-               window.location.assign("/MindGamesMaven/ideaHub");
+
+            $("#cancelEdit").click(function () {
+                window.location.assign("/MindGamesMaven/ideaHub");
             });
+            
+            function validate(formButton) {
+                var isValid = true;
+                var errMessage = "";
+                var regex = /[<>=\/\\'"]/;
+                var theForm = $(formButton).parents("form");
+                $(theForm).find(".notEmpty").each(function () {
+                    var inputValue = $(this).val();
+                    var inputLabel = $(this).next("label").text().trim();
+                    if (inputValue === "") {
+                        isValid = false;
+                        errMessage += inputLabel + " is mandatory \n";
+                    } else if (regex.exec(inputValue)) {
+                        isValid = false;
+                        errMessage += inputLabel + " contains invalid characters \n";
+                    }
+                });
+
+                if (!isValid) {
+                    alert(errMessage);
+                } else {
+                    submitForm(theForm);
+                }
+                return isValid;
+            }
+
+            function submitForm(form) {
+                form.submit();
+            }
         </script>
         <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     </body>

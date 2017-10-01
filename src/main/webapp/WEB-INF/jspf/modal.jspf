@@ -19,7 +19,7 @@
             <div class="modalForm">
                 Enter a title for the new idea:<br />
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <form:input path="ideaTitle" class="mdl-textfield__input" id="ideaTitle" type="text" />
+                    <form:input path="ideaTitle" class="mdl-textfield__input notEmpty" />
                     <form:label path="ideaTitle" class="mdl-textfield__label">
                         Idea Title
                     </form:label>
@@ -27,8 +27,9 @@
             </div>
         </div>
         <div class="modal-footer">
-            <input type="submit" id="modalAcceptButton" class="mdl-button mdl-js-button 
-                   mdl-button--colored mdl-button--raised" value="Add"/>
+            <input type="button" id="modalAcceptButton" class="mdl-button mdl-js-button 
+                   mdl-button--colored mdl-button--raised" value="Add"
+                   onclick="validate(this)"/>
             <span>&nbsp;</span>
             <input type="button" id="modalCancelButton" class="mdl-button mdl-js-button 
                    mdl-button--accent mdl-button--raised" value="Cancel"/>
