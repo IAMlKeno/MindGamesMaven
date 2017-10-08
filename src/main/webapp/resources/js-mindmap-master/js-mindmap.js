@@ -67,12 +67,13 @@
 
     this.name = name;
     this.href = opts.href;
+    var id = opts.id;
     if (opts.url) {
       this.url = opts.url;
     }
 
     // create the element for display
-    this.el = $('<a href="' + this.href + '">' + this.name + '</a>').addClass('node');
+    this.el = $('<a href="' + this.href + '" id="' + id + '">' + this.name + '</a>').addClass('node');
     $('body').prepend(this.el);
 
     if (!parent) {
@@ -111,6 +112,14 @@
     });
 
     this.el.click(function () {
+        var elClass = $(this).attr('class');
+      if(elClass.includes('active') && !elClass.includes('root')) {
+        editFeature(this);
+      } else if(elClass.includes('active') && elClass.includes('root') && 
+              !elClass.includes('activeparent')) {
+        editIdeaTitle(this);
+      }
+      
       if (obj.activeNode) {
         obj.activeNode.el.removeClass('active');
         if (obj.activeNode.parent) {
@@ -126,6 +135,7 @@
         obj.activeNode.parent.el.addClass('activeparent');
       }
       obj.root.animateToStatic();
+      
       return false;
     });
 

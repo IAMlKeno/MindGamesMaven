@@ -7,6 +7,7 @@ $(document).ready(function() {
   var root = $('body>ul>li').get(0).mynode = $('body').addRootNode($('body>ul>li>a').text(), {
     href:'/',
     url:'/',
+    id:$('a:eq(0)',this).attr('id'),
     onclick:function(node) {
       $(node.obj.activeNode.content).each(function() {
         this.hide();
@@ -19,9 +20,11 @@ $(document).ready(function() {
     if (typeof(parentnode)=='undefined') parentnode=root;
       else parentnode=parentnode.mynode;
     
-    this.mynode = $('body').addNode(parentnode, $('a:eq(0)',this).text(), {
+    this.mynode = $('body').addNode(parentnode, $('a:eq(0)',this).text(), 
+       {
 //          href:$('a:eq(0)',this).text().toLowerCase(),
       href:$('a:eq(0)',this).attr('href'),
+      id:$('a:eq(0)',this).attr('id'),
       onclick:function(node) {
         $(node.obj.activeNode.content).each(function() {
           this.hide();

@@ -1,5 +1,6 @@
 package com.portfolio.elkeno_jones.mindgamesmaven.mvc;
 
+import com.google.gson.Gson;
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.FeatureDao;
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.IdeaDao;
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDao;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,6 +53,8 @@ public class MindGamesController {
     /* Idea hub view */
     private static final String IDEA_HUB_URL = "/ideaHub";
     private static final String IDEA_HUB_VIEW = "ideaHub";
+    private static final String IDEA_HUB_UPDATE_PROGRESS_URL = "/ideaHub/progress";
+    private static final String IDEA_HUB_UPDATE_STATUS_URL = "/ideaHub/status";
 
     /* Save*/
     private static final String SAVE_URL = "/save";
@@ -60,10 +64,15 @@ public class MindGamesController {
     private static final String DEVELOP_NEW_IDEA_URL = "/develop/newIdea";
     private static final String DEVELOP_IDEA_URL = "/develop";
     private static final String ADD_FEATURE_URL = "/develop/add";
+    private static final String UPDATE_FEATURE_URL = "/develop/update";
 
     /* Redirect and error*/
     private static final String ERROR_VIEW = "error";
     private static final String REDIRECT_VIEW = "/redirect";
+    
+    /* */
+    private static final String GET_FEATURE_URL = "/develop/feature";
+    private static final String UPDATE_IDEA_TITLE_URL = "/develop/idea/update";
 
     @RequestMapping(value = IDEA_HUB_URL)
     public String home(Model model, HttpServletRequest req) {
@@ -157,6 +166,36 @@ public class MindGamesController {
         Feature newFeat = ideaWrapper.getNewFeature();
         ideaWrapper.getFeatures().add(newFeat);
         ideaWrapper.setNewFeature(new Feature());
+
+        model.addAttribute("ideaWrapper", ideaWrapper);
+
+        return DEVELOP_IDEA_VIEW;
+    }
+    
+    @RequestMapping(value = UPDATE_FEATURE_URL, method = RequestMethod.POST)
+    public String updateFeature(Model model,
+            @ModelAttribute("ideaWrapper") IdeaWithFeatures ideaWrapper,
+            HttpServletRequest req,
+            @RequestParam("descriptionShort") String descriptionShort,
+            @RequestParam("descriptionLong") String descriptionLong,
+            @RequestParam("updateFeatureId") Integer featId)  {
+
+        HttpSession ses = req.getSession();
+        String token = (String) ses.getAttribute("userToken");
+        Integer userId = (Integer) ses.getAttribute("userId");
+        if (!sec.checkAccess(token, userId)) {
+            model.addAttribute("errMessage", "ACCESS DENIED");
+            model.addAttribute("redirectErrorUrl", "auth");
+
+            return ERROR_VIEW;
+        }
+
+        for(Feature feat : ideaWrapper.getFeatures()) {
+            if (feat.getFeatureId() == featId) {
+                feat.setDescriptionLong(descriptionLong);
+                feat.setDescriptionShort(descriptionShort);
+            }
+        }
 
         model.addAttribute("ideaWrapper", ideaWrapper);
 
@@ -261,6 +300,69 @@ public class MindGamesController {
         model.addAttribute("redirectUrl", redirect);
 
         return REDIRECT_VIEW;
+    }
+
+    @RequestMapping(value = IDEA_HUB_UPDATE_PROGRESS_URL, method = RequestMethod.GET)
+    public ResponseEntity<?> updateIdeaProgrss(@RequestParam("ideaId") int id,
+            @RequestParam("action") boolean action,
+            @RequestParam("otherAction") boolean otherAction) {
+        Idea theIdea = ideaDao.getIdeaById(id);
+        theIdea.setIdeaId(id);
+        theIdea.setIsInProgress(action);
+        theIdea.setIsCompleted(otherAction);
+
+        if(ideaDao.saveIdea(theIdea)){
+            return new ResponseEntity("Good", HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Bad", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = IDEA_HUB_UPDATE_STATUS_URL, method = RequestMethod.GET)
+    public ResponseEntity<?> updateIdeaStatus(@RequestParam("ideaId") int id,
+            @RequestParam("action") boolean action,
+            @RequestParam("otherAction") boolean otherAction) {
+        Idea theIdea = ideaDao.getIdeaById(id);
+        theIdea.setIdeaId(id);
+        theIdea.setIsCompleted(action);
+        theIdea.setIsInProgress(otherAction);
+
+        if(ideaDao.saveIdea(theIdea)){
+            return new ResponseEntity("Good", HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Bad", HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = GET_FEATURE_URL, method = RequestMethod.GET)
+    public ResponseEntity<?> getFeature(@RequestParam("featureId") Integer featureId) {
+        String featureJson = "";
+        Gson gson = new Gson();
+        Feature theFeat = featureDao.getFeatureById(featureId);
+        featureJson = gson.toJson(theFeat);
+        
+        return new ResponseEntity(featureJson, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = UPDATE_IDEA_TITLE_URL, method = RequestMethod.POST)
+    public String setIdeaTitle(Model model,
+            @ModelAttribute("ideaWrapper") IdeaWithFeatures ideaWrapper,
+            HttpServletRequest req,
+            @RequestParam("theIdeaTitle") String theIdeaTitle)  {
+
+        HttpSession ses = req.getSession();
+        String token = (String) ses.getAttribute("userToken");
+        Integer userId = (Integer) ses.getAttribute("userId");
+        if (!sec.checkAccess(token, userId)) {
+            model.addAttribute("errMessage", "ACCESS DENIED");
+            model.addAttribute("redirectErrorUrl", "auth");
+
+            return ERROR_VIEW;
+        }
+        ideaWrapper.getIdea().setIdeaTitle(theIdeaTitle);
+        model.addAttribute("ideaWrapper", ideaWrapper);
+
+        return DEVELOP_IDEA_VIEW;
     }
 
     /**

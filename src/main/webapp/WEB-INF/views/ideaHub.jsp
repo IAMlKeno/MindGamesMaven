@@ -55,5 +55,86 @@
         function submitForm(form) {
             form.submit();
         }
+
+        $(".inProgressCheckbox").click(function () {
+           var completeCheckbox = updateProgress(this, true);
+//           updateStatus(completeCheckbox, false);
+        });
+
+        $(".completeCheckbox").click(function () {
+            var progressCheckbox = updateStatus(this, true);
+//            updateProgress(progressCheckbox, false);
+        });
+
+        function updateProgress(elem, changeOther) {
+            var url = "<c:url value="/ideaHub/progress" />";
+            var checkbox = $(elem);
+            var ideaId = checkbox.parents("form").find("[name='ideaId']").val();
+            var completeCheckbox = $(checkbox.parent("div")
+                    .siblings(".statusCheckbox").find(".completeCheckbox"));
+            var proceed = true;
+            if(changeOther === true && $(completeCheckbox).is(":checked")) {
+                var confirmChange = confirm("Are you sure - this will change the status");
+                if(confirmChange) {
+                    $(completeCheckbox).prop("checked", false);
+                } else {
+//                    proceed = false;
+                    checkbox.prop("checked", false);
+                }
+            }
+            var checkboxValue = checkbox.prop("checked");
+            var otherAction = $(completeCheckbox).prop("checked");
+
+            if (proceed) {
+                $.get(url,
+                    {ideaId: ideaId, action: checkboxValue, otherAction: otherAction}
+                )
+                    .done()
+                    .fail(function () {
+                        alert("Failed to update progress");
+                        if (checkbox.is(":checked")) {
+                            checkbox.prop("checked", false);
+                        } else {
+                            checkbox.prop("checked", true);
+                        }
+                    });
+            }
+            return completeCheckbox;
+        }
+        
+        function updateStatus(elem, changeOther) {
+            var url = "<c:url value="/ideaHub/status" />";
+            var checkbox = $(elem);
+            var ideaId = checkbox.parents("form").find("[name='ideaId']").val();
+            var progressCheckbox = $(checkbox.parent("div")
+                    .siblings(".statusCheckbox").find(".inProgressCheckbox"));
+            var proceed = true;
+            if(changeOther === true && $(progressCheckbox).is(":checked")) {
+                if (confirm("Are you sure - this will change the progress status")) {
+                    $(progressCheckbox).prop("checked", false);
+                } else {
+//                    proceed = false;
+                    checkbox.prop("checked", false);
+                }
+            }
+            var checkboxValue = checkbox.prop("checked");
+            var otherAction = $(progressCheckbox).prop("checked");
+
+            if (proceed) {
+                $.get(url,
+                        {ideaId: ideaId, action: checkboxValue, otherAction: otherAction}
+                )
+                    .done()
+                    .fail(function () {
+                        alert("Failed to up status of idea");
+                        if (checkbox.is(":checked")) {
+                            checkbox.prop("checked", false);
+                        } else {
+                            checkbox.prop("checked", true);
+                        }
+                    });
+            }
+            return progressCheckbox;
+        }
     </script>
     <%@include file="../jspf/fragments/footer.jspf" %>

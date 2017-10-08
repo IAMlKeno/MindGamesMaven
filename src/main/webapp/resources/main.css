@@ -21,3 +21,20 @@
     text-align: left;
     margin-left: 5px;
 }
+
+.mdl-list__item-text-body {
+    white-space: initial;
+}
+
+.mdl-list {
+    height: 40px;
+}
+
+.mdl-list__item {
+    overflow-y: auto;
+    padding: 0;
+}
+
+.mdl-list__item--three-line .mdl-list__item-text-body {
+    height:0;
+}

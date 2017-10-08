@@ -4,6 +4,7 @@ import com.portfolio.elkeno_jones.mindgamesmaven.model.Feature;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Entity;
 import org.hibernate.criterion.Restrictions;
@@ -62,7 +63,41 @@ public class FeatureDaoImpl implements FeatureDao {
         
         return saveSuccessful;
     }
+    
+    @Override
+    @Transactional
+    public boolean removeFeature(Feature feature) {
+        boolean isSuccess = true;
+        
+        try {
+            sessionFactory.getCurrentSession().delete(feature);
+            sessionFactory.getCurrentSession().flush();
+        } catch (HibernateException he) {
+            isSuccess = false;
+            System.out.println("[Delete feature]: " + he.getMessage());
+        }
+        
+        return isSuccess;
+    }
 
+    @Override
+    @Transactional
+    public boolean removeFeatureById(Integer id) {
+        boolean isSuccess = true;
+    
+        try {
+            String sql = "delete from Feature where featureid = :id";
+            Query q = sessionFactory.getCurrentSession().createQuery(sql);
+            q.setParameter("id", id);
+            q.executeUpdate();
+        } catch (HibernateException he) {
+            isSuccess = false;
+            System.out.println("[Delete feature]: " + he.getMessage());
+        }
+        
+        return isSuccess;
+    }
+    
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }

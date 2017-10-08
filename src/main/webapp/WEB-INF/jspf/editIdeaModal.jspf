@@ -1,0 +1,61 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
+<c:set var="formUrl">
+    <c:url value='/develop/idea/update' />
+</c:set>
+<!-- Modal content -->
+<div id="editIdeaFormModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <form:form action="${formUrl}" method="POST">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Feature Form</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modalForm">
+                    <input type="hidden" name="ideaId" value="${ideaWrapper.idea.ideaId}" />
+                    Update idea title:<br />
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
+                        <input type="text" name="theIdeaTitle" id="theIdeaTitle" class="mdl-textfield__input notEmpty" />
+                        <label for="theIdeaTitle" class="mdl-textfield__label">
+                            Idea Title...
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" id="modalAcceptButton" class="mdl-button mdl-js-button 
+                       mdl-button--colored mdl-button--raised" 
+                       value="<spring:message code='button_label.save' />"
+                       onclick="validate(this)" />
+                <span>&nbsp;</span>
+                <input type="button" id="modalCancelButton" class="mdl-button mdl-js-button 
+                       mdl-button--colored mdl-button--raised" 
+                       value="<spring:message code='button_label.cancel' />"/>
+            </div>
+        </form:form>
+    </div>
+</div>
+<script>
+    function validateIdeaForm(elem) {
+        var theForm = $(elem).parents("form");
+        var inputText = theForm.find("#theIdeaTitle").val().trim();
+        var ideaId = theForm.find('input[name="ideaId"]').val();
+        
+        if (inputText !== "") {
+            var id = "#idea" + ideaId;
+            $(id).each(function() {
+                $(this).text(inputText);
+            });
+            theForm.parents("#editIdeaFormModal").hide();
+        } else {
+            alert("Idea title cannot be blank");
+        }
+        
+    }
+</script>

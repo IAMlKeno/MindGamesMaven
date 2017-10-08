@@ -55,6 +55,7 @@ public class SecurityImpl implements Security {
 
                 if (dif <= THIRTY_MINS) {
                     isSessionValid = true;
+                    ses.updateInsertTokenAccess(userId, sessionToken);
                 }
             }
         }

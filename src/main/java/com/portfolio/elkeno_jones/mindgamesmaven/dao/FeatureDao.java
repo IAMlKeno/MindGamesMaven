@@ -33,4 +33,19 @@ public interface FeatureDao {
      * @return 
      */
     public boolean saveFeature(Feature feature);
+    
+    /**
+     * Delete feature
+     * 
+     * @param featureId
+     * @return
+     */
+    public boolean removeFeature(Feature feature);
+    
+    /**
+     * Remove feature by id
+     * @param id
+     * @return 
+     */
+    public boolean removeFeatureById(Integer id);
 }

@@ -6,6 +6,8 @@
     border: 2px groove black;
     margin:2%;
     width: 85%;
+    max-height: 470px;
+    overflow: auto;
 }
 
 .newIdeaButtonDiv {

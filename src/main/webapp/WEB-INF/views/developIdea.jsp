@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <c:set var="title" value="Develop Idea" />
 <!DocType html>
 <html>
@@ -66,22 +67,15 @@
     <body>
         <ul style="margin:auto">
             <li>
-                <a href="">
+                <a href="" id="idea${ideaWrapper.idea.ideaId}">
                     ${ideaWrapper.idea.ideaTitle}
                 </a>
                 <ul class="features">
                     <c:forEach items="${ideaWrapper.features}" var="feature">
                         <li>
-                            <a href="" title="${feature.descriptionShort}">
+                            <a href="" title="${feature.descriptionShort}" id="${feature.featureId}">
                                 ${feature.descriptionShort}
                             </a>
-                            <ul class="featureDetails">
-                                <li>
-                                    <a href="" title="${feature.descriptionShort}">
-                                        ${feature.descriptionLong}
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                     </c:forEach>
                 </ul>
@@ -96,6 +90,11 @@
                     mdl-button--colored mdl-button--raised developIdeaButton">
                 Done
             </button>
+            
+            <button id="deleteIdea" class="mdl-button mdl-js-button 
+                    mdl-button--colored mdl-button--raised developIdeaButton">
+                <spring:message code="button_label.delete" />
+            </button>
 
             <button id="cancelEdit" class="mdl-button mdl-js-button 
                     mdl-button--colored mdl-button--raised developIdeaButton">
@@ -103,11 +102,61 @@
             </button>
         </div>
         <%@include file="../jspf/featureModal.jspf" %>
+        <%@include file="../jspf/editFeatureModal.jspf" %>
+        <%@include file="../jspf/editIdeaModal.jspf" %>
+        
+        <div class="featureEdit" style="border: 2px solid; border-radius: 5px; width: 30%; float:right; display:none">
+            <div>Edit Feature</div>
+            <div class="featureTitle">
+                <input type="text" name="" class="featureTitleInput" value=""/>
+            </div>
+            <div class="featureDescript">
+                <textarea class="textareaField">test</textarea>
+            </div>
+        </div>
 
         <script>
-            var url = "<c:url value="/save" />";
+       
+            function editIdeaTitle(idea) {
+                var ideaTitle = $(idea).text().trim();
+                var ideaModal = $("body").find("#editIdeaFormModal");
+                ideaModal.find("#theIdeaTitle").val(ideaTitle);
+
+                ideaModal.show();  
+           }
+       
+           function editFeature(feat) {
+//               var featTitle = $(feat).text().trim();
+               var featId = $(feat).attr("id");
+               var url = '<c:url value="/develop/feature" />';
+                $.get(
+                    url,
+                    {featureId:featId}
+                )
+                    .done(function(data){
+                        var theData = JSON.parse(data);
+                        var featModal = $("body").find("#editFeatureFormModal");
+                        featModal.find("#descriptionShort").val(theData.descriptionShort);
+                        featModal.find("#descriptionLong").val(theData.descriptionLong);
+                        featModal.find("#updateFeatureId").val(theData.featureId);
+
+                        featModal.show();                        
+                    })
+                    .fail();
+                
+           }
+            
             $("#saveIdea").click(function () {
+                var url = "<c:url value="/save" />";
                 window.location.assign(url);
+            });
+            
+            $("#deleteIdea").click(function () {
+                var proceed = confirm("Are you sure that you want to delete this idea?");
+                var deleteUrl = '<c:url value="/develop/idea/remove" />';
+                if (proceed) {
+                    window.location.assign(deleteUrl);
+                }
             });
 
             $("#cancelEdit").click(function () {

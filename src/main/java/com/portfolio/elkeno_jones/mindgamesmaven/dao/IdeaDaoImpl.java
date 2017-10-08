@@ -4,6 +4,7 @@ import com.portfolio.elkeno_jones.mindgamesmaven.model.Idea;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Entity;
 import org.hibernate.criterion.Restrictions;
@@ -85,6 +86,25 @@ public class IdeaDaoImpl implements IdeaDao {
             saveSuccessful = false;
         }
         return idea;
+    }
+    
+    @Override
+    @Transactional
+    public boolean removeIdea(Idea idea) {
+        boolean isSuccess = true;
+        
+        try {
+            String sql = "delete from Idea where ideaId = :id";
+            Query q = sessionFactory.getCurrentSession().createQuery(sql);
+            q.setParameter("id", idea.getIdeaId());
+            
+            q.executeUpdate();
+        } catch (HibernateException he) {
+            System.out.println("[Delete idea]: " + he.getMessage());
+            isSuccess = false;
+        }
+        
+        return isSuccess;
     }
 
     public SessionFactory getSessionFactory() {

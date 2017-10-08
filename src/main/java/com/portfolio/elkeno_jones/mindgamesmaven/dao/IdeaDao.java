@@ -41,4 +41,12 @@ public interface IdeaDao {
      * @return 
      */
     public boolean saveIdea(Idea idea);
+    
+    /**
+     * Delete feature
+     * 
+     * @param feature
+     * @return
+     */
+    public boolean removeIdea(Idea idea);
 }
