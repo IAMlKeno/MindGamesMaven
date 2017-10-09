@@ -24,6 +24,14 @@
                         Idea Title
                     </form:label>
                 </div>
+                
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <form:input path="rating" class="mdl-textfield__input notEmpty" />
+                    <form:label path="rating" class="mdl-textfield__label">
+                        Idea Rating...
+                    </form:label>
+                </div>
+                
             </div>
         </div>
         <div class="modal-footer">

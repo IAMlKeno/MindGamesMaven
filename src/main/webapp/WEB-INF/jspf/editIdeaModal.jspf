@@ -26,6 +26,13 @@
                             Idea Title...
                         </label>
                     </div>
+                    
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
+                        <input type="text" name="ideaRating" id="ideaRating" class="mdl-textfield__input notEmpty" value="${ideaWrapper.idea.rating}"/>
+                        <label for="ideaRating" class="mdl-textfield__label">
+                            Idea Rating...
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

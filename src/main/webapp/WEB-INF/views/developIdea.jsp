@@ -90,7 +90,7 @@
                     mdl-button--colored mdl-button--raised developIdeaButton">
                 Done
             </button>
-            
+
             <button id="deleteIdea" class="mdl-button mdl-js-button 
                     mdl-button--colored mdl-button--raised developIdeaButton">
                 <spring:message code="button_label.delete" />
@@ -104,7 +104,7 @@
         <%@include file="../jspf/featureModal.jspf" %>
         <%@include file="../jspf/editFeatureModal.jspf" %>
         <%@include file="../jspf/editIdeaModal.jspf" %>
-        
+
         <div class="featureEdit" style="border: 2px solid; border-radius: 5px; width: 30%; float:right; display:none">
             <div>Edit Feature</div>
             <div class="featureTitle">
@@ -116,41 +116,48 @@
         </div>
 
         <script>
-       
+            var featJson = '${featMap}';
             function editIdeaTitle(idea) {
                 var ideaTitle = $(idea).text().trim();
                 var ideaModal = $("body").find("#editIdeaFormModal");
                 ideaModal.find("#theIdeaTitle").val(ideaTitle);
 
-                ideaModal.show();  
-           }
-       
-           function editFeature(feat) {
-//               var featTitle = $(feat).text().trim();
-               var featId = $(feat).attr("id");
-               var url = '<c:url value="/develop/feature" />';
-                $.get(
-                    url,
-                    {featureId:featId}
-                )
-                    .done(function(data){
-                        var theData = JSON.parse(data);
-                        var featModal = $("body").find("#editFeatureFormModal");
-                        featModal.find("#descriptionShort").val(theData.descriptionShort);
-                        featModal.find("#descriptionLong").val(theData.descriptionLong);
-                        featModal.find("#updateFeatureId").val(theData.featureId);
+                ideaModal.show();
+            }
 
-                        featModal.show();                        
-                    })
-                    .fail();
-                
-           }
-            
+            function editFeature(feat) {
+                var featId = $(feat).attr("id");
+                var url = '<c:url value="/develop/feature" />';
+                getDescriptionFromJSON(feat, featId);
+//                $.get(
+//                        url,
+//                        {featureId: featId}
+//                )
+//                        .done(function (data) {
+////                            populateForm(data);
+//                            getDescriptionFromJSON(feat, featId);
+//                        })
+//                        .fail(function () {
+//                            getDescriptionFromJSON(feat, featId);
+//                        });
+            }
+
+            function getDescriptionFromJSON(feat, id) {
+                var text = $(feat).text().trim();
+                var json = JSON.parse(featJson);
+                var featModal = $("body").find("#editFeatureFormModal");
+                featModal.find("#descriptionShort").val(text);
+                featModal.find("#descriptionLong").val(json[id]);
+                featModal.find("#updateFeatureId").val(id);
+
+                featModal.show();
+            }
+
             $("#saveIdea").click(function () {
                 var url = "<c:url value="/save" />";
                 window.location.assign(url);
             });
-            
+
             $("#deleteIdea").click(function () {
                 var proceed = confirm("Are you sure that you want to delete this idea?");
                 var deleteUrl = '<c:url value="/develop/idea/remove" />';
@@ -162,7 +169,7 @@
             $("#cancelEdit").click(function () {
                 window.location.assign("/MindGamesMaven/ideaHub");
             });
-            
+
             function validate(formButton) {
                 var isValid = true;
                 var errMessage = "";
@@ -190,6 +197,16 @@
 
             function submitForm(form) {
                 form.submit();
+            }
+
+            function populateForm(data) {
+                var theData = JSON.parse(data);
+                var featModal = $("body").find("#editFeatureFormModal");
+                featModal.find("#descriptionShort").val(theData.descriptionShort);
+                featModal.find("#descriptionLong").val(theData.descriptionLong);
+                featModal.find("#updateFeatureId").val(theData.featureId);
+
+                featModal.show();
             }
         </script>
         <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>

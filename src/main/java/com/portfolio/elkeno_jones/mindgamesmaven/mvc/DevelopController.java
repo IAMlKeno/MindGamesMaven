@@ -65,6 +65,7 @@ public class DevelopController {
     @RequestMapping(value = REMOVE_FEATURE_URL, method = RequestMethod.POST)
     public String removeFeature(Model model,
             @ModelAttribute("ideaWrapper") IdeaWithFeatures ideaWrapper,
+            @ModelAttribute("newFeatures") List<Integer> newFeatures,
             HttpServletRequest req,
             @RequestParam("updateFeatureId") Integer featureId) {
 
@@ -82,12 +83,13 @@ public class DevelopController {
         for (Feature feat : ideaWrapper.getFeatures()) {
             if (!feat.getFeatureId().equals(featureId)) {
                 newFeatList.add(feat);
-            } else {
+            }else {
                 featureDao.removeFeature(feat);
             }
         }
         ideaWrapper.setFeatures(newFeatList);
         model.addAttribute("ideaWrapper", ideaWrapper);
+        model.addAttribute("newFeatures", newFeatures);
 
         return DEVELOP_IDEA_VIEW;
     }
@@ -95,6 +97,7 @@ public class DevelopController {
     @RequestMapping(value = REMOVE_IDEA_URL, method = RequestMethod.GET)
     public String removeIdea(Model model,
             @ModelAttribute("ideaWrapper") IdeaWithFeatures ideaWrapper,
+            @ModelAttribute("newFeatures") List<Integer> newFeatures,
             HttpServletRequest req) {
 
         HttpSession ses = req.getSession();
@@ -109,10 +112,14 @@ public class DevelopController {
 
         String redirectUrl = IDEA_HUB_URL;
         try {
-            for (Feature feat : ideaWrapper.getFeatures()) {
-                featureDao.removeFeatureById(feat.getFeatureId());
+            Idea i = null;
+            i = ideaDao.getIdeaById(ideaWrapper.getIdea().getIdeaId());
+            if(i != null) {
+                for (Feature feat : ideaWrapper.getFeatures()) {
+                    featureDao.removeFeatureById(feat.getFeatureId());
+                }
+                ideaDao.removeIdea(ideaWrapper.getIdea());
             }
-            ideaDao.removeIdea(ideaWrapper.getIdea());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             model.addAttribute("errMessage", e.getMessage());

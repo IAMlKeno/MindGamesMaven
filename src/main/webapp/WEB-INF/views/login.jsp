@@ -92,6 +92,7 @@
             }
             
             $(document).ready(function () {
+                $('#username').focus();
                 $("#signupButton").click(function () {
                     $("body").find("#registerFormModal").css("display", "block");
 //        $("body").find("#ideaForm").css("display", "none");

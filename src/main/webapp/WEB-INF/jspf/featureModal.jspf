@@ -22,7 +22,6 @@
                         <input type="hidden" name="features[${i.index}].featureId" 
                                value="${feat.featureId}"  />
                     </c:forEach>
-                    
                     <form:hidden path="newFeature.ideaId" value="${ideaWrapper.idea.ideaId}" />
                     Enter a title for the feature:<br />
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
@@ -35,18 +34,18 @@
                         <div class="mdl-textfield mdl-js-textfield">
                             <form:textarea path="newFeature.descriptionLong" class="mdl-textfield__input notEmpty" rows= "6"></form:textarea>
                             <form:label path="newFeature.descriptionLong" class="mdl-textfield__label">Description</form:label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <input type="button" id="modalAcceptButton" class="mdl-button mdl-js-button 
-                       mdl-button--colored mdl-button--raised" value="Add"
-                       onclick="validate(this)" />
-                <span>&nbsp;</span>
-                <input type="button" id="modalCancelButton" class="mdl-button mdl-js-button 
-                       mdl-button--accent mdl-button--raised" value="Cancel"/>
-            </div>
+                <div class="modal-footer">
+                    <input type="button" id="modalAcceptButton" class="mdl-button mdl-js-button 
+                           mdl-button--colored mdl-button--raised" value="Add"
+                           onclick="validate(this)" />
+                    <span>&nbsp;</span>
+                    <input type="button" id="modalCancelButton" class="mdl-button mdl-js-button 
+                           mdl-button--accent mdl-button--raised" value="Cancel"/>
+                </div>
         </form:form>
     </div>
 

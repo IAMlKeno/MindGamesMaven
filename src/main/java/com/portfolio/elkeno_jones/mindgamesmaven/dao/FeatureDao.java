@@ -48,4 +48,10 @@ public interface FeatureDao {
      * @return 
      */
     public boolean removeFeatureById(Integer id);
+    
+    /**
+     * Get the max id
+     * @return 
+     */
+    public Integer getMaxFeatureId();
 }
