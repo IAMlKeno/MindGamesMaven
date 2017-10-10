@@ -1,18 +1,11 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="idea" tagdir="/WEB-INF/tags" %>
 <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
     <div class="mdl-layout__header-row">
         <span class="mdl-layout-title">${title}</span>
         <div class="mdl-layout-spacer"></div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-            <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-                <i class="material-icons">search</i>
-            </label>
-            <div class="mdl-textfield__expandable-holder">
-                <input class="mdl-textfield__input" type="text" id="search">
-                <label class="mdl-textfield__label" for="search">Enter your query...</label>
-            </div>
-        </div>
+        <c:if test="${userId ne null}"><idea:searchIdea /></c:if>
         <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
             <i class="material-icons">more_vert</i>
         </button>
@@ -35,15 +28,15 @@
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
                 report
             </i>
-            About Mind Games App
+            About Mind Games
         </a>
-        <a class="mdl-navigation__link" href='<c:url value="/about" />' title="Not implemented">
+        <a class="mdl-navigation__link" href='<c:url value="/howtouse" />' title="Not implemented">
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
                 report
             </i>
             How to Use
         </a>
-        <a class="mdl-navigation__link" href='<c:url value="/about" />' title="Not implemented">
+        <a class="mdl-navigation__link" href='<c:url value="/upcoming" />' title="Not implemented">
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
                 report
             </i>

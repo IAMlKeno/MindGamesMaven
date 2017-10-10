@@ -1,5 +1,6 @@
 <%@tag description="put the tag description here" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@attribute name="ideaWrapper" 
              type="com.portfolio.elkeno_jones.mindgamesmaven.model.IdeaWithFeatures" 
@@ -17,15 +18,15 @@
             <span class="rating">&#40;${ideaWrapper.idea.rating}&#41;</span>
         </div>
         <div class="statusCheckbox">
-            Is in progress: <input type="checkbox" class="inProgressCheckbox" <c:if test="${ideaWrapper.idea.isInProgress}">checked</c:if> />
+            <label><spring:message code="label.in_progress" /></label>: <input type="checkbox" class="inProgressCheckbox" <c:if test="${ideaWrapper.idea.isInProgress}">checked</c:if> />
             </div>
             <div class="statusCheckbox">
-                Is Complete: <input type="checkbox" class="completeCheckbox" <c:if test="${ideaWrapper.idea.isCompleted}">checked</c:if> />
+                <label><spring:message code="label.complete" /></label>: <input type="checkbox" class="completeCheckbox" <c:if test="${ideaWrapper.idea.isCompleted}">checked</c:if> />
             </div>
             <div class="mdl-card__supporting-text">
                 <h5 class="ideaFeatureTitle">
-                    Features:
-                </h5>
+                <spring:message code="label.features" />:
+            </h5>
             <c:forEach items="${ideaWrapper.features}" var="feature">
                 <ul class="mdl-list">
                     <li class="mdl-list__item mdl-list__item--three-line">
@@ -44,7 +45,7 @@
         <div class="mdl-card__actions ideaCardActionButtons">
             <input type="submit" class="mdl-button mdl-js-button 
                    mdl-button--colored mdl-button--raised developIdeaButton" 
-                   value="Develop Idea" />
+                   value="<spring:message code='button_label.develop_idea' />" />
         </div>
     </div>
 </form>

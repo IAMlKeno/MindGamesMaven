@@ -45,8 +45,15 @@ public interface IdeaDao {
     /**
      * Delete feature
      * 
-     * @param feature
+     * @param idea
      * @return
      */
     public boolean removeIdea(Idea idea);
+    
+    /**
+     * Search for matching user ideas 
+     * @param srchStr
+     * @return 
+     */
+    public List<Idea> searchIdeaTitle(String srchStr, Integer userId);
 }

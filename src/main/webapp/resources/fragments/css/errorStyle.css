@@ -1,0 +1,9 @@
+.errorMessageDiv {
+    margin: auto !important;
+    border:2px lightgray groove; 
+    text-align: center;
+}
+
+.errorHeaderDiv {
+    text-align: center;
+}

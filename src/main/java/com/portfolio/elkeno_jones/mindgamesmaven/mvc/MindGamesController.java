@@ -8,6 +8,7 @@ import com.portfolio.elkeno_jones.mindgamesmaven.model.Feature;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.Idea;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.IdeaWithFeatures;
 import com.portfolio.elkeno_jones.mindgamesmaven.service.SecurityImpl;
+import com.portfolio.elkeno_jones.mindgamesmaven.util.FeatureUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -76,6 +77,8 @@ public class MindGamesController {
     private static final String GET_FEATURE_URL = "/develop/feature";
     private static final String UPDATE_IDEA_TITLE_URL = "/develop/idea/update";
 
+    private static final String SEARCH_URL = "/search";
+
     @RequestMapping(value = IDEA_HUB_URL)
     public String home(Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
@@ -106,12 +109,16 @@ public class MindGamesController {
         model.addAttribute("token", session.getAttribute("userToken"));
         model.addAttribute("ideaList", ideaList);
         model.addAttribute("newIdea", newIdea);
+        model.addAttribute(IDEA_WRAPPER, new IdeaWithFeatures());
 
         return IDEA_HUB_VIEW;
     }
 
-    @RequestMapping(value = DEVELOP_IDEA_URL, method = RequestMethod.POST)
-    public String developIdea(Model model, @RequestParam String ideaId,
+    @RequestMapping(value = DEVELOP_IDEA_URL, method = {RequestMethod.POST, RequestMethod.GET})
+    public String developIdea(Model model,
+            @RequestParam(value = "ideaId", required = false) String ideaId,
+            @RequestParam(value = "reload", required = false) Boolean reload,
+            @ModelAttribute(value = "ideaWrapper") IdeaWithFeatures theIdeaWrapper,
             HttpServletRequest req) {
         Integer id;
         HttpSession ses = req.getSession();
@@ -125,24 +132,27 @@ public class MindGamesController {
             return ERROR_VIEW;
         }
         try {
-            id = Integer.parseInt(ideaId);
-            IdeaWithFeatures ideaWrapper = new IdeaWithFeatures();
-            Idea newIdea = ideaDao.getIdeaById(id);
-            List<Feature> features = featureDao.getFeaturesByIdeaId(id);
+            IdeaWithFeatures ideaWrapper;
+            if (reload != null && reload == true) {
+                ideaWrapper = theIdeaWrapper;
+            } else {
+                id = Integer.parseInt(ideaId);
+                ideaWrapper = new IdeaWithFeatures();
+                Idea newIdea = ideaDao.getIdeaById(id);
+                List<Feature> features = featureDao.getFeaturesByIdeaId(id);
 
-            ideaWrapper.setFeatures(features);
-            ideaWrapper.setIdea(newIdea);
-            ideaWrapper.setNewFeature(new Feature());
-            
+                ideaWrapper.setFeatures(features);
+                ideaWrapper.setIdea(newIdea);
+                ideaWrapper.setNewFeature(new Feature());
+            }
             Gson gson = new Gson();
-            Map<Integer, String> featMap = mapIdToFeature(features);
-
+            Map<Integer, String> featMap = FeatureUtil.mapIdToFeature(ideaWrapper.getFeatures());
+            
             model.addAttribute("featMap", gson.toJson(featMap));
             model.addAttribute("ideaWrapper", ideaWrapper);
         } catch (NumberFormatException nfe) {
             String errMessage = "[ Invalid id type - developIdea ] " + nfe.getMessage();
             model.addAttribute("errMessage", errMessage);
-//            throw new InputMismatchException("[ Invalid id type ] " + nfe.getMessage());
         } catch (HibernateException he) {
             String errMessage = "[ Hibernate error - developIdea ] " + he.getMessage();
             model.addAttribute("errMessage", errMessage);//do something
@@ -171,7 +181,7 @@ public class MindGamesController {
 
         Gson gson = new Gson();
         Feature newFeat = ideaWrapper.getNewFeature();
-        Map<Integer, String> featMap = mapIdToFeature(ideaWrapper.getFeatures());
+        Map<Integer, String> featMap = FeatureUtil.mapIdToFeature(ideaWrapper.getFeatures());
 
         Integer maxId = featureDao.getMaxFeatureId() + 1;
         while (featMap.containsKey(maxId)) {
@@ -185,7 +195,9 @@ public class MindGamesController {
         model.addAttribute("ideaWrapper", ideaWrapper);
         model.addAttribute("featMap", gson.toJson(featMap));
 
-        return DEVELOP_IDEA_VIEW;
+        model.addAttribute("redirectUrl", "/develop?reload=true");
+//        model.addAttribute("reload", true);
+        return REDIRECT_VIEW;
     }
 
     @RequestMapping(value = UPDATE_FEATURE_URL, method = RequestMethod.POST)
@@ -206,7 +218,7 @@ public class MindGamesController {
             return ERROR_VIEW;
         }
 
-        Map<Integer, String> featMap = mapIdToFeature(ideaWrapper.getFeatures());
+        Map<Integer, String> featMap = FeatureUtil.mapIdToFeature(ideaWrapper.getFeatures());
 
         for (Feature feat : ideaWrapper.getFeatures()) {
             if (feat.getFeatureId() != null && feat.getFeatureId().equals(featId)) {
@@ -214,11 +226,7 @@ public class MindGamesController {
                 feat.setDescriptionShort(descriptionShort);
                 featMap.put(feat.getFeatureId(), feat.getDescriptionLong());
                 break;
-            }/* else if (feat.getFeatureId() == null) {
-                featMap.put(descriptionShort, descriptionLong);
-                feat.setDescriptionLong(descriptionLong);
-                feat.setDescriptionShort(descriptionShort);
-            }*/
+            }
         }
 
         model.addAttribute("ideaWrapper", ideaWrapper);
@@ -362,7 +370,19 @@ public class MindGamesController {
     }
 
     @RequestMapping(value = GET_FEATURE_URL, method = RequestMethod.GET)
-    public ResponseEntity<?> getFeature(@RequestParam("featureId") Integer featureId) {
+    public ResponseEntity<?> getFeature(@RequestParam("featureId") Integer featureId,
+            HttpServletRequest req) {
+
+        HttpSession ses = req.getSession();
+        String token = (String) ses.getAttribute("userToken");
+        Integer userId = (Integer) ses.getAttribute("userId");
+        if (!sec.checkAccess(token, userId)) {
+//            model.addAttribute("errMessage", "ACCESS DENIED");
+//            model.addAttribute("redirectErrorUrl", "auth");
+
+            return new ResponseEntity("ACCESS DENIED", HttpStatus.FORBIDDEN);
+        }
+
         String featureJson = "";
         Gson gson = new Gson();
         Feature theFeat = featureDao.getFeatureById(featureId);
@@ -388,13 +408,45 @@ public class MindGamesController {
             return ERROR_VIEW;
         }
         Gson gson = new Gson();
-        Map<Integer, String> featMap = mapIdToFeature(ideaWrapper.getFeatures());
+        Map<Integer, String> featMap = FeatureUtil.mapIdToFeature(ideaWrapper.getFeatures());
         ideaWrapper.getIdea().setIdeaTitle(theIdeaTitle);
         ideaWrapper.getIdea().setRating(ideaRating);
         model.addAttribute("ideaWrapper", ideaWrapper);
         model.addAttribute("featMap", gson.toJson(featMap));
 
         return DEVELOP_IDEA_VIEW;
+    }
+
+    @RequestMapping(value = "/develop/reload")
+    public String test(Model model,
+            @ModelAttribute("ideaWrapper") IdeaWithFeatures ideaWrapper) {
+
+        model.addAttribute("featMap", FeatureUtil.mapIdToFeature(ideaWrapper.getFeatures()));
+
+        return DEVELOP_IDEA_VIEW;
+    }
+
+    @RequestMapping(value = SEARCH_URL, method = RequestMethod.GET)
+    public ResponseEntity<?> searchIdeaTitle(@RequestParam("srchStr") String srchStr,
+            HttpServletRequest req) {
+
+        HttpSession ses = req.getSession();
+        String token = (String) ses.getAttribute("userToken");
+        Integer userId = (Integer) ses.getAttribute("userId");
+        if (!sec.checkAccess(token, userId)) {
+
+            return new ResponseEntity("ACCESS DENIED", HttpStatus.FORBIDDEN);
+        }
+
+        Gson gson = new Gson();
+        List<Idea> results = ideaDao.searchIdeaTitle(srchStr, userId);
+        Map<Integer, String> ideaMap = new HashMap<Integer, String>();
+        for (Idea idea : results) {
+            ideaMap.put(idea.getIdeaId(), idea.getIdeaTitle());
+        }
+        String resultsJson = gson.toJson(ideaMap);
+
+        return new ResponseEntity(resultsJson, HttpStatus.OK);
     }
 
     /**
@@ -419,17 +471,6 @@ public class MindGamesController {
         }
 
         return validatedList;
-    }
-    
-    protected Map<Integer, String> mapIdToFeature(List<Feature> feats) {
-        Map<Integer, String> featMap = new HashMap<Integer, String>();
-        for (Feature feat : feats) {
-            if (feat.getFeatureId() != null) {
-                featMap.put(feat.getFeatureId(), feat.getDescriptionLong());
-            }
-        }
-
-        return featMap;
     }
 
     /**

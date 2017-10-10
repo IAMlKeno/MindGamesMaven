@@ -3,9 +3,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="idea" tagdir="/WEB-INF/tags" %>
-<c:set var="title">
-    <spring:message code='header.login' />
-</c:set>
+<c:set var="title"><spring:message code='header.login' /></c:set>
 <%@include file="../jspf/fragments/head.jspf" %>
 <script src="<c:url value="/resources/modal/modal.js" />" type="text/javascript"></script>
 
@@ -16,12 +14,12 @@
         <%@include file="../jspf/fragments/menu.jspf" %>
         <main class="mdl-layout__content mdl-color--grey-100" style="min-height:600px">
             <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--6-col loginHeader">
+                <div class="mdl-cell mdl-cell--8-col loginHeader">
                     <h1><spring:message code="header.login_header" /></h1>
                 </div>
             </div>
             <div class="mdl-grid">
-                <div class="mdl-card mdl-shadow--2dp loginDiv">
+                <div class="mdl-card mdl-shadow--2dp mdl-cell--8-col loginDiv">
                     <form:form action="/MindGamesMaven/login" modelAttribute="user" method="POST">
                         <div class="mdl-card__title ideaTitleDiv">
                             <h4 class="mdl-card__title-text ideaTitle">
@@ -31,7 +29,7 @@
                         <div class="mdl-card__supporting-text">
                             <c:if test="${not empty loginAuth && loginAuth eq false}">
                                 <div class="loginError" style="color:red">
-                                    Username or password invalid...
+                                    <spring:message code='phrases.invalid_username_password' />
                                 </div>
                             </c:if>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -62,35 +60,6 @@
             </div>
         </main>
         <script>
-            function validate(formButton) {
-                var isValid = true;
-                var errMessage = "";
-                var regex = /[<>=\/\\'"]/;
-                var theForm = $(formButton).parents("form");
-                $(theForm).find(".notEmpty").each(function(){
-                   var inputValue = $(this).val();
-                   var inputLabel = $(this).next("label").text().trim();
-                   if(inputValue === ""){
-                       isValid = false;
-                       errMessage += inputLabel + " is mandatory \n";
-                   } else if (regex.exec(inputValue)) {
-                       isValid = false;
-                       errMessage += inputLabel + " contains invalid characters \n";
-                   }
-                });
-                
-                if (!isValid) { 
-                    alert(errMessage);
-                } else {
-                    submitForm(theForm);
-                }
-                return isValid;
-            }
-            
-            function submitForm(form) {
-                form.submit();
-            }
-            
             $(document).ready(function () {
                 $('#username').focus();
                 $("#signupButton").click(function () {

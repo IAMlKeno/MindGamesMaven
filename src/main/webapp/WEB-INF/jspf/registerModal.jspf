@@ -8,9 +8,7 @@
 <div id="registerFormModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
-        <c:set var="action">
-            <c:url value='/register' />
-        </c:set>
+        <c:set var="action"><c:url value='/register' /></c:set>
         <form:form action="${action}" commandName="user" method="POST">
             <div class="modal-header">
                 <span class="close">&times;</span>
@@ -46,14 +44,14 @@
                 </div>
             </div>
             <div class="modal-footer registerFooter">
-                <input type="button" id="modalAcceptButton" class="mdl-button mdl-js-button 
-                       mdl-button--colored mdl-button--raised" value="Let&#39;s Begin!"
-                       onclick="validate(this)" />
+                <input type="button" id="" class="mdl-button mdl-js-button 
+                       mdl-button--colored mdl-button--raised modalAcceptButton"
+                       value="Let&#39;s Begin!" onclick="validate(this)" />
                 <span>&nbsp;</span>
-                <input type="button" id="modalCancelButton" class="mdl-button mdl-js-button 
-                       mdl-button--accent mdl-button--raised" value="<spring:message code="button_label.cancel"/>"/>
+                <input type="button" class="mdl-button mdl-js-button 
+                       mdl-button--accent mdl-button--raised modalCancelButton" 
+                       value="<spring:message code="button_label.cancel"/>"/>
             </div>
         </form:form>
     </div>
-
 </div>

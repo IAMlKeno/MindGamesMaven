@@ -10,39 +10,26 @@ var span = document.getElementsByClassName("close")[0];
 // When the user clicks the button, open the modal 
 $(document).ready(function(){
     $("#ideaSubmitButton").click(function() {
-        $("body").find("#ideaFormModal").css("display", "block");
-//        $("body").find("#ideaForm").css("display", "none");
-    });
-    
-    // When the user clicks on <span> (x), close the modal
-    $("span").click(function() {
-        $(".modal").css("display", "none");
-    });
-    
-    $("#modalCancelButton").click(function() {
-        $(".modal").css("display", "none");
-    });
-    
-    // When the user clicks anywhere outside of the modal, close it
-    $(window).click(function(event) {
-        if (event.target === $(".modal")) {
-            $(".modal").css("display", "none");
-        }
+        $("#ideaFormModal").show();
     });
     
     $("#newFeatureButton").click(function() {
-        $("body").find("#featureFormModal").css("display", "block");
+        $("#featureFormModal").show();
     });
     
     // When the user clicks on <span> (x), close the modal
-    $("span").click(function() {
-        $(".modal").css("display", "none");
+    $('span[class="close"]').click(function() {
+        $(this).parents(".modal").css("display", "none");
     });
     
-//    // When the user clicks anywhere outside of the modal, close it
+    $(".modalCancelButton").click(function() {
+        $(this).parents(".modal").css("display", "none");
+    });
+    
+    // When the user clicks anywhere outside of the modal, close it
 //    $(window).click(function(event) {
-//        if (event.target === $("#ideaFormModal")) {
-//            $("#ideaFormModal").css("display", "none");
+//        if (event.target !== $(".modal")) {
+//            $(".modal").css("display", "none");
 //        }
 //    });
 });

@@ -12,9 +12,11 @@
         <%@include file="../jspf/fragments/menu.jspf" %>
         <main class="mdl-layout__content mdl-color--grey-100" style="min-height:600px">
             <div class="newIdeaButtonDiv">
-                <input type="submit" id="ideaSubmitButton" 
+                <button id="ideaSubmitButton" 
                        class="mdl-button mdl-js-button mdl-button--colored 
-                       mdl-button--raised" value="Add New Idea" />
+                       mdl-button--raised">
+                    <spring:message code="button_label.add_new_idea" />
+                </button>
             </div>
             <div class="mdl-grid ideaGrid">
                 <!-- using card to hold idea example-->
@@ -27,43 +29,12 @@
     </div>
     <%@include file="../jspf/modal.jspf" %>
     <script>
-        function validate(formButton) {
-            var isValid = true;
-            var errMessage = "";
-            var regex = /[<>=\/\\'"]/;
-            var theForm = $(formButton).parents("form");
-            $(theForm).find(".notEmpty").each(function () {
-                var inputValue = $(this).val();
-                var inputLabel = $(this).next("label").text().trim();
-                if (inputValue === "") {
-                    isValid = false;
-                    errMessage += inputLabel + " is mandatory \n";
-                } else if (regex.exec(inputValue)) {
-                    isValid = false;
-                    errMessage += inputLabel + " contains invalid characters \n";
-                }
-            });
-
-            if (!isValid) {
-                alert(errMessage);
-            } else {
-                submitForm(theForm);
-            }
-            return isValid;
-        }
-
-        function submitForm(form) {
-            form.submit();
-        }
-
         $(".inProgressCheckbox").click(function () {
-           var completeCheckbox = updateProgress(this, true);
-//           updateStatus(completeCheckbox, false);
+           updateProgress(this, true);
         });
 
         $(".completeCheckbox").click(function () {
-            var progressCheckbox = updateStatus(this, true);
-//            updateProgress(progressCheckbox, false);
+            updateStatus(this, true);
         });
 
         function updateProgress(elem, changeOther) {
@@ -74,7 +45,7 @@
                     .siblings(".statusCheckbox").find(".completeCheckbox"));
             var proceed = true;
             if(changeOther === true && $(completeCheckbox).is(":checked")) {
-                var confirmChange = confirm("Are you sure - this will change the status");
+                var confirmChange = confirm("<spring:message code='phrases.confirm_progress_change' />");
                 if(confirmChange) {
                     $(completeCheckbox).prop("checked", false);
                 } else {
@@ -91,7 +62,7 @@
                 )
                     .done()
                     .fail(function () {
-                        alert("Failed to update progress");
+                        alert("<spring:message code='phrases.update_progress_failed' />");
                         if (checkbox.is(":checked")) {
                             checkbox.prop("checked", false);
                         } else {
@@ -110,7 +81,7 @@
                     .siblings(".statusCheckbox").find(".inProgressCheckbox"));
             var proceed = true;
             if(changeOther === true && $(progressCheckbox).is(":checked")) {
-                if (confirm("Are you sure - this will change the progress status")) {
+                if (confirm("<spring:message code='phrases.confirm_status_change' />")) {
                     $(progressCheckbox).prop("checked", false);
                 } else {
 //                    proceed = false;
@@ -126,7 +97,7 @@
                 )
                     .done()
                     .fail(function () {
-                        alert("Failed to up status of idea");
+                        alert("<spring:message code='phrases.update_status_failed' />");
                         if (checkbox.is(":checked")) {
                             checkbox.prop("checked", false);
                         } else {
