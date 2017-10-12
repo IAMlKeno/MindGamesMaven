@@ -113,10 +113,15 @@ public class FeatureDaoImpl implements FeatureDao {
             id = (Integer) sessionFactory.getCurrentSession().createCriteria(Feature.class)
                     .setProjection(Projections.max("featureId"))
                     .uniqueResult();
+            if (id < 0 || id == null) {
+                id = 0;
+            }
         } catch (HibernateException he) {
             System.out.println("[Get max feature id]: " + he.getMessage());
+            id = 0;
         } catch (Exception e) {
             System.out.println("[Get max feature id]: " + e.getMessage());
+            id = 0;
         }
 
         return id;

@@ -43,10 +43,12 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost/mindgames</property>
+    <property name="hibernate.connection.url">jdbc:mysql://sql3.freemysqlhosting.net/sql3198619</property>
+    <property name="hibernate.connection.username">sql3198619</property>
+    <property name="hibernate.connection.password">74ZqFtMxjQ</property>
+<!--    <property name="hibernate.connection.url">jdbc:mysql://localhost/mindgames</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password"></property>
-    
+    <property name="hibernate.connection.password"></property>-->
     <mapping resource="com/portfolio/elkeno_jones/mindgamesmaven/model/Feature.hbm.xml"/>
     <mapping resource="com/portfolio/elkeno_jones/mindgamesmaven/model/Idea.hbm.xml"/>
     <mapping resource="com/portfolio/elkeno_jones/mindgamesmaven/model/User.hbm.xml"/>

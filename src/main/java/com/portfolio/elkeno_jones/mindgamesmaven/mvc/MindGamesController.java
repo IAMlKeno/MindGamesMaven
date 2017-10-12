@@ -183,7 +183,11 @@ public class MindGamesController {
         Feature newFeat = ideaWrapper.getNewFeature();
         Map<Integer, String> featMap = FeatureUtil.mapIdToFeature(ideaWrapper.getFeatures());
 
-        Integer maxId = featureDao.getMaxFeatureId() + 1;
+        Integer maxId = 0;
+        Integer returnedId = featureDao.getMaxFeatureId();
+        if(returnedId >= 0) {
+            maxId = returnedId + 1;
+        }
         while (featMap.containsKey(maxId)) {
             maxId++;
         }
