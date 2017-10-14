@@ -10,8 +10,8 @@ import com.portfolio.elkeno_jones.mindgamesmaven.model.IdeaWithFeatures;
 import com.portfolio.elkeno_jones.mindgamesmaven.service.SecurityImpl;
 import com.portfolio.elkeno_jones.mindgamesmaven.util.FeatureUtil;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -312,6 +312,8 @@ public class MindGamesController {
         }
         try {
             idea.setIdeaId(0);
+            Date curDate = new Date();
+            idea.setDateCreated(curDate.getTime());
 
             IdeaWithFeatures ideaWrapper = new IdeaWithFeatures();
             List<Feature> features = new ArrayList<Feature>();

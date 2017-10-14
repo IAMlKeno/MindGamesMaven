@@ -18,11 +18,20 @@ import javax.persistence.Id;
 public class User implements Serializable {
     private String firstName;
     private String lastName;
-    private Date lastLoginDate;
+    private Long lastLoginDate;
     private String password;
     @Id
     private Integer userId;
     private String username;
+    private String emailAddress;
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 
     public User(){}
     
@@ -35,11 +44,11 @@ public class User implements Serializable {
         this.firstName = firstName;
     }
 
-    public Date getLastLoginDate() {
+    public Long getLastLoginDate() {
         return lastLoginDate;
     }
 
-    public void setLastLoginDate(Date lastLoginDate) {
+    public void setLastLoginDate(Long lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
     }
 

@@ -49,5 +49,6 @@ Contributor(s):
         <property name="lastName" column="lastName" />
         <property name="password" column="PASSWORD" />
         <property name="username" column="USERNAME" />
+        <property name="emailAddress" column="emailAddress" />
     </class>
 </hibernate-mapping>

@@ -18,3 +18,16 @@
 #ideaSubmitButton{
     width:50%;
 }
+
+#rating {
+    width: 80px;
+}
+
+.modal-textbox-div {
+    width:50%;
+}
+
+.modal-textbox-div .mdl-textfield {
+    width:100%;
+}
+

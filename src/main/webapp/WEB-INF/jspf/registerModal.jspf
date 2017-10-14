@@ -16,30 +16,49 @@
             </div>
             <div class="modal-body">
                 <div class="modalForm">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <form:input path="firstName" class="mdl-textfield__input notEmpty" />
-                        <form:label path="firstName" class="mdl-textfield__label">
-                            <spring:message code="label.first_name" />
-                        </form:label>
+                    <div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <form:input path="firstName" class="mdl-textfield__input notEmpty" />
+                            <form:label path="firstName" class="mdl-textfield__label">
+                                <spring:message code="label.first_name" />
+                            </form:label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <form:input path="lastName" class="mdl-textfield__input notEmpty" />
+                            <form:label path="lastName" class="mdl-textfield__label">
+                                <spring:message code="label.last_name" />
+                            </form:label>
+                        </div>
                     </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <form:input path="lastName" class="mdl-textfield__input notEmpty" />
-                        <form:label path="lastName" class="mdl-textfield__label">
-                            <spring:message code="label.last_name" />
-                        </form:label>
+                    <div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <form:input path="username" class="mdl-textfield__input notEmpty" />
+                            <form:label path="username" class="mdl-textfield__label">
+                                <spring:message code="label.username" />
+                            </form:label>
+                        </div>
                     </div>
-                    <br /><br />
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <form:input path="username" class="mdl-textfield__input notEmpty" />
-                        <form:label path="username" class="mdl-textfield__label">
-                            <spring:message code="label.username" />
-                        </form:label>
+                    <div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <form:input path="password" class="mdl-textfield__input notEmpty" type="password" />
+                            <form:label path="password" class="mdl-textfield__label">
+                                <spring:message code="label.password" />
+                            </form:label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input id="confirmPassword" class="mdl-textfield__input notEmpty" type="password" />
+                            <label for="confirmPassword" class="mdl-textfield__label">
+                                <spring:message code="label.confirm_password" />
+                            </label>
+                        </div>
                     </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <form:input path="password" class="mdl-textfield__input notEmpty" type="password" />
-                        <form:label path="password" class="mdl-textfield__label">
-                            <spring:message code="label.password" />
-                        </form:label>
+                    <div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <form:input path="emailAddress" class="mdl-textfield__input notEmpty" />
+                            <form:label path="emailAddress" class="mdl-textfield__label">
+                                <spring:message code="label.email_address" />
+                            </form:label>
+                        </div>
                     </div>
                 </div>
             </div>

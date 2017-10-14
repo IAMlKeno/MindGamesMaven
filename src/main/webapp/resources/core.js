@@ -1,7 +1,7 @@
 function validate(formButton) {
     var isValid = true;
     var errMessage = "";
-    var regex = /[<>=\/\\'"]/;
+    var regex = /[<>=\/\\]/;
     var theForm = $(formButton).parents("form");
     $(theForm).find(".notEmpty").each(function () {
         var inputValue = $(this).val();
@@ -14,6 +14,15 @@ function validate(formButton) {
             errMessage += inputLabel + " contains invalid characters \n";
         }
     });
+    
+    if($(theForm).find('#confirmPassword').length > 0) {
+        var password1 = $(theForm).find('#password').val();
+        var password2 = $(theForm).find('#confirmPassword').val();
+        if (password1 !== password2) {
+            errMessage += "Passwords must match \n";
+            isValid = false;
+        }
+    }
 
     if (!isValid) {
         alert(errMessage);

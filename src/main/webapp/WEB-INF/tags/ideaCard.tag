@@ -16,9 +16,12 @@
                 ${ideaWrapper.idea.ideaTitle}
             </h4>
             <span class="rating">&#40;${ideaWrapper.idea.rating}&#41;</span>
-        </div>
-        <div class="statusCheckbox">
-            <label><spring:message code="label.in_progress" /></label>: <input type="checkbox" class="inProgressCheckbox" <c:if test="${ideaWrapper.idea.isInProgress}">checked</c:if> />
+            </div>
+            <div class="statusCheckbox">
+                <c:if test="${ideaWrapper.idea.dateCreated ne null}"><span><small>Created: ${ideaWrapper.idea.createdDate}</small></span></c:if>
+            </div>
+            <div class="statusCheckbox">
+                <label><spring:message code="label.in_progress" /></label>: <input type="checkbox" class="inProgressCheckbox" <c:if test="${ideaWrapper.idea.isInProgress}">checked</c:if> />
             </div>
             <div class="statusCheckbox">
                 <label><spring:message code="label.complete" /></label>: <input type="checkbox" class="completeCheckbox" <c:if test="${ideaWrapper.idea.isCompleted}">checked</c:if> />

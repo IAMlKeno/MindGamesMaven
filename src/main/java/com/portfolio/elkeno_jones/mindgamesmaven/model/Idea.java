@@ -6,11 +6,13 @@
 package com.portfolio.elkeno_jones.mindgamesmaven.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  *
@@ -19,7 +21,7 @@ import javax.persistence.Id;
 @Entity
 public class Idea implements Serializable {
     private String alias;
-    private Date dateCreated;
+    private Long dateCreated;
     private String descriptionLong;
     private String descriptionShort;
     @Id
@@ -30,6 +32,9 @@ public class Idea implements Serializable {
     private boolean isInProgress;
     private String rating;
     private Integer userId;
+    
+    @Transient
+    private String createdDate;
 
     public Idea(){}
     
@@ -42,11 +47,11 @@ public class Idea implements Serializable {
         this.alias = alias;
     }
 
-    public Date getDateCreated() {
+    public Long getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(Long dateCreated) {
         this.dateCreated = dateCreated;
     }
 
@@ -113,6 +118,14 @@ public class Idea implements Serializable {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-    
-    
+
+    public String getCreatedDate() {
+        SimpleDateFormat sdf
+            = new SimpleDateFormat("yyyy-MM-dd h:mma");
+        return sdf.format(new Date(dateCreated));
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
 }
