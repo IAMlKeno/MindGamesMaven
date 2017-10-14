@@ -193,6 +193,15 @@
             <type>jar</type>
         </dependency>
         <!--  Spring Security  -->
+        
+        <!-- Web runner -->
+        <!-- https://mvnrepository.com/artifact/org.jbehave.web/jbehave-web-runner -->
+        <dependency>
+            <groupId>org.jbehave.web</groupId>
+            <artifactId>jbehave-web-runner</artifactId>
+            <version>3.5.5</version>
+        </dependency>
+ 
     </dependencies>
 
     <build>
