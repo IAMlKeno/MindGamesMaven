@@ -73,7 +73,7 @@
         }
 
         $("#saveIdea").click(function () {
-            var url = "<c:url value="/save" />";
+            var url = '<c:url value="/save" />';
             window.location.assign(url);
         });
 
