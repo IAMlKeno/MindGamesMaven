@@ -121,7 +121,7 @@ public class Idea implements Serializable {
 
     public String getCreatedDate() {
         SimpleDateFormat sdf
-            = new SimpleDateFormat("yyyy-MM-dd h:mma");
+            = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(new Date(dateCreated));
     }
 
