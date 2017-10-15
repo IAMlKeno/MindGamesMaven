@@ -277,5 +277,4 @@
         </plugins>
         <finalName>mindgames</finalName>
      </build>
-    <artifactId>mindgames</artifactId>
 </project>
