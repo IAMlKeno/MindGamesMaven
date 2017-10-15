@@ -20,7 +20,7 @@
             </div>
             <div class="mdl-grid">
                 <div class="mdl-card mdl-shadow--2dp mdl-cell--8-col loginDiv">
-                    <form:form action="/MindGamesMaven/login" modelAttribute="user" method="POST">
+                    <form:form action="<c:url value='/login' />" modelAttribute="user" method="POST">
                         <div class="mdl-card__title ideaTitleDiv">
                             <h4 class="mdl-card__title-text ideaTitle">
                                 <spring:message code="phrases.login_message" />
