@@ -86,7 +86,7 @@
         });
 
         $("#cancelEdit").click(function () {
-            var url = <c:url value="/ideaHub" />
+            var url = '<c:url value="/ideaHub" />';
             window.location.assign(url);
         });
 
