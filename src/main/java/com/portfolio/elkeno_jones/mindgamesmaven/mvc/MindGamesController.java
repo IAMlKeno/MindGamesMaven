@@ -270,7 +270,9 @@ public class MindGamesController {
                 );
                 ideaSaveSuccessful = true;
             } catch (HibernateException he) {
-                /* TODO: handle exception */
+                System.out.println(he.getMessage());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
 
             List<Feature> correctedFeatures
@@ -282,7 +284,6 @@ public class MindGamesController {
                 }
             }
             if (saveSuccessful && ideaSaveSuccessful) {
-                String location = "/MindGamesMaven";
                 model.addAttribute("redirectUrl", IDEA_HUB_URL);
                 redirectUrl = REDIRECT_VIEW;
             } else {
@@ -293,6 +294,7 @@ public class MindGamesController {
             }
         } catch (Exception e) {
             /* TODO: handle exception */
+            System.out.println(e.getMessage());
         }
         return redirectUrl;
     }
@@ -485,5 +487,19 @@ public class MindGamesController {
     @ModelAttribute(NEW_IDEA)
     private Idea loadNewIdea() {
         return new Idea();
+    }
+    
+    @RequestMapping(value = "/getIdeaTitle", method = RequestMethod.GET)
+    public ResponseEntity<?> getIdeaTitle(@RequestParam(value = "title", required = false) String title) {
+        String response = "false";
+        try {
+            Idea idea = ideaDao.getIdeaByTitle(title);
+            if(idea != null) {
+                response = "true";
+            }
+        } catch (Exception e) {
+            
+        }
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 }

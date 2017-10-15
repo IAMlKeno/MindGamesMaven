@@ -75,6 +75,9 @@ public class IdeaDaoImpl implements IdeaDao {
         boolean saveSuccessful = false;
 //        Idea idea = null;
         try {
+            if(idea.getAlias() != null && idea.getAlias().equalsIgnoreCase("")) {
+                idea.setAlias(null);
+            }
             if (idea.getIdeaId() <= 0) {
                 sessionFactory.getCurrentSession().save(idea);
                 saveSuccessful = true;

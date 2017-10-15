@@ -14,8 +14,7 @@ function validate(formButton) {
             errMessage += inputLabel + " contains invalid characters \n";
         }
     });
-    
-    if($(theForm).find('#confirmPassword').length > 0) {
+    if ($(theForm).find('#confirmPassword').length > 0) {
         var password1 = $(theForm).find('#password').val();
         var password2 = $(theForm).find('#confirmPassword').val();
         if (password1 !== password2) {
@@ -35,3 +34,4 @@ function validate(formButton) {
 function submitForm(form) {
     form.submit();
 }
+

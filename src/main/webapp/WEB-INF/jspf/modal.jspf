@@ -17,7 +17,7 @@
                     <spring:message code="phrases.enter_idea_title" />:<br />
                     <div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <form:input path="ideaTitle" class="mdl-textfield__input notEmpty" />
+                            <form:input path="ideaTitle" class="mdl-textfield__input notEmpty"/>
                             <form:label path="ideaTitle" class="mdl-textfield__label">
                                 <spring:message code="label.idea_title" />
                             </form:label>
