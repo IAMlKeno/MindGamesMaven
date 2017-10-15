@@ -86,7 +86,8 @@
         });
 
         $("#cancelEdit").click(function () {
-            window.location.assign("/MindGamesMaven/ideaHub");
+            var url = <c:url value="/ideaHub" />
+            window.location.assign(url);
         });
 
         function populateForm(data) {
