@@ -29,6 +29,16 @@
     animation-duration: 0.4s
 }
 
+@media only screen 
+and (max-device-width: 1000px)
+{ 
+    .modal-content {
+      height: 400px;
+      overflow: scroll;
+      width: 70% !important;
+  }
+}
+
 /* Add Animation */
 @-webkit-keyframes animatetop {
     from {top:-300px; opacity:0} 
