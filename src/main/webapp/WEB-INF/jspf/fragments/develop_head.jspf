@@ -31,26 +31,25 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
     <script src="<c:url value="/resources/core.js" />" type="text/javascript"></script>
     <!-- Kenneth Kufluk 2008/09/10 -->
-<link href="<c:url value="/resources/js-mindmap-master/js-mindmap.css" />" rel="stylesheet" />
-<link href="<c:url value="/resources/js-mindmap-master/style.css" />" type="text/css" rel="stylesheet"/>
-<link href="<c:url value="/resources/developIdea.css" />" type="text/css" rel="stylesheet"/>
+    <link href="<c:url value="/resources/js-mindmap-master/js-mindmap.css" />" rel="stylesheet" />
+    <link href="<c:url value="/resources/js-mindmap-master/style.css" />" type="text/css" rel="stylesheet"/>
+    <link href="<c:url value="/resources/developIdea.css" />" type="text/css" rel="stylesheet"/>
 
-<!-- jQuery -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
-<!-- UI, for draggable nodes -->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-1.6.2.min.js" integrity="sha256-0W0HoDU0BfzslffvxQomIbx0Jfml6IlQeDlvsNxGDE8=" crossorigin="anonymous"></script>
+    <!-- UI, for draggable nodes -->
+    <script src="https://code.jquery.com/ui/1.8.15/jquery-ui.min.js" integrity="sha256-UNE48xeZLFKg87YKcTtP3zHY2+N7J9JvTEssXDgYcKQ=" crossorigin="anonymous"></script>
 
-<!-- Raphael for SVG support (won't work on android) -->
-<script type="text/javascript" src="<c:url value="/resources/js-mindmap-master/raphael-min.js" />"></script>
+    <!-- Raphael for SVG support (won't work on android) -->
+    <script type="text/javascript" src="<c:url value="/resources/js-mindmap-master/raphael-min.js" />"></script>
 
-<!-- Mindmap -->
-<script type="text/javascript" src="<c:url value="/resources/js-mindmap-master/js-mindmap.js" />"></script>
+    <!-- Mindmap -->
+    <script type="text/javascript" src="<c:url value="/resources/js-mindmap-master/js-mindmap.js" />"></script>
 
-<!-- Kick everything off -->
-<script src="<c:url value="/resources/js-mindmap-master/script.js" />" type="text/javascript"></script>
+    <!-- Kick everything off -->
+    <script src="<c:url value="/resources/js-mindmap-master/script.js" />" type="text/javascript"></script>
 
-<script src="<c:url value="/resources/modal/modal.js" />" type="text/javascript"></script>
-    
+    <script src="<c:url value="/resources/modal/modal.js" />" type="text/javascript"></script>
     
     <style>
         #view-source {
