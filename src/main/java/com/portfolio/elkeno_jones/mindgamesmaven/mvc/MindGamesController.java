@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.FeatureDao;
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.IdeaDao;
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDao;
+import com.portfolio.elkeno_jones.mindgamesmaven.forms.SortForm;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.Feature;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.Idea;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.IdeaWithFeatures;
@@ -80,7 +81,8 @@ public class MindGamesController {
     private static final String SEARCH_URL = "/search";
 
     @RequestMapping(value = IDEA_HUB_URL)
-    public String home(Model model, HttpServletRequest req) {
+    public String home(Model model, HttpServletRequest req,
+            @ModelAttribute("sortForm") SortForm sortForm) {
         HttpSession session = req.getSession();
         Idea newIdea = new Idea();
         Integer userId = (Integer) session.getAttribute("userId");
@@ -94,7 +96,19 @@ public class MindGamesController {
             return ERROR_VIEW;
         }
 
-        List<Idea> userIdeas = ideaDao.getIdeasByUserId(userId);
+        if(sortForm.getSortBy() == null) {
+            sortForm = new SortForm();
+            sortForm.setSortBy("1");
+            sortForm.setSortDir("DESC");
+        }
+        Integer id;
+        try {
+            id = Integer.parseInt(sortForm.getSortBy());
+        } catch (Exception e) {
+            id = 1;
+        }
+        String sortByStr = getSortBy(id);
+        List<Idea> userIdeas = ideaDao.getIdeasByUserId(userId, sortByStr, sortForm.getSortDir());
         List<IdeaWithFeatures> ideaList = new ArrayList<IdeaWithFeatures>();
 
         for (Idea tempIdea : userIdeas) {
@@ -105,7 +119,9 @@ public class MindGamesController {
 
             ideaList.add(ideaWrapper);
         }
+//        SortForm sortForm = new SortForm();
 
+        model.addAttribute("sortForm", sortForm);
         model.addAttribute("token", session.getAttribute("userToken"));
         model.addAttribute("ideaList", ideaList);
         model.addAttribute("newIdea", newIdea);
@@ -147,7 +163,7 @@ public class MindGamesController {
             }
             Gson gson = new Gson();
             Map<Integer, String> featMap = FeatureUtil.mapIdToFeature(ideaWrapper.getFeatures());
-            
+
             model.addAttribute("featMap", gson.toJson(featMap));
             model.addAttribute("ideaWrapper", ideaWrapper);
         } catch (NumberFormatException nfe) {
@@ -185,7 +201,7 @@ public class MindGamesController {
 
         Integer maxId = 0;
         Integer returnedId = featureDao.getMaxFeatureId();
-        if(returnedId >= 0) {
+        if (returnedId >= 0) {
             maxId = returnedId + 1;
         }
         while (featMap.containsKey(maxId)) {
@@ -485,5 +501,42 @@ public class MindGamesController {
     @ModelAttribute(NEW_IDEA)
     private Idea loadNewIdea() {
         return new Idea();
+    }
+
+    /**
+     * Determine what column to sort the ideas by
+     * TODO: move this to the database somehow
+     * @param id   Id to return
+     * @return 
+     */
+    protected String getSortBy(Integer id) {
+        String sortBy;
+        switch (id) {
+            case 1:
+                sortBy = "dateCreated";
+                break;
+            case 2:
+                sortBy = "ideaId";
+                break;
+            case 3:
+                sortBy = "ideaTitle";
+                break;
+            case 4:
+                sortBy = "alias";
+                break;
+            case 5:
+                sortBy = "isInProgress";
+                break;
+            case 6:
+                sortBy = "isCompleted";
+                break;
+            case 7:
+                sortBy = "rating";
+                break;
+            default:
+                sortBy = "dateCreated";
+        }
+
+        return sortBy;
     }
 }

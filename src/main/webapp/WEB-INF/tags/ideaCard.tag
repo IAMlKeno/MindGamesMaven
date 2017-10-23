@@ -12,9 +12,7 @@
     <input type="hidden" name="ideaId" value="${ideaWrapper.idea.ideaId}" />
     <div class="mdl-card mdl-shadow--2dp ideaCard">
         <div class="mdl-card__title ideaTitleDiv">
-            <h4 class="mdl-card__title-text ideaTitle">
-                ${ideaWrapper.idea.ideaTitle}
-            </h4>
+            <h4 class="mdl-card__title-text ideaTitle" title="${ideaWrapper.idea.ideaTitle}">${ideaWrapper.idea.ideaTitle}            </h4>
             <span class="rating">&#40;${ideaWrapper.idea.rating}&#41;</span>
             </div>
             <div class="statusCheckbox">
@@ -30,20 +28,16 @@
                 <h5 class="ideaFeatureTitle">
                 <spring:message code="label.features" />:
             </h5>
+            <ul class="mdl-list">
             <c:forEach items="${ideaWrapper.features}" var="feature">
-                <ul class="mdl-list">
-                    <li class="mdl-list__item mdl-list__item--three-line">
-                        <span class="mdl-list__item-primary-content">
-                            <span>
-                                ${feature.descriptionShort}
-                            </span>
-                            <span class="mdl-list__item-text-body">
-                                ${feature.descriptionLong}
-                            </span>
-                        </span>
-                    </li>
-                </ul>
+                <li class="mdl-list__item mdl-list__item--three-line">
+                    <span class="mdl-list__item-primary-content">
+                        <span>${feature.descriptionShort}</span>
+                        <span class="mdl-list__item-text-body">${feature.descriptionLong}</span>
+                    </span>
+                </li>
             </c:forEach>
+            </ul>
         </div>
         <div class="mdl-card__actions ideaCardActionButtons">
             <input type="submit" class="mdl-button mdl-js-button 

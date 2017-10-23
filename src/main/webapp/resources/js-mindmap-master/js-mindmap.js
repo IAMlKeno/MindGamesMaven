@@ -56,7 +56,7 @@
   'use strict';
 
   var TIMEOUT = 4,  // movement timeout in seconds
-    CENTRE_FORCE = 3,  // strength of attraction to the centre by the active node
+    CENTRE_FORCE = 7,  // was 3 strength of attraction to the centre by the active node
     Node,
     Line;
 
@@ -477,7 +477,7 @@
   $.fn.mindmap = function (options) {
     // Define default settings.
     options = $.extend({
-      attract: 15,
+      attract: 10,
       repulse: 6,
       damping: 0.55,
       timeperiod: 10,

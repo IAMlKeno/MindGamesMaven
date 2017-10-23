@@ -3,6 +3,13 @@
     margin:2%;
 }
 
+.ideaTitleDiv h4 {
+    width: 90%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
 .rating {
     margin-left:auto;
 }
@@ -13,4 +20,14 @@
 
 .developIdeaButton {
     width:80%;
+}
+
+.mdl-list__item--three-line {
+    min-height: 60px;
+    max-height: 88px !important;
+    height: auto;
+}
+
+.ideaCard h5 {
+    margin: 5px 0 15px 0;
 }

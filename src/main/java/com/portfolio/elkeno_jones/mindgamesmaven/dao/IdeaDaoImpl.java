@@ -7,6 +7,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Entity;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,24 @@ public class IdeaDaoImpl implements IdeaDao {
 
     @Override
     @Transactional
-    public List<Idea> getIdeasByUserId(Integer userId) {
-        List<Idea> idea = (List<Idea>) sessionFactory.getCurrentSession()
+    public List<Idea> getIdeasByUserId(Integer userId, String orderBy, String orderDir) {
+        List<Idea> ideaList;
+        
+        if (orderDir.equalsIgnoreCase("ASC")) {
+            ideaList = (List<Idea>) sessionFactory.getCurrentSession()
                 .createCriteria(Idea.class)
                 .add(Restrictions.eq("userId", userId))
+                .addOrder(Order.asc(orderBy))
                 .list();
+        } else {
+            ideaList = (List<Idea>) sessionFactory.getCurrentSession()
+                .createCriteria(Idea.class)
+                .add(Restrictions.eq("userId", userId))
+                .addOrder(Order.desc(orderBy))
+                .list();
+        }
 
-        return idea;
+        return ideaList;
     }
 
     @Override

@@ -13,10 +13,27 @@
         <main class="mdl-layout__content mdl-color--grey-100" style="min-height:600px">
             <div class="newIdeaButtonDiv">
                 <button id="ideaSubmitButton" 
-                       class="mdl-button mdl-js-button mdl-button--colored 
-                       mdl-button--raised">
+                        class="mdl-button mdl-js-button mdl-button--colored 
+                        mdl-button--raised">
                     <spring:message code="button_label.add_new_idea" />
                 </button>
+            </div>
+            <div class="sortDiv">
+                <c:set var="formUrl"><c:url value="/ideaHub" /></c:set>
+                <form:form method="get" modelAttribute="sortForm" action="${formUrl}">
+                    <form:select path="sortBy" class="_sortBy"> <%--TODO: move this to the database somehow --%>
+                        <form:option value="">Sort By...</form:option>
+                        <form:option value="1">Created</form:option>
+                        <form:option value="7">Rating</form:option>
+                        <form:option value="3">Title</form:option>
+                        <form:option value="5">In Progress</form:option>
+                    </form:select>
+                    <form:select path="sortDir" class="_sortDir" style="margin-left: 2%;">
+                        <form:option value="ASC">Ascending</form:option>
+                        <form:option value="DESC">Descending</form:option>
+                    </form:select>
+                    <input type="submit" value="Refresh" />
+                </form:form>
             </div>
             <div class="mdl-grid ideaGrid">
                 <!-- using card to hold idea example-->
@@ -29,8 +46,37 @@
     </div>
     <%@include file="../jspf/modal.jspf" %>
     <script>
+        $(function () {
+            var sortDirCookieVal = getCookie("sortDir");
+            var sortByCookieVal = getCookie("sortBy");
+            if (sortByCookieVal !== "" && sortDirCookieVal !== 'undefined') {
+                var sortBySelect = $('._sortBy');
+                var sortDirSelect = $('._sortDir');
+                if (sortBySelect.val() !== sortByCookieVal && sortDirSelect.val() !== sortDirCookieVal) {
+                    sortBySelect.val(sortByCookieVal);
+                    sortDirSelect.val(sortDirCookieVal);
+
+                    $('._sortDir').parents('form').submit();
+                }
+            }
+        });
+        
+        $('._sortDir').parents('form').submit(function () {
+            setupSortCookies();
+        });
+        function setupSortCookies() {
+            var sortDirVar = "sortDir";
+            var sortByVar = "sortBy";
+            var sortDirValue = $('._sortDir').val();
+            ;
+            var sortByValue = $('._sortBy').val();
+            var days = 7;
+
+            setCookie(sortByVar, sortByValue, days);
+            setCookie(sortDirVar, sortDirValue, days);
+        }
         $(".inProgressCheckbox").click(function () {
-           updateProgress(this, true);
+            updateProgress(this, true);
         });
 
         $(".completeCheckbox").click(function () {
@@ -44,9 +90,9 @@
             var completeCheckbox = $(checkbox.parent("div")
                     .siblings(".statusCheckbox").find(".completeCheckbox"));
             var proceed = true;
-            if(changeOther === true && $(completeCheckbox).is(":checked")) {
+            if (changeOther === true && $(completeCheckbox).is(":checked")) {
                 var confirmChange = confirm("<spring:message code='phrases.confirm_progress_change' />");
-                if(confirmChange) {
+                if (confirmChange) {
                     $(completeCheckbox).prop("checked", false);
                 } else {
 //                    proceed = false;
@@ -58,21 +104,21 @@
 
             if (proceed) {
                 $.get(url,
-                    {ideaId: ideaId, action: checkboxValue, otherAction: otherAction}
+                        {ideaId: ideaId, action: checkboxValue, otherAction: otherAction}
                 )
-                    .done()
-                    .fail(function () {
-                        alert("<spring:message code='phrases.update_progress_failed' />");
-                        if (checkbox.is(":checked")) {
-                            checkbox.prop("checked", false);
-                        } else {
-                            checkbox.prop("checked", true);
-                        }
-                    });
+                        .done()
+                        .fail(function () {
+                            alert("<spring:message code='phrases.update_progress_failed' />");
+                            if (checkbox.is(":checked")) {
+                                checkbox.prop("checked", false);
+                            } else {
+                                checkbox.prop("checked", true);
+                            }
+                        });
             }
             return completeCheckbox;
         }
-        
+
         function updateStatus(elem, changeOther) {
             var url = "<c:url value="/ideaHub/status" />";
             var checkbox = $(elem);
@@ -80,7 +126,7 @@
             var progressCheckbox = $(checkbox.parent("div")
                     .siblings(".statusCheckbox").find(".inProgressCheckbox"));
             var proceed = true;
-            if(changeOther === true && $(progressCheckbox).is(":checked")) {
+            if (changeOther === true && $(progressCheckbox).is(":checked")) {
                 if (confirm("<spring:message code='phrases.confirm_status_change' />")) {
                     $(progressCheckbox).prop("checked", false);
                 } else {
@@ -95,15 +141,15 @@
                 $.get(url,
                         {ideaId: ideaId, action: checkboxValue, otherAction: otherAction}
                 )
-                    .done()
-                    .fail(function () {
-                        alert("<spring:message code='phrases.update_status_failed' />");
-                        if (checkbox.is(":checked")) {
-                            checkbox.prop("checked", false);
-                        } else {
-                            checkbox.prop("checked", true);
-                        }
-                    });
+                        .done()
+                        .fail(function () {
+                            alert("<spring:message code='phrases.update_status_failed' />");
+                            if (checkbox.is(":checked")) {
+                                checkbox.prop("checked", false);
+                            } else {
+                                checkbox.prop("checked", true);
+                            }
+                        });
             }
             return progressCheckbox;
         }

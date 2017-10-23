@@ -18,9 +18,11 @@ public interface IdeaDao {
      * Get list of ideas by the user (user id)
      * 
      * @param userId
+     * @param orderBy
+     * @param orderDir
      * @return 
      */
-    public List<Idea> getIdeasByUserId(Integer userId);
+    public List<Idea> getIdeasByUserId(Integer userId, String orderBy, String orderDir);
     
     /**
      * Get idea by the id

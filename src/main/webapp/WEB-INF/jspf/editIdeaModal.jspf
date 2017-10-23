@@ -18,7 +18,7 @@
                     <input type="hidden" name="ideaId" value="${ideaWrapper.idea.ideaId}" />
                     <spring:message code="phrases.update_idea_title" />:<br />
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
-                        <input type="text" name="theIdeaTitle" id="theIdeaTitle" class="mdl-textfield__input notEmpty" />
+                        <input type="text" name="theIdeaTitle" id="theIdeaTitle" class="mdl-textfield__input notEmpty" maxlength="50"/>
                         <label for="theIdeaTitle" class="mdl-textfield__label">
                             <spring:message code="label.idea_title" />...
                         </label>

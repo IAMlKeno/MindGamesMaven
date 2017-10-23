@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <c:set var="title" value="Develop Idea" />
 <%@include file="../jspf/fragments/develop_head.jspf" %>
 <body>
@@ -45,7 +46,7 @@
     <%@include file="../jspf/editIdeaModal.jspf" %>
 
     <script>
-        var featJson = '${featMap}';
+        var featJson = '${fn:replace(featMap, "\\", "\\\\")}';
         function editIdeaTitle(idea) {
             var ideaTitle = $(idea).text().trim();
             var ideaModal = $("body").find("#editIdeaFormModal");

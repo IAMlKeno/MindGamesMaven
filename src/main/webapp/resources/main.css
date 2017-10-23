@@ -3,7 +3,10 @@
     white-space: nowrap;
     overflow: auto;
     display: -webkit-inline-box;
+    display: -moz-grid-line;
     width: 100%;
+    border: 2px groove darkgray;
+    background-color: lightgray;
 }
 
 .ideaCard{
@@ -27,7 +30,9 @@
 }
 
 .mdl-list {
-    height: 40px;
+    max-height: 300px;
+    margin: 5px 0;
+    padding: 0;
 }
 
 .mdl-list__item {
