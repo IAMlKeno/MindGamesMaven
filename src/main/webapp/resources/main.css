@@ -82,4 +82,12 @@
 
 #myUL li {
     width: 200px;
+}   
+
+.modal-textbox-div {
+    width:50%;
+}
+
+.modal-textbox-div .mdl-textfield {
+    width:100%;
 }

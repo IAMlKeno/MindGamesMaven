@@ -21,16 +21,18 @@
                     </c:forEach>
                     <form:hidden path="newFeature.ideaId" value="${ideaWrapper.idea.ideaId}" />
                     <spring:message code="phrases.enter_feature_title" />:<br />
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <form:input path="newFeature.descriptionShort" class="mdl-textfield__input notEmpty" maxlength="50"/>
                         <form:label path="newFeature.descriptionShort" class="mdl-textfield__label">
                             <spring:message code="label.feature_title" />...
                         </form:label>
                     </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
-                        <div class="mdl-textfield mdl-js-textfield">
-                            <form:textarea path="newFeature.descriptionLong" class="mdl-textfield__input notEmpty" rows= "6"></form:textarea>
-                            <form:label path="newFeature.descriptionLong" class="mdl-textfield__label"><spring:message code="label.description" /></form:label>
+                    <div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div" >
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <form:textarea path="newFeature.descriptionLong" class="mdl-textfield__input notEmpty" rows= "6"></form:textarea>
+                                <form:label path="newFeature.descriptionLong" class="mdl-textfield__label"><spring:message code="label.description" /></form:label>
+                                </div>
                             </div>
                         </div>
                     </div>

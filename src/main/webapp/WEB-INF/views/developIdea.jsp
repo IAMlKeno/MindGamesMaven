@@ -50,7 +50,7 @@
         function editIdeaTitle(idea) {
             var ideaTitle = $(idea).text().trim();
             var ideaModal = $("body").find("#editIdeaFormModal");
-            ideaModal.find("#theIdeaTitle").val(ideaTitle);
+//            ideaModal.find("#theIdeaTitle").val(ideaTitle);
 
             ideaModal.show();
         }

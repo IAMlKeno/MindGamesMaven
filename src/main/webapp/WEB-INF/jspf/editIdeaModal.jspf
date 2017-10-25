@@ -4,11 +4,11 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <c:set var="formUrl"><c:url value='/develop/idea/update' /></c:set>
-<!-- Modal content -->
-<div id="editIdeaFormModal" class="modal">
     <!-- Modal content -->
-    <div class="modal-content">
-        <form:form action="${formUrl}" method="POST">
+    <div id="editIdeaFormModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+        <form:form action="${formUrl}" modelAttribute="ideaWrapper" method="POST">
             <div class="modal-header">
                 <span class="close">&times;</span>
                 <h2><spring:message code="header.idea_form" /></h2>
@@ -17,18 +17,37 @@
                 <div class="modalForm">
                     <input type="hidden" name="ideaId" value="${ideaWrapper.idea.ideaId}" />
                     <spring:message code="phrases.update_idea_title" />:<br />
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
-                        <input type="text" name="theIdeaTitle" id="theIdeaTitle" class="mdl-textfield__input notEmpty" maxlength="50"/>
-                        <label for="theIdeaTitle" class="mdl-textfield__label">
-                            <spring:message code="label.idea_title" />...
-                        </label>
+                    <div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input type="text" name="theIdeaTitle" id="theIdeaTitle" class="mdl-textfield__input notEmpty" maxlength="50" value="${ideaWrapper.idea.ideaTitle}"/>
+                            <label for="theIdeaTitle" class="mdl-textfield__label"><spring:message code="label.idea_title" />...</label>
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style='width:80px'>
+                            <input type="text" name="ideaRating" id="ideaRating" class="mdl-textfield__input notEmpty" value="${ideaWrapper.idea.rating}"/>
+                            <label for="ideaRating" class="mdl-textfield__label"><spring:message code="label.idea_rating" />...</label>
+                        </div>
                     </div>
-                    
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
-                        <input type="text" name="ideaRating" id="ideaRating" class="mdl-textfield__input notEmpty" value="${ideaWrapper.idea.rating}"/>
-                        <label for="ideaRating" class="mdl-textfield__label">
-                            <spring:message code="label.idea_rating" />...
-                        </label>
+                    <div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <form:input type="text" path="idea.alias" class="mdl-textfield__input" maxlength="24" />
+                            <label for="alias" class="mdl-textfield__label"><spring:message code="label.idea_alias" /></label>
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <form:input type="text" path="idea.descriptionShort" class="mdl-textfield__input" maxlength="50" />
+                            <label for="descriptionShort" class="mdl-textfield__label">
+                                <spring:message code="label.short_description" />
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <form:textarea path="idea.descriptionLong" class="mdl-textfield__input" rows="6"></form:textarea>
+                                <label for="descriptionLong" class="mdl-textfield__label"><spring:message code="label.description" /></label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

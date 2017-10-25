@@ -22,16 +22,18 @@
                     <input type="hidden" name="ideaId" value="${ideaWrapper.idea.ideaId}" />
                     <input type="hidden" name="updateFeatureId" id="updateFeatureId" value="" />
                     <spring:message code="phrases.enter_feature_title" />:<br />
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input type="text" name="descriptionShort" id="descriptionShort" class="mdl-textfield__input notEmpty" maxlength="50"/>
                         <label for="descriptionShort" class="mdl-textfield__label">
                             <spring:message code="label.feature_title" />...
                         </label>
                     </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
-                        <div class="mdl-textfield mdl-js-textfield">
-                            <textarea name="descriptionLong" id="descriptionLong" class="mdl-textfield__input notEmpty" rows= "6"></textarea>
-                            <label for="descriptionLong" class="mdl-textfield__label"><spring:message code="label.description" /></label>
+                    <div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <textarea name="descriptionLong" id="descriptionLong" class="mdl-textfield__input notEmpty" rows= "6"></textarea>
+                                <label for="descriptionLong" class="mdl-textfield__label"><spring:message code="label.description" /></label>
+                            </div>
                         </div>
                     </div>
                 </div>

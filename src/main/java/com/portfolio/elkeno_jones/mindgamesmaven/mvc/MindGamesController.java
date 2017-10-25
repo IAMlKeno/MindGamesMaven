@@ -417,8 +417,8 @@ public class MindGamesController {
     public String setIdeaTitle(Model model,
             @ModelAttribute("ideaWrapper") IdeaWithFeatures ideaWrapper,
             HttpServletRequest req,
-            @RequestParam("theIdeaTitle") String theIdeaTitle,
-            @RequestParam("ideaRating") String ideaRating) {
+            @RequestParam(value="theIdeaTitle", required=false) String theIdeaTitle,
+            @RequestParam(value="ideaRating", required=false) String ideaRating) {
 
         HttpSession ses = req.getSession();
         String token = (String) ses.getAttribute("userToken");
