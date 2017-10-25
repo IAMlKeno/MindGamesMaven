@@ -67,7 +67,7 @@
                     $("body").find("#registerFormModal").css("display", "block");
 //        $("body").find("#ideaForm").css("display", "none");
                 });
-
+                
                 // When the user clicks on <span> (x), close the modal
                 $("span").click(function () {
                     $(".modal").css("display", "none");
