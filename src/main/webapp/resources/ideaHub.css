@@ -34,3 +34,8 @@
 .sortDiv {
     margin-left: 2%;
 }
+
+.exportActionDiv{
+    text-align: right; 
+    padding-right:10px
+}

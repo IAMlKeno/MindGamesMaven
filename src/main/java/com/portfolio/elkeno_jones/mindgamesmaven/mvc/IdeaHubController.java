@@ -5,24 +5,19 @@ import com.portfolio.elkeno_jones.mindgamesmaven.dao.IdeaDao;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.Feature;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.Idea;
 import com.portfolio.elkeno_jones.mindgamesmaven.service.SecurityImpl;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -62,33 +57,9 @@ public class IdeaHubController {
             throw new Exception("Invalid user for idea!");
         }
         List<Feature> theFeatures = featureDao.getFeaturesByIdeaId(ideaId);
-        String lineBreak = "\n"; // gives one blank line
-        String carriageReturn = "\r\n"; //gives to lines
-        String line = "---------------------------------------------------------";
-        String description = "Description";
-        String features = "Features";
-        String notAvailable = "Not Available";
+        List<String> lines = getLines(ideaToExport, theFeatures);
+
         String exportFileName = ideaToExport.getIdeaTitle() + ".txt";
-        List<String> lines = new ArrayList<String>();
-
-        lines.add(ideaToExport.getIdeaTitle());
-        lines.add(line);
-        lines.add(description);
-        if (ideaToExport.getDescriptionLong() == null
-                || ideaToExport.getDescriptionLong().equals("")) {
-            lines.add(notAvailable);
-        } else {
-            lines.add(ideaToExport.getDescriptionLong());
-        }
-        lines.add(lineBreak);
-        lines.add(features);
-        lines.add(line);
-        for (Feature feat : theFeatures) {
-            lines.add("- " + feat.getDescriptionShort());
-            lines.add(feat.getDescriptionLong());
-            lines.add(lineBreak);
-        }
-
         Path file = Paths.get(exportFileName);
         Files.write(file, lines, Charset.forName("UTF-8"));
 
@@ -100,5 +71,55 @@ public class IdeaHubController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+    
+    protected List<String> getLines(Idea idea, List<Feature> features) {
+        String lineBreak = "\n"; // gives one blank line
+        String carriageReturn = "\r\n"; //gives to lines
+        String line = "---------------------------------------------------------";
+        String description = "Description";
+        String featuresStr = "Features";
+        String notAvailable = "Not Available";
+        String statusStr = "Status";
+        String created = "Created";
+        String inProgressStr = "In Progress";
+        String completeStr = "Compeleted";
+        
+        List<String> lines = new ArrayList<String>();
+
+        StringBuilder heading = new StringBuilder(idea.getIdeaTitle());
+        if(idea.getAlias() != null && !idea.getAlias().isEmpty()) {
+            String alias = " (Alias: " + idea.getAlias() + ")";
+            heading.append(alias);
+        }
+        lines.add(heading.toString());
+        if(idea.getCreatedDate() != null && !idea.getCreatedDate().isEmpty()) {
+            lines.add(created + ": " + idea.getCreatedDate());
+        }
+        String status = "";
+        if(idea.isIsCompleted()) {
+            status = completeStr;
+        } else if (idea.isIsInProgress()) {
+            status = inProgressStr;
+        }
+        lines.add(statusStr + ": " + status);
+        lines.add(line);
+        lines.add(description);
+        if (idea.getDescriptionLong() == null
+                || idea.getDescriptionLong().equals("")) {
+            lines.add(notAvailable);
+        } else {
+            lines.add(idea.getDescriptionLong());
+        }
+        lines.add(lineBreak);
+        lines.add(featuresStr);
+        lines.add(line);
+        for (Feature feat : features) {
+            lines.add("- " + feat.getDescriptionShort());
+            lines.add(feat.getDescriptionLong());
+            lines.add(lineBreak);
+        }
+        
+        return lines;
     }
 }

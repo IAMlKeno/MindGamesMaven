@@ -157,7 +157,14 @@
         $("._export").click(function(){
             var url = "<c:url value='/file' />";
             var ideaIdVar = $(this).parents('form').find('input[name="ideaId"]').val();
-            window.location.assign(url + "?ideaId="+ideaIdVar);
+            var action = $(this).prev('._exportActionSelect').val();
+            switch(action) {
+                case "text":
+                    window.location.assign(url + "?ideaId="+ideaIdVar);
+                    break;
+                case "email":
+                    break;
+            }
         });
     </script>
     <%@include file="../jspf/fragments/footer.jspf" %>

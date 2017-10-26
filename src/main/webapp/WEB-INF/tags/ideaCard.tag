@@ -24,7 +24,14 @@
             <div class="statusCheckbox">
                 <label><spring:message code="label.complete" /></label>: <input type="checkbox" class="completeCheckbox" <c:if test="${ideaWrapper.idea.isCompleted}">checked</c:if> />
             </div>
-            <div> <input type="button" class="_export" value="Export" /> </div>
+            <div class="exportActionDiv">
+                <select class="_exportActionSelect">
+                    <option>Actions...</option>
+                    <option value="text">Export as Text</option>
+                    <option value="email">Email Idea</option>
+                </select>
+                <input type="button" class="_export" value="Go" />
+            </div>
             <div class="mdl-card__supporting-text">
                 <h5 class="ideaFeatureTitle">
                 <spring:message code="label.features" />:
