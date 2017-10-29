@@ -45,6 +45,7 @@
         </main>
     </div>
     <%@include file="../jspf/modal.jspf" %>
+    <%@include file="../jspf/sendToEmail.jspf" %>
     <script>
         $(function () {
             var sortDirCookieVal = getCookie("sortDir");
@@ -156,6 +157,7 @@
         
         $("._export").click(function(){
             var url = "<c:url value='/file' />";
+            var emailUrl = "<c:url value='/email' />";
             var ideaIdVar = $(this).parents('form').find('input[name="ideaId"]').val();
             var action = $(this).prev('._exportActionSelect').val();
             switch(action) {
@@ -163,8 +165,16 @@
                     window.location.assign(url + "?ideaId="+ideaIdVar);
                     break;
                 case "email":
+//                    window.location.assign(emailUrl + "?ideaId="+ideaIdVar);
+                    openSendToForm(ideaIdVar);
                     break;
             }
         });
+        
+        function openSendToForm(ideaId) {
+            var sendToModal = $("#emailToFormModal");
+            sendToModal.find("input[name='ideaId']").val(ideaId);
+            sendToModal.show();
+        }
     </script>
     <%@include file="../jspf/fragments/footer.jspf" %>

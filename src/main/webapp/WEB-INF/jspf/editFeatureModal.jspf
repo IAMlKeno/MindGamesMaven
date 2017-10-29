@@ -31,7 +31,7 @@
                     <div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div">
                             <div class="mdl-textfield mdl-js-textfield">
-                                <textarea name="descriptionLong" id="descriptionLong" class="mdl-textfield__input notEmpty" rows= "6"></textarea>
+                                <textarea name="descriptionLong" id="descriptionLong" class="mdl-textfield__input notEmpty" rows="6"></textarea>
                                 <label for="descriptionLong" class="mdl-textfield__label"><spring:message code="label.description" /></label>
                             </div>
                         </div>

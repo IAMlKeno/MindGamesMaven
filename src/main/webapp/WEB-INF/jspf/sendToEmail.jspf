@@ -1,0 +1,133 @@
+<%@ page pageEncoding="UTF-8" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<c:set var="formUrl"><c:url value='/email' /></c:set>
+    <!-- Modal content -->
+    <div id="emailToFormModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content" style="width:40%">
+            <form action="${formUrl}" class="_emailToForm" method="POST">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Send To</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modalForm">
+                    <input type="hidden" name="ideaId" />
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input type="text" id="emailTo" name="emailTo" class="mdl-textfield__input _emailTo" />
+                        <label for="emailTo" class="mdl-textfield__label">
+                            Email To:
+                        </label>
+                    </div>
+                    <div style="display:inline">
+                        <label><input type="checkbox" class="_sendToSelf" />Send To registered email</label>
+                    </div>
+                    <div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div" >
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <input type="text" id="subject" name="subject" class="mdl-textfield__input" />
+                                <label for="subject" class="mdl-textfield__label">Subject (optional):</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label modal-textbox-div" style="width:60%; padding:0">
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <textarea id="emailBody" name="emailBody" class="mdl-textfield__input _emailBody" rows="5" maxlength="124"></textarea>
+                                <label for="emailBody" class="mdl-textfield__label">Email body (optional):</label>
+                            </div>
+                        </div>
+                        <div style="display:inline">Characters remaining: <span class="_emailCharactersRemaining">124</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="mdl-button mdl-js-button 
+                       mdl-button--colored mdl-button--raised modalAcceptButton"
+                       value="Send"
+                       onclick="validate(this)" />
+                <span>&nbsp;</span>
+                <input type="button" class="mdl-button mdl-js-button 
+                       mdl-button--accent mdl-button--raised modalCancelButton"
+                       value="<spring:message code='button_label.cancel' />"/>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $("._sendToSelf").click(function () {
+        var checked = $(this).prop("checked");
+        if (checked) {
+            $("._emailTo").prop("disabled", true);
+            $("._emailTo").css("background", "lightgray");
+        } else {
+            $("._emailTo").prop("disabled", false);
+            $("._emailTo").css("background", "white");
+        }
+    });
+    
+    $("._emailBody").keyup(function(){
+        var characters = $(this).val();
+        var characterCount = characters.length;
+        var totalCharactersAllowed = 124;
+        var charactersRemaining = totalCharactersAllowed - characterCount;
+        $("._emailCharactersRemaining").text(charactersRemaining);
+    });
+    
+    $("._emailToForm").submit(function(event){
+        event.preventDefault();
+        var url = "<c:url value='/email' />";
+        var ideaId = $(this).find('input[name="ideaId"]').val();
+        var subject = $(this).find('input[name="subject"]').val();
+        var emailTo = $(this).find('input[name="emailTo"]').val();;
+        var emailBody = $(this).find('textarea[name="emailBody"]').val();
+        var showLoader = true; 
+        showHideLoaderEmail(showLoader);
+        $.post(url, 
+            {ideaId:ideaId, subject: subject, emailTo: emailTo, emailBody: emailBody}
+            )
+            .done(function(){
+                alert("Message Sent!");
+                var sendToModal = $("#emailToFormModal");
+                var showLoader = false; 
+                showHideLoaderEmail(showLoader);
+                sendToModal.hide();
+            })
+            .fail(function(){
+                alert("Error: There was an error sending the idea through email!");
+                var showLoader = false; 
+                showHideLoaderEmail(showLoader);
+            });
+    });
+    function showHideLoaderEmail(showLoader){
+        var divForLoader = $('#emailToFormModal').find('.modal-content');
+        if (showLoader) {
+            if($(divForLoader).prev('img').length <= 0) {
+                var imageTag = $("<div></div>").addClass("loadingDiv");
+                divForLoader.append(imageTag);
+            }
+        } else {
+            var loaderImage = $('.loadingDiv');
+            $(loaderImage).remove();
+        }
+    }
+    
+</script>
+<style>
+.loadingDiv{
+  position:absolute;
+  top:0px;
+  right:0px;
+  width:100%;
+  height:100%;
+  background-color:#666;
+  background-image:url('<c:url value="/resources/images/loader.gif" />');
+  background-repeat:no-repeat;
+  background-position:center;
+  z-index:10000000;
+  opacity: 0.4;
+  filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+</style>

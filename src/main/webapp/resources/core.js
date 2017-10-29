@@ -4,12 +4,29 @@ function validate(formButton) {
     var regex = /[<>=\/\\]/;
     var theForm = $(formButton).parents("form");
     $(theForm).find(".notEmpty").each(function () {
-        var inputValue = $(this).val();
+        var inputValue = $(this).val().trim();
         var inputLabel = $(this).next("label").text().trim();
         if (inputValue === "") {
             isValid = false;
             errMessage += inputLabel + " is mandatory \n";
         } else if (regex.exec(inputValue)) {
+            isValid = false;
+            errMessage += inputLabel + " contains invalid characters \n";
+        }
+    });
+    
+    $(theForm).find("input").each(function () {
+        var inputValue = $(this).val().trim();
+        var inputLabel = $(this).next("label").text().trim();
+        if (regex.exec(inputValue)) {
+            isValid = false;
+            errMessage += inputLabel + " contains invalid characters \n";
+        }
+    });
+    $(theForm).find("textarea").each(function () {
+        var inputValue = $(this).val().trim();
+        var inputLabel = $(this).next("label").text().trim();
+        if (regex.exec(inputValue)) {
             isValid = false;
             errMessage += inputLabel + " contains invalid characters \n";
         }

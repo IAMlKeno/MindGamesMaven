@@ -38,7 +38,7 @@
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/views/"
           p:suffix=".jsp" />
-
+          
     <!--
     The index controller.
     -->
@@ -85,10 +85,10 @@
     <bean id="userDao" class="com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDaoImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
-<!--    <bean id="securityDao" class="com.portfolio.elkeno_jones.mindgamesmaven.dao.SecurityDaoImpl">
+    <!--    <bean id="securityDao" class="com.portfolio.elkeno_jones.mindgamesmaven.dao.SecurityDaoImpl">
         <property name="securityDaoImpl" ref="securityDao"></property>
     </bean>-->
-<!--    <bean id="security" class="com.portfolio.elkeno_jones.mindgamesmaven.service.SecurityImpl">
+    <!--    <bean id="security" class="com.portfolio.elkeno_jones.mindgamesmaven.service.SecurityImpl">
         <property name="securityImpl" ref="securityDao"></property>
     </bean>-->
     <context:component-scan base-package="com.portfolio.elkeno_jones.mindgamesmaven" />
@@ -110,7 +110,7 @@
     </bean>
 
     <bean id="localeResolver"
-              class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+          class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
         <property name="defaultLocale" value="en" />
         <property name="cookieName" value="myAppLocaleCookie"></property>
         <property name="cookieMaxAge" value="3600"></property>
@@ -124,7 +124,7 @@
     
     <!--If Sessions are incorporated, this can be used to get the local-->
     <!--<bean id="localeResolver"
-	class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-	<property name="defaultLocale" value="en" />
+        class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en" />
     </bean> -->
 </beans>
