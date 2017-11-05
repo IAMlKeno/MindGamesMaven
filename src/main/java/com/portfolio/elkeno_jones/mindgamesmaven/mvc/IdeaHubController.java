@@ -3,7 +3,6 @@ package com.portfolio.elkeno_jones.mindgamesmaven.mvc;
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.FeatureDao;
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.IdeaDao;
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDao;
-import com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDaoImpl;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.Feature;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.Idea;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.User;
@@ -29,10 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/**
- *
- * @author Elkeno
- */
 @Controller
 public class IdeaHubController {
 
@@ -48,7 +43,12 @@ public class IdeaHubController {
     private static final String ERROR_VIEW = "error";
     private static final String REDIRECT_VIEW = "/redirect";
 
-    @RequestMapping(value = "/file", method = {RequestMethod.POST, RequestMethod.GET})
+    private static final String EXPORT_FILE_URL = "/file.html";
+    private static final String EMAIL_FILE_URL = "/email.html";
+
+    protected static final String AUTHENTICATE_URL = "/auth.html";
+
+    @RequestMapping(value = EXPORT_FILE_URL, method = {RequestMethod.POST, RequestMethod.GET})
     public ResponseEntity<?> downloadTextResource(HttpServletRequest req,
             HttpServletResponse response,
             @RequestParam(value = "ideaId", required = true) Integer ideaId,
@@ -85,14 +85,13 @@ public class IdeaHubController {
         return new ResponseEntity("", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/email", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = EMAIL_FILE_URL, method = {RequestMethod.POST, RequestMethod.GET})
     public ResponseEntity<?> sendEmailResource(HttpServletRequest req,
             HttpServletResponse response,
             @RequestParam(value = "ideaId", required = true) Integer ideaId,
             @RequestParam(value = "emailTo", required = false, defaultValue = "") String emailTo,
             @RequestParam(value = "subject", required = false, defaultValue = "") String subject,
             @RequestParam(value = "emailBody", required = false, defaultValue = "") String emailBody)
-            
             throws IOException, Exception {
 
         HttpSession ses = req.getSession();
@@ -114,15 +113,14 @@ public class IdeaHubController {
             Path file = Paths.get(exportFileName);
             Files.write(file, lines, Charset.forName("UTF-8"));
 
-            if(subject.isEmpty()) {
+            if (subject.isEmpty()) {
                 subject = ideaToExport.getIdeaTitle();
             }
-            if(emailBody.isEmpty()) {
+            if (emailBody.isEmpty()) {
                 emailBody = ideaToExport.getIdeaTitle();
             }
-            
+            User user = userDao.getUserById(userId);
             if (emailTo.isEmpty()) {
-                User user = userDao.getUserById(userId);
                 if (user.getEmailAddress() != null && !user.getEmailAddress().isEmpty()) {
                     emailTo = user.getEmailAddress();
                 } else {
@@ -131,12 +129,18 @@ public class IdeaHubController {
                 }
             }
 
+            String fromEmail;
+            if (user.getEmailAddress() != null && !user.getEmailAddress().isEmpty()) {
+                fromEmail = user.getEmailAddress();
+            } else {
+                fromEmail = "norepley.ideaorganizer@gmail.com";
+            }
             ApplicationContext context
                     = new ClassPathXmlApplicationContext("Spring-Mail.xml");
 
             JavaMailer mm = (JavaMailer) context.getBean("javaMailer");
-            mm.sendMailWithAttachment("norepley.ideaorganizer@gmail.com",
-                    emailTo, subject, emailBody, file, exportFileName);
+            mm.sendMailWithAttachment(fromEmail, emailTo, subject, emailBody,
+                    file, exportFileName);
 
         } catch (Exception ex) {
             System.out.println(ex.getStackTrace());
@@ -147,7 +151,6 @@ public class IdeaHubController {
 
     protected List<String> getLines(Idea idea, List<Feature> features) {
         String lineBreak = "\n"; // gives one blank line
-        String carriageReturn = "\r\n"; //gives to lines
         String line = "---------------------------------------------------------";
         String description = "Description";
         String featuresStr = "Features";

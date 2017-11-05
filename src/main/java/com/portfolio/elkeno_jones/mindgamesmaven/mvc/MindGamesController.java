@@ -3,7 +3,6 @@ package com.portfolio.elkeno_jones.mindgamesmaven.mvc;
 import com.google.gson.Gson;
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.FeatureDao;
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.IdeaDao;
-import com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDao;
 import com.portfolio.elkeno_jones.mindgamesmaven.forms.SortForm;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.Feature;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.Idea;
@@ -25,24 +24,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-/**
- *
- * @author Elkeno
- */
 @Controller
 @Configuration
 @ComponentScan("com.portfolio.elkeno_jones.mindgamesmaven.dao")
 @SessionAttributes("ideaWrapper")
 public class MindGamesController {
 
-    @Autowired
-    private UserDao userDao;
     @Autowired
     private IdeaDao ideaDao;
     @Autowired
@@ -51,38 +45,41 @@ public class MindGamesController {
     private SecurityImpl sec;
 
     private static final String IDEA_WRAPPER = "ideaWrapper";
-    private static final String NEW_IDEA = "newIdea";
-    private static final String IDEA_LIST = "ideaList";
 
     /* Idea hub view */
-    private static final String IDEA_HUB_URL = "/ideaHub";
+    private static final String IDEA_HUB_URL = "/ideaHub.html";
+    @Deprecated
+    private static final String IDEA_HUB_OLD_URL = "/ideaHub";
     private static final String IDEA_HUB_VIEW = "ideaHub";
-    private static final String IDEA_HUB_UPDATE_PROGRESS_URL = "/ideaHub/progress";
-    private static final String IDEA_HUB_UPDATE_STATUS_URL = "/ideaHub/status";
+    private static final String IDEA_HUB_UPDATE_PROGRESS_URL = "/ideaHub/progress.html";
+    private static final String IDEA_HUB_UPDATE_STATUS_URL = "/ideaHub/status.html";
 
     /* Save*/
     private static final String SAVE_URL = "/save";
 
     /* Develop Idea */
     private static final String DEVELOP_IDEA_VIEW = "developIdea";
-    private static final String DEVELOP_NEW_IDEA_URL = "/develop/newIdea";
-    private static final String DEVELOP_IDEA_URL = "/develop";
-    private static final String ADD_FEATURE_URL = "/develop/add";
-    private static final String UPDATE_FEATURE_URL = "/develop/update";
+    private static final String DEVELOP_NEW_IDEA_URL = "/develop/newIdea.html";
+    private static final String DEVELOP_IDEA_URL = "/develop.html";
+    private static final String ADD_FEATURE_URL = "/develop/add.html";
+    private static final String UPDATE_FEATURE_URL = "/develop/update.html";
 
     /* Redirect and error*/
     private static final String ERROR_VIEW = "error";
     private static final String REDIRECT_VIEW = "/redirect";
 
     /* */
-    private static final String GET_FEATURE_URL = "/develop/feature";
-    private static final String UPDATE_IDEA_TITLE_URL = "/develop/idea/update";
+    private static final String GET_FEATURE_URL = "/develop/feature.html";
+    private static final String UPDATE_IDEA_TITLE_URL = "/develop/idea/update.html";
 
-    private static final String SEARCH_URL = "/search";
+    private static final String SEARCH_URL = "/search.html";
+    protected static final String AUTHENTICATE_URL = "/auth.html";
 
-    @RequestMapping(value = IDEA_HUB_URL)
+    @RequestMapping(value = {IDEA_HUB_URL, IDEA_HUB_OLD_URL})
     public String home(Model model, HttpServletRequest req,
-            @ModelAttribute("sortForm") SortForm sortForm) {
+            @ModelAttribute("sortForm") SortForm sortForm,
+            @CookieValue(value="sortDir", required = false) String sortDir,
+            @CookieValue(value="sortBy", required = false) String sortBy) {
         HttpSession session = req.getSession();
         Idea newIdea = new Idea();
         Integer userId = (Integer) session.getAttribute("userId");
@@ -91,15 +88,23 @@ public class MindGamesController {
 
         if (!sec.checkAccess(token, userId)) {
             model.addAttribute("errMessage", "ACCESS DENIED...");
-            model.addAttribute("redirectErrorUrl", "auth");
+            model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
 
             return ERROR_VIEW;
         }
 
         if(sortForm.getSortBy() == null) {
             sortForm = new SortForm();
-            sortForm.setSortBy("1");
-            sortForm.setSortDir("DESC");
+            if(sortBy != null && !sortBy.isEmpty()) {
+                sortForm.setSortBy(sortBy);
+            } else {
+                sortForm.setSortBy("1");
+            }
+            if(sortDir != null && !sortDir.isEmpty()) {
+                sortForm.setSortDir(sortDir);
+            } else {
+                sortForm.setSortDir("DESC");
+            }
         }
         Integer id;
         try {
@@ -119,7 +124,6 @@ public class MindGamesController {
 
             ideaList.add(ideaWrapper);
         }
-//        SortForm sortForm = new SortForm();
 
         model.addAttribute("sortForm", sortForm);
         model.addAttribute("token", session.getAttribute("userToken"));
@@ -143,7 +147,7 @@ public class MindGamesController {
 
         if (!sec.checkAccess(token, userId)) {
             model.addAttribute("errMessage", "ACCESS DENIED");
-            model.addAttribute("redirectErrorUrl", "auth");
+            model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
 
             return ERROR_VIEW;
         }
@@ -171,7 +175,7 @@ public class MindGamesController {
             model.addAttribute("errMessage", errMessage);
         } catch (HibernateException he) {
             String errMessage = "[ Hibernate error - developIdea ] " + he.getMessage();
-            model.addAttribute("errMessage", errMessage);//do something
+            model.addAttribute("errMessage", errMessage);
         } catch (Exception e) {
             String errMessage = "[ Java Exception - developIdea ] " + e.getMessage();
             model.addAttribute("errMessage", errMessage);
@@ -190,7 +194,7 @@ public class MindGamesController {
         Integer userId = (Integer) ses.getAttribute("userId");
         if (!sec.checkAccess(token, userId)) {
             model.addAttribute("errMessage", "ACCESS DENIED");
-            model.addAttribute("redirectErrorUrl", "auth");
+            model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
 
             return ERROR_VIEW;
         }
@@ -215,8 +219,7 @@ public class MindGamesController {
         model.addAttribute("ideaWrapper", ideaWrapper);
         model.addAttribute("featMap", gson.toJson(featMap));
 
-        model.addAttribute("redirectUrl", "/develop?reload=true");
-//        model.addAttribute("reload", true);
+        model.addAttribute("redirectUrl", "/develop.html?reload=true");
         return REDIRECT_VIEW;
     }
 
@@ -233,7 +236,7 @@ public class MindGamesController {
         Integer userId = (Integer) ses.getAttribute("userId");
         if (!sec.checkAccess(token, userId)) {
             model.addAttribute("errMessage", "ACCESS DENIED");
-            model.addAttribute("redirectErrorUrl", "auth");
+            model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
 
             return ERROR_VIEW;
         }
@@ -270,7 +273,7 @@ public class MindGamesController {
 
         if (!sec.checkAccess(token, userId)) {
             model.addAttribute("errMessage", "ACCESS DENIED");
-            model.addAttribute("redirectErrorUrl", "auth");
+            model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
 
             return ERROR_VIEW;
         }
@@ -298,14 +301,13 @@ public class MindGamesController {
                 }
             }
             if (saveSuccessful && ideaSaveSuccessful) {
-                String location = "/MindGamesMaven";
                 model.addAttribute("redirectUrl", IDEA_HUB_URL);
                 redirectUrl = REDIRECT_VIEW;
             } else {
-                redirectUrl = ERROR_VIEW;
                 String errMessage = "Failed to save idea and features";
-                model.addAttribute("redirectUrl", "auth");
+                model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
                 model.addAttribute("errMessage", errMessage);
+                redirectUrl = ERROR_VIEW;
             }
         } catch (Exception e) {
             /* TODO: handle exception */
@@ -322,7 +324,7 @@ public class MindGamesController {
         Integer userId = (Integer) ses.getAttribute("userId");
         if (!sec.checkAccess(token, userId)) {
             model.addAttribute("errMessage", "ACCESS DENIED");
-            model.addAttribute("redirectErrorUrl", "auth");
+            model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
 
             return ERROR_VIEW;
         }
@@ -341,7 +343,7 @@ public class MindGamesController {
             model.addAttribute("ideaWrapper", ideaWrapper);
         } catch (HibernateException he) {
             String errMessage = "[ Hibernate error - developNewIdea] " + he.getMessage();
-            model.addAttribute("errMessage", errMessage);//do something
+            model.addAttribute("errMessage", errMessage);
         } catch (Exception e) {
             String errMessage = "[ Java Exception - developNewIdea] " + e.getMessage();
             model.addAttribute("errMessage", errMessage);
@@ -399,9 +401,6 @@ public class MindGamesController {
         String token = (String) ses.getAttribute("userToken");
         Integer userId = (Integer) ses.getAttribute("userId");
         if (!sec.checkAccess(token, userId)) {
-//            model.addAttribute("errMessage", "ACCESS DENIED");
-//            model.addAttribute("redirectErrorUrl", "auth");
-
             return new ResponseEntity("ACCESS DENIED", HttpStatus.FORBIDDEN);
         }
 
@@ -425,7 +424,7 @@ public class MindGamesController {
         Integer userId = (Integer) ses.getAttribute("userId");
         if (!sec.checkAccess(token, userId)) {
             model.addAttribute("errMessage", "ACCESS DENIED");
-            model.addAttribute("redirectErrorUrl", "auth");
+            model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
 
             return ERROR_VIEW;
         }
@@ -493,14 +492,6 @@ public class MindGamesController {
         }
 
         return validatedList;
-    }
-
-    /**
-     * Loads a new Idea into the model
-     */
-    @ModelAttribute(NEW_IDEA)
-    private Idea loadNewIdea() {
-        return new Idea();
     }
 
     /**

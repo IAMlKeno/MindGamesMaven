@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="<c:url value="/resources/fragments/css/ideaCardStyle.css" />">
 
-<form action="<c:url value='/develop' />" method="POST">
+<form action="<c:url value='/develop.html' />" method="POST">
     <input type="hidden" name="ideaId" value="${ideaWrapper.idea.ideaId}" />
     <div class="mdl-card mdl-shadow--2dp ideaCard">
         <div class="mdl-card__title ideaTitleDiv">

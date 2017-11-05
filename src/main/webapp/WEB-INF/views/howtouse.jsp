@@ -20,7 +20,7 @@
                     <p class="errorMessage" style="padding:5px">
                         Click on one of the labels below to get more details!
                         <br />
-                        <a href="<c:url value='/auth' />">
+                        <a href="<c:url value='/auth.html' />">
                         <c:choose><c:when test="${userId ne null}">Or click here to continue</c:when><c:otherwise>Or click here to login</c:otherwise></c:choose>
                         </a>
                     </p>
@@ -92,6 +92,40 @@
                             Note that the idea cannot be both in progress and
                             complete.
                         </div>
+                        
+                        <div class="parent">Sorting</div>
+                        <div class="child">
+                            From the Idea Hub, you will notice a check box and
+                            the words <i>Complete</i> in the idea cards. Check
+                            the check box to mark it as completed. <br />
+                            Note that the idea cannot be both in progress and
+                            complete.
+                        </div>
+                        <div class="parent">Email an Idea</div>
+                        <div class="child">
+                            In each idea card, you can find a drop box with 
+                            <i>Actions...</i> selected. You can click this for 
+                            more options. Among the options is <i>Email Idea</i>.
+                            <br />
+                            If you select this option and click the Go button, a
+                            <i>Send To </i> modal window will appear with fields
+                            for Email To, Subject, Email body. You can fill these
+                            options in and click send. The idea will be sent as
+                            a text file via email.
+                            <b>Note:</b> if all of these options are left blank,
+                            the idea will be sent to the email that you 
+                            registered with.
+                        </div>
+                        <div class="parent">Exporting Ideas</div>
+                        <div class="child">
+                            In each idea card, you can find a drop box with
+                            <i>Actions...</i> selected. You can click this for 
+                            more options. Among the options is <i>Export as Text</i>.
+                            <br />
+                            If you select this option and click the Go button, 
+                            the browser will download a text file with your idea
+                            and features.
+                        </div>
                     </div>
                 </div> 
             </div>
@@ -122,7 +156,7 @@
             padding-top:5px;
         }
         .child{
-            padding: 0 100px;
+            padding: 0 40px;
             background: lightgray;
             margin-bottom: 5px;
             border-bottom: 1px solid;

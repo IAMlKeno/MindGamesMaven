@@ -2,6 +2,7 @@ function validate(formButton) {
     var isValid = true;
     var errMessage = "";
     var regex = /[<>=\/\\]/;
+    var emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
     var theForm = $(formButton).parents("form");
     $(theForm).find(".notEmpty").each(function () {
         var inputValue = $(this).val().trim();
@@ -10,6 +11,15 @@ function validate(formButton) {
             isValid = false;
             errMessage += inputLabel + " is mandatory \n";
         } else if (regex.exec(inputValue)) {
+            isValid = false;
+            errMessage += inputLabel + " contains invalid characters \n";
+        }
+    });
+    
+    $(theForm).find("._emailInput:enabled").each(function() {
+        var inputValue = $(this).val().trim();
+        var inputLabel = $(this).next("label").text().trim();
+        if (!emailRegex.exec(inputValue)) {
             isValid = false;
             errMessage += inputLabel + " contains invalid characters \n";
         }

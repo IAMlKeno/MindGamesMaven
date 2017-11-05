@@ -42,12 +42,11 @@ public class JavaMailer {
 
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
+        helper.setFrom(from);
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(msg);
 
-//        FileSystemResource file
-//                = new FileSystemResource(new File(pathToAttachment));
         helper.addAttachment(filename, pathToAttachment.toFile());
 
         jvSender.send(message);

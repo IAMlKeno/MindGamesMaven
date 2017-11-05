@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.portfolio.elkeno_jones.mindgamesmaven.mvc;
 
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDao;
@@ -12,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,25 +15,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- *
- * @author Elkeno
- */
 @Controller
+@Configuration
 public class CoreController {
 
     protected static final String LOGIN_VIEW = "login";
-    protected static final String AUTHENTICATE_URL = "/auth";
-    protected static final String ACCESS_DENIED_URL = "/Access_Denied";
-    protected static final String LOGOUT_URL = "/logout";
-    protected static final String LOGIN_URL = "/login";
+    protected static final String AUTHENTICATE_URL = "/auth.html";
+    @Deprecated
+    protected static final String AUTHENTICATE_OLD_URL = "/auth";
+    protected static final String LOGOUT_URL = "/logout.html";
+    protected static final String LOGIN_URL = "/login.html";
 
     private static final String IDEA_HUB_VIEW = "ideaHub";
-    private static final String IDEA_HUB_URL = "/ideaHub";
+    private static final String IDEA_HUB_URL = "/ideaHub.html";
 
-    private static final String REDIRECT_VIEW = "/redirect";
+    private static final String ACCOUNT_VIEW = "account";
+    private static final String ACCOUNT_URL = "/account.html";
+    private static final String ACCOUNT_UPDATE_URL = "/account/update.html";
 
-    private static final String REGISTER_URL = "/register";
+    private static final String REDIRECT_VIEW = "redirect";
+
+    private static final String REGISTER_URL = "/register.html";
     private static final String REGISTER_VIEW = "register";
 
     private static final String ERROR_VIEW = "error";
@@ -48,9 +46,9 @@ public class CoreController {
     @Autowired
     private SecurityImpl sec;
 
-    @RequestMapping(value = AUTHENTICATE_URL)
+    @RequestMapping(value = {AUTHENTICATE_URL, AUTHENTICATE_OLD_URL})
     public String setLanding(Model model, HttpServletRequest req) {
-        String landingPage = "";
+        String landingPage;
 
         HttpSession session = req.getSession(true);
         if (session.getAttribute("userToken") != null) {
@@ -71,8 +69,7 @@ public class CoreController {
     }
 
     @RequestMapping(value = LOGIN_URL, method = RequestMethod.POST)
-    public String loginPage(HttpServletRequest req,
-            Model model,
+    public String loginPage(HttpServletRequest req, Model model,
             @ModelAttribute("user") User user, BindingResult result) {
 
         if (result.hasErrors()) {
@@ -128,7 +125,7 @@ public class CoreController {
         if (!userDao.saveUser(userVo)) {
             String errMessage = "Error registering new user!";
             model.addAttribute("errMessage", errMessage);
-            model.addAttribute("redirectUrl", "auth");
+            model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
             redirectUrl = ERROR_VIEW;
         } else {
             redirectUrl = IDEA_HUB_VIEW;
@@ -149,14 +146,59 @@ public class CoreController {
         return REDIRECT_VIEW;
     }
 
-    @RequestMapping(value = ACCESS_DENIED_URL, method = RequestMethod.GET)
-    public String accessDeniedPage(Model model) {
-//        model.addAttribute("user", getPrincipal());
-        return "accessDenied";
-    }
-
     @RequestMapping(value = "/")
     public String indexer() {
         return REDIRECT_VIEW;
+    }
+
+    @RequestMapping(value = ACCOUNT_URL, method = RequestMethod.GET)
+    public String viewUserAccount(Model model, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        Integer userId = (Integer) session.getAttribute("userId");
+        String token = (String) session.getAttribute("userToken");
+
+        if (!sec.checkAccess(token, userId)) {
+            model.addAttribute("errMessage", "ACCESS DENIED...");
+            model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
+
+            return ERROR_VIEW;
+        }
+
+        User user = userDao.getUserById(userId);
+        model.addAttribute("userAccount", user);
+
+        return ACCOUNT_VIEW;
+    }
+
+    @RequestMapping(value = ACCOUNT_URL, method = RequestMethod.POST)
+    public String updateUserAccount(Model model, HttpServletRequest req,
+            @ModelAttribute("userAccount") User user) {
+        HttpSession session = req.getSession();
+        Integer userId = (Integer) session.getAttribute("userId");
+        String token = (String) session.getAttribute("userToken");
+
+        if (!sec.checkAccess(token, userId)) {
+            model.addAttribute("errMessage", "ACCESS DENIED...");
+            model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
+
+            return ERROR_VIEW;
+        }
+
+        if (!user.getUserId().equals(userId)) {
+            model.addAttribute("errMessage", "ACCESS DENIED...");
+            model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
+            return ERROR_VIEW;
+        }
+        if (!userDao.saveUser(user)) {
+            String errMessage = "Error updating account";
+            model.addAttribute("errMessage", errMessage);
+            model.addAttribute("redirectErrorUrl", AUTHENTICATE_URL);
+
+            return ERROR_VIEW;
+        }
+        model.addAttribute("isAccountUpdated", true);
+        model.addAttribute("userAccount", user);
+
+        return ACCOUNT_VIEW;
     }
 }

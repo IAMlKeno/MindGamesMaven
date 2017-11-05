@@ -24,7 +24,7 @@
         var list = $('#myUL');
         if (srchStr !== "") {
             showHideLoader(true);
-            var url = '<c:url value="/search" />';
+            var url = '<c:url value="/search.html" />';
         
             $.get(url, {srchStr: srchStr})
                     .done(function (data) {
@@ -49,7 +49,7 @@
     }
 
     function listItemAction(id) {
-        var url = '<c:url value="/develop" />';
+        var url = '<c:url value="/develop.html" />';
         window.location.assign(url + "?ideaId=" + id);
     }
     

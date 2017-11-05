@@ -91,3 +91,8 @@
 .modal-textbox-div .mdl-textfield {
     width:100%;
 }
+
+.accountUpdated {
+    color: green;
+    font-weight: bold;
+}

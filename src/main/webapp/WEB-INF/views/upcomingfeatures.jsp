@@ -21,29 +21,6 @@
                         <li class="mdl-list__item mdl-list__item--three-line">
                             <span class="mdl-list__item-primary-content">
                                 <span>
-                                    Exporting idea as text file
-                                </span>
-                                <span class="mdl-list__item-text-body">
-                                    The app will be able to export the idea and
-                                    its features as a printable text document.
-                                </span>
-                            </span>
-                        </li>
-                        <li class="mdl-list__item mdl-list__item--three-line">
-                            <span class="mdl-list__item-primary-content">
-                                <span>
-                                    Export idea to email
-                                </span>
-                                <span class="mdl-list__item-text-body">
-                                    The app will access you local email 
-                                    application and create an email with the 
-                                    specifics of the idea.
-                                </span>
-                            </span>
-                        </li>
-                        <li class="mdl-list__item mdl-list__item--three-line">
-                            <span class="mdl-list__item-primary-content">
-                                <span>
                                     Automatic Rating System
                                 </span>
                                 <span class="mdl-list__item-text-body">
@@ -53,22 +30,10 @@
                                 </span>
                             </span>
                         </li>
-                        <li class="mdl-list__item mdl-list__item--three-line">
-                            <span class="mdl-list__item-primary-content">
-                                <span>
-                                    Sorting Ideas
-                                </span>
-                                <span class="mdl-list__item-text-body">
-                                    The app's Idea Hub will allow you to sort
-                                    ideas based on rating, idea title, in 
-                                    progress or complete.
-                                </span>
-                            </span>
-                        </li>
                     </ul>
                     <br />
                     <div style="margin-top: 15px;">
-                        <a href="<c:url value='/auth' />">
+                        <a href="<c:url value='/auth.html' />">
                         <c:choose><c:when test="${userId ne null}">Click here to continue</c:when><c:otherwise>Click here to login</c:otherwise></c:choose>
                         </a>
                     </div>

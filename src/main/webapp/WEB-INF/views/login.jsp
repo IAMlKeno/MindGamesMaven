@@ -4,10 +4,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="idea" tagdir="/WEB-INF/tags" %>
 <c:set var="title"><spring:message code='header.login' /></c:set>
-<c:set var="formUrl"><c:url value='/login' /></c:set>
+<c:set var="formUrl"><c:url value='/login.html' /></c:set>
 <%@include file="../jspf/fragments/head.jspf" %>
 <script src="<c:url value="/resources/modal/modal.js" />" type="text/javascript"></script>
-
 <link rel="stylesheet" href="<c:url value="/resources/fragments/css/loginStyle.css" />">
 
 <body>
@@ -29,9 +28,9 @@
                         </div>
                         <div class="mdl-card__supporting-text">
                             <c:if test="${not empty loginAuth && loginAuth eq false}">
-                                <div class="loginError" style="color:red">
-                                    <spring:message code='phrases.invalid_username_password' />
-                                </div>
+                            <div class="loginError" style="color:red">
+                                <spring:message code='phrases.invalid_username_password' />
+                            </div>
                             </c:if>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                 <form:input path="username" class="mdl-textfield__input notEmpty" />
@@ -65,7 +64,6 @@
                 $('#username').focus();
                 $("#signupButton").click(function () {
                     $("body").find("#registerFormModal").css("display", "block");
-//        $("body").find("#ideaForm").css("display", "none");
                 });
                 
                 // When the user clicks on <span> (x), close the modal

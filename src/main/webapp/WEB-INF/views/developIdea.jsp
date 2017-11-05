@@ -7,15 +7,11 @@
 <body>
     <ul style="margin:auto">
         <li>
-            <a href="" id="idea${ideaWrapper.idea.ideaId}">
-                ${ideaWrapper.idea.ideaTitle}
-            </a>
+            <a href="" id="idea${ideaWrapper.idea.ideaId}">${ideaWrapper.idea.ideaTitle}</a>
             <ul class="features">
                 <c:forEach items="${ideaWrapper.features}" var="feature">
                     <li>
-                        <a href="" title="${feature.descriptionShort}" id="${feature.featureId}">
-                            ${feature.descriptionShort}
-                        </a>
+                        <a href="" title="${feature.descriptionShort}" id="${feature.featureId}">${feature.descriptionShort}</a>
                     </li>
                 </c:forEach>
             </ul>
@@ -48,10 +44,7 @@
     <script>
         var featJson = '${fn:replace(featMap, "\\", "\\\\")}';
         function editIdeaTitle(idea) {
-            var ideaTitle = $(idea).text().trim();
             var ideaModal = $("body").find("#editIdeaFormModal");
-//            ideaModal.find("#theIdeaTitle").val(ideaTitle);
-
             ideaModal.show();
         }
 
@@ -74,20 +67,20 @@
         }
 
         $("#saveIdea").click(function () {
-            var url = "<c:url value="/save" />";
+            var url = "<c:url value="/save.html" />";
             window.location.assign(url);
         });
 
         $("#deleteIdea").click(function () {
             var proceed = confirm("<spring:message code='phrases.confirm_delete_idea' />");
-            var deleteUrl = '<c:url value="/develop/idea/remove" />';
+            var deleteUrl = '<c:url value="/develop/idea/remove.html" />';
             if (proceed) {
                 window.location.assign(deleteUrl);
             }
         });
 
         $("#cancelEdit").click(function () {
-            window.location.assign("/MindGamesMaven/ideaHub");
+            window.location.assign("/MindGamesMaven/ideaHub.html");
         });
 
         function populateForm(data) {

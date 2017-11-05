@@ -19,7 +19,8 @@
                 </button>
             </div>
             <div class="sortDiv">
-                <c:set var="formUrl"><c:url value="/ideaHub" /></c:set>
+                <h4 style="margin:0">Sort By</h4>
+                <c:set var="formUrl"><c:url value="/ideaHub.html" /></c:set>
                 <form:form method="get" modelAttribute="sortForm" action="${formUrl}">
                     <form:select path="sortBy" class="_sortBy"> <%--TODO: move this to the database somehow --%>
                         <form:option value="">Sort By...</form:option>
@@ -61,7 +62,7 @@
                 }
             }
         });
-        
+
         $('._sortDir').parents('form').submit(function () {
             setupSortCookies();
         });
@@ -85,7 +86,7 @@
         });
 
         function updateProgress(elem, changeOther) {
-            var url = "<c:url value="/ideaHub/progress" />";
+            var url = "<c:url value="/ideaHub/progress.html" />";
             var checkbox = $(elem);
             var ideaId = checkbox.parents("form").find("[name='ideaId']").val();
             var completeCheckbox = $(checkbox.parent("div")
@@ -96,7 +97,6 @@
                 if (confirmChange) {
                     $(completeCheckbox).prop("checked", false);
                 } else {
-//                    proceed = false;
                     checkbox.prop("checked", false);
                 }
             }
@@ -121,7 +121,7 @@
         }
 
         function updateStatus(elem, changeOther) {
-            var url = "<c:url value="/ideaHub/status" />";
+            var url = "<c:url value="/ideaHub/status.html" />";
             var checkbox = $(elem);
             var ideaId = checkbox.parents("form").find("[name='ideaId']").val();
             var progressCheckbox = $(checkbox.parent("div")
@@ -131,7 +131,6 @@
                 if (confirm("<spring:message code='phrases.confirm_status_change' />")) {
                     $(progressCheckbox).prop("checked", false);
                 } else {
-//                    proceed = false;
                     checkbox.prop("checked", false);
                 }
             }
@@ -154,23 +153,21 @@
             }
             return progressCheckbox;
         }
-        
-        $("._export").click(function(){
-            var url = "<c:url value='/file' />";
-            var emailUrl = "<c:url value='/email' />";
+
+        $("._export").click(function () {
+            var url = "<c:url value='/file.html' />";
             var ideaIdVar = $(this).parents('form').find('input[name="ideaId"]').val();
             var action = $(this).prev('._exportActionSelect').val();
-            switch(action) {
+            switch (action) {
                 case "text":
-                    window.location.assign(url + "?ideaId="+ideaIdVar);
+                    window.location.assign(url + "?ideaId=" + ideaIdVar);
                     break;
                 case "email":
-//                    window.location.assign(emailUrl + "?ideaId="+ideaIdVar);
                     openSendToForm(ideaIdVar);
                     break;
             }
         });
-        
+
         function openSendToForm(ideaId) {
             var sendToModal = $("#emailToFormModal");
             sendToModal.find("input[name='ideaId']").val(ideaId);

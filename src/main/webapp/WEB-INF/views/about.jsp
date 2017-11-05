@@ -30,14 +30,10 @@
                         build with them!
                         <br />
                         What are you waiting for? Get started!<br /><br />
-                        <a href="<c:url value='/auth' />">
+                        <a href="<c:url value='/auth.html' />">
                             <c:choose>
-                                <c:when test="${userId ne null}">
-                                    Click here to continue
-                                </c:when>
-                                <c:otherwise>
-                                    Click here to login
-                                </c:otherwise>
+                                <c:when test="${userId ne null}">Click here to continue</c:when>
+                                <c:otherwise>Click here to login</c:otherwise>
                             </c:choose>
                         </a>
                     </p>

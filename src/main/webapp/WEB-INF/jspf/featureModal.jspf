@@ -2,7 +2,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<c:set var="formUrl"><c:url value='/develop/add' /></c:set>
+<c:set var="formUrl"><c:url value='/develop/add.html' /></c:set>
 <!-- Modal content -->
 <div id="featureFormModal" class="modal">
     <!-- Modal content -->
@@ -16,8 +16,8 @@
                 <div class="modalForm">
                     <form:hidden path="idea.ideaId" />
                     <c:forEach items="${ideaWrapper.features}" var="feat" varStatus="i">
-                        <input type="hidden" name="features[${i.index}].featureId" 
-                               value="${feat.featureId}"  />
+                    <input type="hidden" name="features[${i.index}].featureId" 
+                           value="${feat.featureId}"  />
                     </c:forEach>
                     <form:hidden path="newFeature.ideaId" value="${ideaWrapper.idea.ideaId}" />
                     <spring:message code="phrases.enter_feature_title" />:<br />
@@ -32,21 +32,21 @@
                             <div class="mdl-textfield mdl-js-textfield">
                                 <form:textarea path="newFeature.descriptionLong" class="mdl-textfield__input notEmpty" rows= "6"></form:textarea>
                                 <form:label path="newFeature.descriptionLong" class="mdl-textfield__label"><spring:message code="label.description" /></form:label>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <input type="button" class="mdl-button mdl-js-button 
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="mdl-button mdl-js-button 
                            mdl-button--colored mdl-button--raised modalAcceptButton"
                            value="<spring:message code='button_label.add' />"
-                           onclick="validate(this)" />
-                    <span>&nbsp;</span>
-                    <input type="button" class="mdl-button mdl-js-button 
-                           mdl-button--accent mdl-button--raised modalCancelButton"
-                           value="<spring:message code='button_label.cancel' />"/>
-                </div>
+                    onclick="validate(this)" />
+                <span>&nbsp;</span>
+                <input type="button" class="mdl-button mdl-js-button 
+                       mdl-button--accent mdl-button--raised modalCancelButton"
+                       value="<spring:message code='button_label.cancel' />"/>
+            </div>
         </form:form>
     </div>
 </div>
