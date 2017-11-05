@@ -150,7 +150,7 @@ public class IdeaHubController {
     }
 
     protected List<String> getLines(Idea idea, List<Feature> features) {
-        String lineBreak = "\n"; // gives one blank line
+        String lineBreak = "\r\n"; // gives one blank line
         String line = "---------------------------------------------------------";
         String description = "Description";
         String featuresStr = "Features";
@@ -159,7 +159,6 @@ public class IdeaHubController {
         String created = "Created";
         String inProgressStr = "In Progress";
         String completeStr = "Compeleted";
-        String lineSeparator = "line.separator";
 
         List<String> lines = new ArrayList<String>();
 
@@ -169,13 +168,9 @@ public class IdeaHubController {
             heading.append(alias);
         }
         lines.add(heading.toString());
-        lines.add(System.getProperty(lineSeparator));
-        
         if (idea.getCreatedDate() != null && !idea.getCreatedDate().isEmpty()) {
             lines.add(created + ": " + idea.getCreatedDate());
-            lines.add(System.getProperty(lineSeparator));
         }
-        
         String status = "";
         if (idea.isIsCompleted()) {
             status = completeStr;
@@ -183,29 +178,21 @@ public class IdeaHubController {
             status = inProgressStr;
         }
         lines.add(statusStr + ": " + status);
-        lines.add(System.getProperty(lineSeparator));
         lines.add(line);
-        lines.add(System.getProperty(lineSeparator));
         lines.add(description);
-        lines.add(System.getProperty(lineSeparator));
         if (idea.getDescriptionLong() == null
                 || idea.getDescriptionLong().equals("")) {
             lines.add(notAvailable);
         } else {
             lines.add(idea.getDescriptionLong());
         }
-        lines.add(System.getProperty(lineSeparator));
-        lines.add(System.getProperty(lineSeparator));
+        lines.add(lineBreak);
         lines.add(featuresStr);
-        lines.add(System.getProperty(lineSeparator));
         lines.add(line);
-        lines.add(System.getProperty(lineSeparator));
         for (Feature feat : features) {
             lines.add("- " + feat.getDescriptionShort());
-            lines.add(System.getProperty(lineSeparator));
             lines.add(feat.getDescriptionLong());
-            lines.add(System.getProperty(lineSeparator));
-            lines.add(System.getProperty(lineSeparator));
+            lines.add(lineBreak);
         }
 
         return lines;
