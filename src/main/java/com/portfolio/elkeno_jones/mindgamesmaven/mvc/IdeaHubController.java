@@ -71,7 +71,7 @@ public class IdeaHubController {
 
         String exportFileName = ideaToExport.getIdeaTitle() + ".txt";
         Path file = Paths.get(exportFileName);
-        Files.write(file, lines, Charset.forName("UTF-8"));
+        Files.write(file, lines, Charset.forName("US-ASCII"));
 
         response.setContentType("text/plain");
         response.addHeader("Content-Disposition", "attachment; filename=" + exportFileName);
@@ -111,7 +111,7 @@ public class IdeaHubController {
         try {
             String exportFileName = ideaToExport.getIdeaTitle() + ".txt";
             Path file = Paths.get(exportFileName);
-            Files.write(file, lines, Charset.forName("UTF-8"));
+            Files.write(file, lines, Charset.forName("US-ASCII"));
 
             if (subject.isEmpty()) {
                 subject = ideaToExport.getIdeaTitle();
