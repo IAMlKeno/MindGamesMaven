@@ -39,3 +39,7 @@
     text-align: right; 
     padding-right:10px
 }
+
+.statusCheckbox label {
+    cursor: pointer;
+}

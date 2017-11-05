@@ -20,22 +20,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class CoreController {
 
     protected static final String LOGIN_VIEW = "login";
-    protected static final String AUTHENTICATE_URL = "/auth.html";
-    @Deprecated
-    protected static final String AUTHENTICATE_OLD_URL = "/auth";
-    protected static final String LOGOUT_URL = "/logout.html";
-    protected static final String LOGIN_URL = "/login.html";
+    protected static final String AUTHENTICATE_URL = "/auth";
+    protected static final String LOGOUT_URL = "/logout";
+    protected static final String LOGIN_URL = "/login";
 
     private static final String IDEA_HUB_VIEW = "ideaHub";
-    private static final String IDEA_HUB_URL = "/ideaHub.html";
+    private static final String IDEA_HUB_URL = "/ideaHub";
 
     private static final String ACCOUNT_VIEW = "account";
-    private static final String ACCOUNT_URL = "/account.html";
-    private static final String ACCOUNT_UPDATE_URL = "/account/update.html";
+    private static final String ACCOUNT_URL = "/account";
+    private static final String ACCOUNT_UPDATE_URL = "/account/update";
 
     private static final String REDIRECT_VIEW = "redirect";
 
-    private static final String REGISTER_URL = "/register.html";
+    private static final String REGISTER_URL = "/register";
     private static final String REGISTER_VIEW = "register";
 
     private static final String ERROR_VIEW = "error";
@@ -46,7 +44,7 @@ public class CoreController {
     @Autowired
     private SecurityImpl sec;
 
-    @RequestMapping(value = {AUTHENTICATE_URL, AUTHENTICATE_OLD_URL})
+    @RequestMapping(value = AUTHENTICATE_URL)
     public String setLanding(Model model, HttpServletRequest req) {
         String landingPage;
 

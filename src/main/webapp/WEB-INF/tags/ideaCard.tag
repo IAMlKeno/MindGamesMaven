@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="<c:url value="/resources/fragments/css/ideaCardStyle.css" />">
 
-<form action="<c:url value='/develop.html' />" method="POST">
+<form action="<c:url value='/develop' />" method="POST">
     <input type="hidden" name="ideaId" value="${ideaWrapper.idea.ideaId}" />
     <div class="mdl-card mdl-shadow--2dp ideaCard">
         <div class="mdl-card__title ideaTitleDiv">
@@ -19,10 +19,10 @@
                 <c:if test="${ideaWrapper.idea.dateCreated ne null}"><span><small>Created: ${ideaWrapper.idea.createdDate}</small></span></c:if>
             </div>
             <div class="statusCheckbox">
-                <label><spring:message code="label.in_progress" /></label>: <input type="checkbox" class="inProgressCheckbox" <c:if test="${ideaWrapper.idea.isInProgress}">checked</c:if> />
+                <label><spring:message code="label.in_progress" />: <input type="checkbox" class="inProgressCheckbox" <c:if test="${ideaWrapper.idea.isInProgress}">checked</c:if> /></label>
             </div>
             <div class="statusCheckbox">
-                <label><spring:message code="label.complete" /></label>: <input type="checkbox" class="completeCheckbox" <c:if test="${ideaWrapper.idea.isCompleted}">checked</c:if> />
+                <label><spring:message code="label.complete" />: <input type="checkbox" class="completeCheckbox" <c:if test="${ideaWrapper.idea.isCompleted}">checked</c:if> /></label>
             </div>
             <div class="exportActionDiv">
                 <select class="_exportActionSelect">

@@ -67,20 +67,20 @@
         }
 
         $("#saveIdea").click(function () {
-            var url = "<c:url value="/save.html" />";
+            var url = "<c:url value="/save" />";
             window.location.assign(url);
         });
 
         $("#deleteIdea").click(function () {
             var proceed = confirm("<spring:message code='phrases.confirm_delete_idea' />");
-            var deleteUrl = '<c:url value="/develop/idea/remove.html" />';
+            var deleteUrl = '<c:url value="/develop/idea/remove" />';
             if (proceed) {
                 window.location.assign(deleteUrl);
             }
         });
 
         $("#cancelEdit").click(function () {
-            window.location.assign("/MindGamesMaven/ideaHub.html");
+            window.location.assign("/MindGamesMaven/ideaHub");
         });
 
         function populateForm(data) {

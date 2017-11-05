@@ -39,14 +39,14 @@ public class DevelopController {
 
     private static final String DEVELOP_IDEA_VIEW = "developIdea";
 
-    private static final String REMOVE_FEATURE_URL = "/develop/feature/remove.html";
-    private static final String REMOVE_IDEA_URL = "/develop/idea/remove.html";
+    private static final String REMOVE_FEATURE_URL = "/develop/feature/remove";
+    private static final String REMOVE_IDEA_URL = "/develop/idea/remove";
     
-    private static final String SEARCH_RESULT_URL = "/search/result.html";
+    private static final String SEARCH_RESULT_URL = "/search/result";
 
-    private static final String IDEA_HUB_URL = "/ideaHub.html";
+    private static final String IDEA_HUB_URL = "/ideaHub";
     
-    protected static final String AUTHENTICATE_URL = "/auth.html";
+    protected static final String AUTHENTICATE_URL = "/auth";
 
     private static final String REDIRECT_VIEW = "/redirect";
     private static final String ERROR_VIEW = "error";

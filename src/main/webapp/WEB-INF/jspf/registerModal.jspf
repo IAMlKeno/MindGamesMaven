@@ -7,7 +7,7 @@
 <div id="registerFormModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
-        <c:set var="action"><c:url value='/register.html' /></c:set>
+        <c:set var="action"><c:url value='/register' /></c:set>
         <form:form action="${action}" commandName="user" method="POST">
             <div class="modal-header">
                 <span class="close">&times;</span>

@@ -7,7 +7,7 @@
 <%@include file="../jspf/fragments/head.jspf" %>
 <link rel="stylesheet" href="<c:url value="/resources/ideaHub.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/fragments/css/errorStyle.css" />">
-<c:url value="/account.html" var="formUrl" />
+<c:url value="/account" var="formUrl" />
 <body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <%@include file="../jspf/fragments/menu.jspf" %>

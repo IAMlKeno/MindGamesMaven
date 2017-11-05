@@ -47,35 +47,33 @@ public class MindGamesController {
     private static final String IDEA_WRAPPER = "ideaWrapper";
 
     /* Idea hub view */
-    private static final String IDEA_HUB_URL = "/ideaHub.html";
-    @Deprecated
-    private static final String IDEA_HUB_OLD_URL = "/ideaHub";
+    private static final String IDEA_HUB_URL = "/ideaHub";
     private static final String IDEA_HUB_VIEW = "ideaHub";
-    private static final String IDEA_HUB_UPDATE_PROGRESS_URL = "/ideaHub/progress.html";
-    private static final String IDEA_HUB_UPDATE_STATUS_URL = "/ideaHub/status.html";
+    private static final String IDEA_HUB_UPDATE_PROGRESS_URL = "/ideaHub/progress";
+    private static final String IDEA_HUB_UPDATE_STATUS_URL = "/ideaHub/status";
 
     /* Save*/
     private static final String SAVE_URL = "/save";
 
     /* Develop Idea */
     private static final String DEVELOP_IDEA_VIEW = "developIdea";
-    private static final String DEVELOP_NEW_IDEA_URL = "/develop/newIdea.html";
-    private static final String DEVELOP_IDEA_URL = "/develop.html";
-    private static final String ADD_FEATURE_URL = "/develop/add.html";
-    private static final String UPDATE_FEATURE_URL = "/develop/update.html";
+    private static final String DEVELOP_NEW_IDEA_URL = "/develop/newIdea";
+    private static final String DEVELOP_IDEA_URL = "/develop";
+    private static final String ADD_FEATURE_URL = "/develop/add";
+    private static final String UPDATE_FEATURE_URL = "/develop/update";
 
     /* Redirect and error*/
     private static final String ERROR_VIEW = "error";
     private static final String REDIRECT_VIEW = "/redirect";
 
     /* */
-    private static final String GET_FEATURE_URL = "/develop/feature.html";
-    private static final String UPDATE_IDEA_TITLE_URL = "/develop/idea/update.html";
+    private static final String GET_FEATURE_URL = "/develop/feature";
+    private static final String UPDATE_IDEA_TITLE_URL = "/develop/idea/update";
 
-    private static final String SEARCH_URL = "/search.html";
-    protected static final String AUTHENTICATE_URL = "/auth.html";
+    private static final String SEARCH_URL = "/search";
+    protected static final String AUTHENTICATE_URL = "/auth";
 
-    @RequestMapping(value = {IDEA_HUB_URL, IDEA_HUB_OLD_URL})
+    @RequestMapping(value = IDEA_HUB_URL)
     public String home(Model model, HttpServletRequest req,
             @ModelAttribute("sortForm") SortForm sortForm,
             @CookieValue(value="sortDir", required = false) String sortDir,
@@ -219,7 +217,7 @@ public class MindGamesController {
         model.addAttribute("ideaWrapper", ideaWrapper);
         model.addAttribute("featMap", gson.toJson(featMap));
 
-        model.addAttribute("redirectUrl", "/develop.html?reload=true");
+        model.addAttribute("redirectUrl", "/develop?reload=true");
         return REDIRECT_VIEW;
     }
 

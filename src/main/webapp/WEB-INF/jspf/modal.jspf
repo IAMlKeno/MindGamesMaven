@@ -6,7 +6,7 @@
 <div id="ideaFormModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
-        <c:set var="action"><c:url value='/develop/newIdea.html' /></c:set>
+        <c:set var="action"><c:url value='/develop/newIdea' /></c:set>
         <form:form action="${action}" commandName="newIdea" method="POST">
             <div class="modal-header">
                 <span class="close">&times;</span>

@@ -11,9 +11,9 @@
         </button>
         <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn"
             htmlFor="hdrbtn">
-            <a href='<c:url value="/about.html" />'><li class="mdl-menu__item">About</li></a>
+            <a href='<c:url value="/about" />'><li class="mdl-menu__item">About</li></a>
             <c:if test="${userId ne null}">
-                <a href='<c:url value="/account.html" />'><li class="mdl-menu__item">My Account</li></a>
+                <a href='<c:url value="/account" />'><li class="mdl-menu__item">My Account</li></a>
             </c:if>
         </ul>
     </div>
@@ -21,33 +21,33 @@
 <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
     <!--    <span class='mdl-layout-title'>Welcome</span>-->
     <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" style="height:100%">
-        <a class="mdl-navigation__link" href="<c:url value='ideaHub.html' /> ">
+        <a class="mdl-navigation__link" href="<c:url value='ideaHub' /> ">
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
                 home
             </i>
             Home
         </a>
         <c:if test="${userId ne null}">
-        <a class="mdl-navigation__link" href='<c:url value="/account.html" />'>
+        <a class="mdl-navigation__link" href='<c:url value="/account" />'>
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
                 account_circle
             </i>
             My Account
         </a> 
         </c:if>
-        <a class="mdl-navigation__link" href='<c:url value="/about.html" />' >
+        <a class="mdl-navigation__link" href='<c:url value="/about" />' >
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
                 info
             </i>
             About Mind Games
         </a>
-        <a class="mdl-navigation__link" href='<c:url value="/howtouse.html" />'>
+        <a class="mdl-navigation__link" href='<c:url value="/howtouse" />'>
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
                 report
             </i>
             How to Use
         </a>
-        <a class="mdl-navigation__link" href='<c:url value="/upcoming.html" />'>
+        <a class="mdl-navigation__link" href='<c:url value="/upcoming" />'>
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
                 announcement
             </i>
@@ -58,7 +58,7 @@
         <span class="visuallyhidden">
             &nbsp;
         </span>
-        <c:set var="logout"><c:url value="/logout.html" /></c:set>
+        <c:set var="logout"><c:url value="/logout" /></c:set>
         <a class="mdl-navigation__link" href="${logout}">
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
                 help_outline

@@ -20,7 +20,7 @@
                     <p class="errorMessage" style="padding:5px">
                         Click on one of the labels below to get more details!
                         <br />
-                        <a href="<c:url value='/auth.html' />">
+                        <a href="<c:url value='/auth' />">
                         <c:choose><c:when test="${userId ne null}">Or click here to continue</c:when><c:otherwise>Or click here to login</c:otherwise></c:choose>
                         </a>
                     </p>

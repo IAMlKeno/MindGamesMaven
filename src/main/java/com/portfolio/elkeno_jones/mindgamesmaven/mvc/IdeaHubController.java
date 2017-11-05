@@ -43,10 +43,10 @@ public class IdeaHubController {
     private static final String ERROR_VIEW = "error";
     private static final String REDIRECT_VIEW = "/redirect";
 
-    private static final String EXPORT_FILE_URL = "/file.html";
-    private static final String EMAIL_FILE_URL = "/email.html";
+    private static final String EXPORT_FILE_URL = "/file";
+    private static final String EMAIL_FILE_URL = "/email";
 
-    protected static final String AUTHENTICATE_URL = "/auth.html";
+    protected static final String AUTHENTICATE_URL = "/auth";
 
     @RequestMapping(value = EXPORT_FILE_URL, method = {RequestMethod.POST, RequestMethod.GET})
     public ResponseEntity<?> downloadTextResource(HttpServletRequest req,

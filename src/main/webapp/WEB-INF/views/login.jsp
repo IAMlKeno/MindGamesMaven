@@ -4,7 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="idea" tagdir="/WEB-INF/tags" %>
 <c:set var="title"><spring:message code='header.login' /></c:set>
-<c:set var="formUrl"><c:url value='/login.html' /></c:set>
+<c:set var="formUrl"><c:url value='/login' /></c:set>
 <%@include file="../jspf/fragments/head.jspf" %>
 <script src="<c:url value="/resources/modal/modal.js" />" type="text/javascript"></script>
 <link rel="stylesheet" href="<c:url value="/resources/fragments/css/loginStyle.css" />">

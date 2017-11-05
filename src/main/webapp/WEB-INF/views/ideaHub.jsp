@@ -20,7 +20,7 @@
             </div>
             <div class="sortDiv">
                 <h4 style="margin:0">Sort By</h4>
-                <c:set var="formUrl"><c:url value="/ideaHub.html" /></c:set>
+                <c:set var="formUrl"><c:url value="/ideaHub" /></c:set>
                 <form:form method="get" modelAttribute="sortForm" action="${formUrl}">
                     <form:select path="sortBy" class="_sortBy"> <%--TODO: move this to the database somehow --%>
                         <form:option value="">Sort By...</form:option>
@@ -86,10 +86,10 @@
         });
 
         function updateProgress(elem, changeOther) {
-            var url = "<c:url value="/ideaHub/progress.html" />";
+            var url = "<c:url value="/ideaHub/progress" />";
             var checkbox = $(elem);
             var ideaId = checkbox.parents("form").find("[name='ideaId']").val();
-            var completeCheckbox = $(checkbox.parent("div")
+            var completeCheckbox = $(checkbox.parents("div")
                     .siblings(".statusCheckbox").find(".completeCheckbox"));
             var proceed = true;
             if (changeOther === true && $(completeCheckbox).is(":checked")) {
@@ -121,10 +121,10 @@
         }
 
         function updateStatus(elem, changeOther) {
-            var url = "<c:url value="/ideaHub/status.html" />";
+            var url = "<c:url value="/ideaHub/status" />";
             var checkbox = $(elem);
             var ideaId = checkbox.parents("form").find("[name='ideaId']").val();
-            var progressCheckbox = $(checkbox.parent("div")
+            var progressCheckbox = $(checkbox.parents("div")
                     .siblings(".statusCheckbox").find(".inProgressCheckbox"));
             var proceed = true;
             if (changeOther === true && $(progressCheckbox).is(":checked")) {
@@ -155,7 +155,7 @@
         }
 
         $("._export").click(function () {
-            var url = "<c:url value='/file.html' />";
+            var url = "<c:url value='/file' />";
             var ideaIdVar = $(this).parents('form').find('input[name="ideaId"]').val();
             var action = $(this).prev('._exportActionSelect').val();
             switch (action) {

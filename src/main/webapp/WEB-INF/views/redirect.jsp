@@ -12,7 +12,7 @@
         <c:set var="redirect">
             <c:choose>
             <c:when test="${redirectUrl ne null}">${redirectUrl}</c:when>
-            <c:otherwise>/auth.html</c:otherwise>
+            <c:otherwise>/auth</c:otherwise>
             </c:choose>
         </c:set>
         $(function(){
