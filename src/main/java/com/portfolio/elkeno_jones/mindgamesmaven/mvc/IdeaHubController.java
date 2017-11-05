@@ -69,7 +69,7 @@ public class IdeaHubController {
         List<Feature> theFeatures = featureDao.getFeaturesByIdeaId(ideaId);
         List<String> lines = getLines(ideaToExport, theFeatures);
 
-        String exportFileName = ideaToExport.getIdeaTitle() + ".txt";
+        String exportFileName = ideaToExport.getIdeaTitle() + ".rtf";
         Path file = Paths.get(exportFileName);
         Files.write(file, lines, Charset.forName("US-ASCII"));
 
@@ -109,7 +109,7 @@ public class IdeaHubController {
         List<String> lines = getLines(ideaToExport, theFeatures);
 
         try {
-            String exportFileName = ideaToExport.getIdeaTitle() + ".txt";
+            String exportFileName = ideaToExport.getIdeaTitle() + ".rtf";
             Path file = Paths.get(exportFileName);
             Files.write(file, lines, Charset.forName("US-ASCII"));
 
