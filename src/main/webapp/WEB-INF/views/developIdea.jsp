@@ -80,7 +80,7 @@
         });
 
         $("#cancelEdit").click(function () {
-            window.location.assign("/MindGamesMaven/ideaHub");
+            window.location.assign("<c:url value='/ideaHub' />");
         });
 
         function populateForm(data) {
