@@ -39,7 +39,7 @@
                                 <label for="emailBody" class="mdl-textfield__label">Email body (optional):</label>
                             </div>
                         </div>
-                        <div style="display:inline">Characters remaining: <span class="_emailCharactersRemaining">124</span></div>
+                        <div class="charRemainingDiv" style="display:inline">Characters remaining: <span class="_emailCharactersRemaining">124</span></div>
                     </div>
                 </div>
             </div>

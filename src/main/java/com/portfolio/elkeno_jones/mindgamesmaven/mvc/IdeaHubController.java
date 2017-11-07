@@ -158,7 +158,7 @@ public class IdeaHubController {
         String statusStr = "Status";
         String created = "Created";
         String inProgressStr = "In Progress";
-        String completeStr = "Compeleted";
+        String completeStr = "Completed";
 
         List<String> lines = new ArrayList<String>();
 

@@ -23,29 +23,34 @@
                     <form class="_accountUpdateForm" action="${formUrl}" method="POST">
                         <input type="hidden" name="userId" value="${userAccount.userId}" />
                         <div>
-                            <label for="firstName">First Name:</label>
-                            <input type="text" id="firstName" name="firstName" class="notEmpty" value="${userAccount.firstName}" />
+                            <table class="myAccountTable">
+                                <tr>
+                                    <td class="label"><label for="firstName">First Name:</label></td>
+                                    <td class="value"><input type="text" id="firstName" name="firstName" class="notEmpty" value="${userAccount.firstName}" /></td>
+                                    <td class="label"><label for="lastName">Last Name:</label></td>
+                                    <td class="value"><input type="text" id="lastName" name="lastName" class="notEmpty" value="${userAccount.lastName}"/></td>
+                                </tr>
 
-                            <label for="lastName">Last Name:</label>
-                            <input type="text" id="lastName" name="lastName" class="notEmpty" value="${userAccount.lastName}"/>
+                                <tr>
+                                    <td class="label"><label for="username">Username:</label></td>
+                                    <td class="value"><input type="text" id="username" name="username" class="notEmpty" value="${userAccount.username}" /></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="label"><label for="emailAddress">Email Address:</label></td>
+                                    <td class="value"><input type="text" id="emailAddress" name="emailAddress" class="notEmpty _emailInput" value="${userAccount.emailAddress}"/></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="label"><label for="password">Password:</label></td>
+                                    <td class="value"><input type="password" id="password" name="password" class="notEmpty" value="${userAccount.password}" /></td>
+                                    <td class="label"><label for="confirmPassword">Confirm Password</label></td>
+                                    <td class="value"><input type="password" id="confirmPassword" name="confirmPassword" class="notEmpty" value="${userAccount.password}"/></td>
+                                </tr>
+                            </table>
                         </div>
-                        <br />
-                        <div>
-                            <label for="username">Username:</label>
-                            <input type="text" id="username" name="username" class="notEmpty" value="${userAccount.username}" />
-
-                            <label for="emailAddress">Email Address:</label>
-                            <input type="text" id="emailAddress" name="emailAddress" class="notEmpty _emailInput" value="${userAccount.emailAddress}"/>
-                        </div>
-                        <br />
-                        <div>
-                            <label for="password">Password:</label>
-                            <input type="password" id="password" name="password" class="notEmpty" value="${userAccount.password}" />
-
-                            <label for="confirmPassword">Confirm Password</label>
-                            <input type="password" id="confirmPassword" name="confirmPassword" class="notEmpty" value="${userAccount.password}"/>
-                        </div>
-
                         <hr />
                         <input type="button" value="Update" onclick="validate(this)"
                                class="mdl-button mdl-js-button mdl-button--accent mdl-button--raised"/>

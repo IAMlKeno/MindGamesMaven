@@ -96,3 +96,38 @@
     color: green;
     font-weight: bold;
 }
+
+.myAccountTable .label {
+    text-align: right;
+}
+
+@media only screen 
+and (max-device-width: 600px)
+{
+    .myAccountTable {
+        margin: auto;
+        width: 80%;
+        border-collapse: separate;
+        empty-cells: hide
+    }
+    
+    .myAccountTable .label:nth-child(odd) {
+        background-color: lightgray;
+    }
+    
+    .myAccountTable .label {
+        text-align: center;
+    }
+    
+    .myAccountTable .value {
+        padding-bottom: 5px;
+    }
+    
+    .myAccountTable td {
+        display: block;
+    }
+    
+    .charRemainingDiv{
+        display: block;
+    }
+}
