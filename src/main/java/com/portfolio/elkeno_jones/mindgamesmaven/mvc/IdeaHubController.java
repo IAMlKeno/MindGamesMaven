@@ -143,7 +143,7 @@ public class IdeaHubController {
                     file, exportFileName);
 
         } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
+            ex.printStackTrace();
             return new ResponseEntity(ex.getStackTrace(), HttpStatus.BAD_GATEWAY);
         }
         return new ResponseEntity("Email sent.", HttpStatus.OK);
