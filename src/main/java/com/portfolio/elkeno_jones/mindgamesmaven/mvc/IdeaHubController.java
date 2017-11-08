@@ -111,7 +111,7 @@ public class IdeaHubController {
         try {
             String exportFileName = ideaToExport.getIdeaTitle() + ".rtf";
             Path file = Paths.get(exportFileName);
-            Files.write(file, lines, Charset.forName("US-ASCII"));
+            Files.write(file, lines, Charset.forName("UTF-8"));
 
             if (subject.isEmpty()) {
                 subject = ideaToExport.getIdeaTitle();
