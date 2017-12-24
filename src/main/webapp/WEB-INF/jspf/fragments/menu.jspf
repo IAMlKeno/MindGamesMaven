@@ -46,7 +46,7 @@
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
                 info
             </i>
-            About Mind Games
+            About Idea Organizer
         </a>
         <a class="mdl-navigation__link" href='<c:url value="/howtouse" />'>
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">

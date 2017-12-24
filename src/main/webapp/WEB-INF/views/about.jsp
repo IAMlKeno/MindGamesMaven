@@ -18,11 +18,11 @@
                 <hr />
                 <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-phone errorMessageDiv">
                     <p class="errorMessage" style="padding:5px">
-                        Mind games web app is an application intended to help
+                        Idea organizer web app is an application intended to help
                         you plan or decide what your next project-venture should 
                         be.
                         <br />
-                        You can use the Mind Games web application to build and 
+                        You can use the Idea organizer web application to build and 
                         develop your next great idea!
                         <br />
                         It encompasses using a mind map to visually represent 
