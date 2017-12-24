@@ -35,6 +35,19 @@
                 </div>
             </div>  
 
+                <div class="mdl-grid" style="margin-bottom: -100px">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone">
+                    <h3 class="landingText">Email or export as text file</h3>
+                    <p>
+                        Email a great idea to a friend or colleague. Or export
+                        as a text file.
+                    </p>
+                </div>
+                <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone">
+                    <img style="height: 80%" src="<c:url value='/resources/images/email_export.jpg' />" alt="develop idea screen" />
+                </div>
+            </div>
+                
             <div class="mdl-grid" style="margin-bottom: -100px">
                 <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone">
                     <h3 class="landingText">Develop your new great idea</h3>
