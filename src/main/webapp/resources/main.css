@@ -110,24 +110,34 @@ and (max-device-width: 600px)
         border-collapse: separate;
         empty-cells: hide
     }
-    
+
     .myAccountTable .label:nth-child(odd) {
         background-color: lightgray;
     }
-    
+
     .myAccountTable .label {
         text-align: center;
     }
-    
+
     .myAccountTable .value {
         padding-bottom: 5px;
     }
-    
+
     .myAccountTable td {
         display: block;
     }
-    
+
     .charRemainingDiv{
         display: block;
     }
+}
+
+.mdl-button-mimic {
+    border-radius: 5px;
+    background-color: rgb(64,196,255);
+}
+
+.landingText {
+    color: #757575;
+    font-weight: bold;
 }

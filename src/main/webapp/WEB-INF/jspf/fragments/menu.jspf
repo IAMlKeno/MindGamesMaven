@@ -1,41 +1,46 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="idea" tagdir="/WEB-INF/tags" %>
-<c:set var="logout"><c:url value="/logout" /></c:set>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<c:url value="/logout" var="logout" />
+<c:url value ="/auth" var="login"/>
 <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
     <div class="mdl-layout__header-row">
         <span class="mdl-layout-title">${title}</span>
         <div class="mdl-layout-spacer"></div>
+        <c:if test="${isLanding}">
+            <button class="_signUpButton mdl-button-mimic"><spring:message code="label.sign_up" /></button>&nbsp;<button class="_signInButton mdl-button-mimic"><spring:message code="label.sign_in" /></button>
+        </c:if>
         <c:if test="${userId ne null}"><idea:searchIdea /></c:if>
-        <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
-            <i class="material-icons">more_vert</i>
-        </button>
-        <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn"
-            htmlFor="hdrbtn">
-            <a href='<c:url value="/about" />'><li class="mdl-menu__item">About</li></a>
-            <c:if test="${userId ne null}">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+                <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn"
+                htmlFor="hdrbtn">
+                <a href='<c:url value="/about" />'><li class="mdl-menu__item">About</li></a>
+                    <c:if test="${userId ne null}">
                 <a href='<c:url value="/account" />'><li class="mdl-menu__item">My Account</li></a>
                 <a href="${logout}"><li class="mdl-menu__item">Logout</li></a>
-            </c:if>
+                    </c:if>
         </ul>
     </div>
 </header>
 <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
     <!--    <span class='mdl-layout-title'>Welcome</span>-->
     <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" style="height:100%">
-        <a class="mdl-navigation__link" href="<c:url value='ideaHub' /> ">
+        <a class="mdl-navigation__link" href="<c:url value='home' /> ">
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
                 home
             </i>
             Home
         </a>
         <c:if test="${userId ne null}">
-        <a class="mdl-navigation__link" href='<c:url value="/account" />'>
-            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
-                account_circle
-            </i>
-            My Account
-        </a> 
+            <a class="mdl-navigation__link" href='<c:url value="/account" />'>
+                <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
+                    account_circle
+                </i>
+                My Account
+            </a> 
         </c:if>
         <a class="mdl-navigation__link" href='<c:url value="/about" />' >
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
@@ -60,13 +65,23 @@
         <span class="visuallyhidden">
             &nbsp;
         </span>
-        <c:if test="${userId ne null}">
-        <a class="mdl-navigation__link" href="${logout}">
-            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
-                help_outline
-            </i>
-            Log Out
-        </a>
-        </c:if>
+        <c:choose>
+            <c:when test="${userId ne null}">
+                <a class="mdl-navigation__link" href="${logout}">
+                    <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
+                        help_outline
+                    </i>
+                    <spring:message code="label.log_out" />
+                </a>
+            </c:when>
+            <c:otherwise>
+                <a class="mdl-navigation__link" href="${login}">
+                    <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">
+                        help_outline
+                    </i>
+                    <spring:message code="label.log_in" />
+                </a>
+            </c:otherwise>
+        </c:choose>
     </nav>
 </div>

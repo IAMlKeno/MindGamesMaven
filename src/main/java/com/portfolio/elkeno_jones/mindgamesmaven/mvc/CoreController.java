@@ -26,6 +26,9 @@ public class CoreController {
 
     private static final String IDEA_HUB_VIEW = "ideaHub";
     private static final String IDEA_HUB_URL = "/ideaHub";
+    
+    private static final String LANDING_VIEW = "landing";
+    private static final String LANDING_URL = "/home";
 
     private static final String ACCOUNT_VIEW = "account";
     private static final String ACCOUNT_URL = "/account";
@@ -45,7 +48,7 @@ public class CoreController {
     private SecurityImpl sec;
 
     @RequestMapping(value = AUTHENTICATE_URL)
-    public String setLanding(Model model, HttpServletRequest req) {
+    public String authenticate(Model model, HttpServletRequest req) {
         String landingPage;
 
         HttpSession session = req.getSession(true);
@@ -62,6 +65,29 @@ public class CoreController {
         } else {
             model.addAttribute("user", new User());
             landingPage = LOGIN_VIEW;
+        }
+        return landingPage;
+    }
+    
+    @RequestMapping(value = LANDING_URL)
+    public String setLanding(Model model, HttpServletRequest req) {
+        String landingPage;
+
+        HttpSession session = req.getSession(true);
+        if (session.getAttribute("userToken") != null) {
+            Integer userId = (Integer) session.getAttribute("userId");
+            String token = (String) session.getAttribute("userToken");
+            if (sec.checkAccess(token, userId)) {
+                model.addAttribute("redirectUrl", IDEA_HUB_URL);
+                landingPage = REDIRECT_VIEW;
+            } else {
+                model.addAttribute("user", new User());
+                landingPage = LOGIN_VIEW;
+            }
+        } else {
+            model.addAttribute("isLanding", true);
+            model.addAttribute("user", new User());
+            landingPage = LANDING_VIEW;
         }
         return landingPage;
     }
