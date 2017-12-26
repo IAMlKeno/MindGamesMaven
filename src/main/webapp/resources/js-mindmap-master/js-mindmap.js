@@ -73,7 +73,7 @@
     }
 
     // create the element for display
-    this.el = $('<a href="' + this.href + '" id="' + id + '">' + this.name + '</a>').addClass('node');
+    this.el = $('<a href="' + this.href + '" id="' + id + '" title="' + this.name + '">' + this.name + '</a>').addClass('node');
     $('body').prepend(this.el);
 
     if (!parent) {
@@ -81,6 +81,7 @@
       this.el.addClass('active root');
     } else {
       obj.lines[obj.lines.length] = new Line(obj, this, parent);
+      this.el.addClass('featureNode');
     }
     this.parent = parent;
     this.children = [];
