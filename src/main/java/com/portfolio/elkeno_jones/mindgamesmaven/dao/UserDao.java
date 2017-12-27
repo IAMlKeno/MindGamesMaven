@@ -31,5 +31,5 @@ public interface UserDao {
      * @param username
      * @return 
      */
-    public User findUserByUsername(String username);
+    public User findUserByUsernameOrEmail(String username);
 }

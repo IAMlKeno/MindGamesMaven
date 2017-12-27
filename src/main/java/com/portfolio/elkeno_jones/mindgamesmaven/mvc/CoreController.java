@@ -104,7 +104,7 @@ public class CoreController {
         String token;
         String loginView;
 
-        User userVo = userDao.findUserByUsername(username);
+        User userVo = userDao.findUserByUsernameOrEmail(username);
 
         if (userVo != null && userVo.getPassword().equals(password)) {
             token = sec.generateSessionToken(username);
@@ -157,7 +157,7 @@ public class CoreController {
             String token = sec.generateSessionToken(username);
             HttpSession session = req.getSession(true);
 
-            User dbUser = userDao.findUserByUsername(username);
+            User dbUser = userDao.findUserByUsernameOrEmail(username);
             userVo.setUserId(dbUser.getUserId());
 
             session.setAttribute("userToken", token);

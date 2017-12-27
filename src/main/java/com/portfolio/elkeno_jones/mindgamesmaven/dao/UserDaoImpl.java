@@ -1,8 +1,6 @@
 package com.portfolio.elkeno_jones.mindgamesmaven.dao;
 
 import com.portfolio.elkeno_jones.mindgamesmaven.model.User;
-import java.util.List;
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Entity;
@@ -51,7 +49,7 @@ public class UserDaoImpl implements UserDao {
     
     @Override
     @Transactional
-    public User findUserByUsername(String username){
+    public User findUserByUsernameOrEmail(String username){
         User user;
         
         try{
@@ -59,6 +57,12 @@ public class UserDaoImpl implements UserDao {
                     .createCriteria(User.class)
                     .add(Restrictions.eq("username", username))
                     .uniqueResult();
+            if (user == null) {
+                user = (User) sessionFactory.getCurrentSession()
+                        .createCriteria(User.class)
+                        .add(Restrictions.eq("emailAddress", username))
+                        .uniqueResult();
+            }
         } catch (HibernateException he){
             System.out.println("[Hibernate Execption] " + he.getMessage());
             return null;

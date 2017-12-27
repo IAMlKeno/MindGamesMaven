@@ -28,14 +28,14 @@
                         </div>
                         <div class="mdl-card__supporting-text">
                             <c:if test="${not empty loginAuth && loginAuth eq false}">
-                            <div class="loginError" style="color:red">
-                                <spring:message code='phrases.invalid_username_password' />
-                            </div>
+                                <div class="loginError" style="color:red">
+                                    <spring:message code='phrases.invalid_username_password' />
+                                </div>
                             </c:if>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                 <form:input path="username" class="mdl-textfield__input notEmpty" />
                                 <form:label path="username" class="mdl-textfield__label">
-                                    <spring:message code="label.username" />
+                                    <spring:message code="label.username_or_email" />
                                 </form:label>
                             </div>
 
@@ -45,6 +45,10 @@
                                     <spring:message code="label.password" />
                                 </form:label>
                             </div>
+                        </div>
+                        <div class="_forgotPasswordLink" style="display: inline; margin-top: -100px; 
+                             position: relative; top: -20px;">
+                            <small><a href="#_">Forgot Password</a></small>
                         </div>
                         <div class="mdl-card__actions loginActionButtons">
                             <input type="button" class="mdl-button mdl-js-button 
@@ -65,7 +69,7 @@
                 $("#signupButton").click(function () {
                     $("body").find("#registerFormModal").css("display", "block");
                 });
-                
+
                 // When the user clicks on <span> (x), close the modal
                 $("span").click(function () {
                     $(".modal").css("display", "none");
@@ -92,12 +96,24 @@
                 });
 
                 // When the user clicks anywhere outside of the modal, close it
-                $(window).click(function(event) {
+                $(window).click(function (event) {
                     if (event.target === $("#registerFormModal")) {
                         $("#registerFormModal").css("display", "none");
                     }
-                });  
+                });
+
+                $('._forgotPasswordLink').click(function () {
+                    confirmEmail();
+                });
             });
+
+            function confirmEmail() {
+                var email = prompt("Please enter your email:", "");
+                if (email !== null || email !== "") {
+                    //hit endpoint
+                    //alert user that email will be sent
+                }
+            }
 
         </script>
         <%@include file="../jspf/registerModal.jspf" %>

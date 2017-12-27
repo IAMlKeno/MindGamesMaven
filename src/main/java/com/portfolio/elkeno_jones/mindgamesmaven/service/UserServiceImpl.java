@@ -21,7 +21,7 @@ public class UserServiceImpl {
     @Transactional(readOnly = true)
     public String loadUserByUsername(String username, String password) {
         try{
-            User user = userDao.findUserByUsername(username);
+            User user = userDao.findUserByUsernameOrEmail(username);
 
             if (user == null) {
                 System.out.println("User not found");
