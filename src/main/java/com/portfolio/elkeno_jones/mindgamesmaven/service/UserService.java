@@ -1,5 +1,6 @@
 package com.portfolio.elkeno_jones.mindgamesmaven.service;
 
+import com.portfolio.elkeno_jones.mindgamesmaven.exception.PasswordRecoveryException;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.User;
 
 /**
@@ -20,11 +21,9 @@ public interface UserService {
     public User authenticateUser(String username, String password);
     
     /**
-     * This method will be used for resetting passwords based on the 
-     * email
-     * 
-     * @param email
-     * @return 
+     * Method confirms that the user email exists, if so, sends the recovery 
+     * password to the email passed in
+     * @param email email address to send recovery password to
      */
-    public String resetPassword(String email);
+    public void sendUserPassword(String email) throws PasswordRecoveryException;
 }

@@ -1,33 +1,34 @@
 package com.portfolio.elkeno_jones.mindgamesmaven.service;
 
-import com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDaoImpl;
+import com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDao;
+import com.portfolio.elkeno_jones.mindgamesmaven.exception.PasswordRecoveryException;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.User;
-import java.util.ArrayList;
-import java.util.List;
+import com.portfolio.elkeno_jones.mindgamesmaven.util.JavaMailer;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
-
 
 /**
  *
  * @author Elkeno Jones
  */
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserDaoImpl userDao;
+    //@Autowired
+    protected UserDao userDao;//elkeno_q.jones@hotmail.com
 
     @Transactional(readOnly = true)
     public String loadUserByUsername(String username, String password) {
-        try{
+        try {
             User user = userDao.findUserByUsernameOrEmail(username);
 
             if (user == null) {
                 System.out.println("User not found");
-                throw new HibernateException ("Username not found");
+                throw new HibernateException("Username not found");
             } else {
-                if(password.equals(user.getPassword())){
+                if (password.equals(user.getPassword())) {
                     return user.getUsername();
                 } else {
                     throw new HibernateException("Invalid password");
@@ -40,15 +41,41 @@ public class UserServiceImpl {
         }
     }
 
-//    private List<GrantedAuthority> getGrantedAuthorities(User user) {
-//        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-//
-////        for (UserProfile userProfile : user.getUserProfiles()) {
-////            System.out.println("UserProfile : " + userProfile);
-////            authorities.add(new SimpleGrantedAuthority("ROLE_" + userProfile.getType()));
-////        }
-////        System.out.print("authorities :" + authorities);
-//        return authorities;
-//    }
+    @Override
+    public void sendUserPassword(String email) throws PasswordRecoveryException {
+        try {
+            User userVo = userDao.findUserByUsernameOrEmail(email);
+            if (userVo == null) {
+                throw new PasswordRecoveryException();
+            } else {
+                sendRecoveryEmail(userVo.getEmailAddress(), userVo.getPassword());
+            }
+        } catch (Exception ex) {
+            System.out.println("######EJONES: " + ex.getStackTrace());
+        }
+    }
 
+    private void sendRecoveryEmail(String emailTo, String password) {
+        String fromEmail = "norepley.ideaorganizer@gmail.com";
+        String subject = "Idea Organizer Password Recovery";
+        String emailBody = "Your recovery password is: " + password;
+        ApplicationContext context
+                = new ClassPathXmlApplicationContext("Spring-Mail.xml");
+
+        JavaMailer mm = (JavaMailer) context.getBean("javaMailer");
+        mm.sendMail(fromEmail, emailTo, subject, emailBody);
+    }
+
+    @Override
+    public User authenticateUser(String username, String password) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+    
+    public UserDao getUserDao() {
+        return this.userDao;
+    }
 }

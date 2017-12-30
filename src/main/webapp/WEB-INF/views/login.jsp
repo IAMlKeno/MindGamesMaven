@@ -46,9 +46,8 @@
                                 </form:label>
                             </div>
                         </div>
-                        <div class="_forgotPasswordLink" style="display: inline; margin-top: -100px; 
-                             position: relative; top: -20px;">
-                            <small><a href="#_">Forgot Password</a></small>
+                        <div class="forgotPasswordLink _forgotPasswordLink">
+                            <small><a href="#_"><spring:message code="label.forgot_password" /></a></small>
                         </div>
                         <div class="mdl-card__actions loginActionButtons">
                             <input type="button" class="mdl-button mdl-js-button 
@@ -108,13 +107,25 @@
             });
 
             function confirmEmail() {
-                var email = prompt("Please enter your email:", "");
+                //add regex to confirm email format and scrub
+                var url = '<c:url value="/ajax/forgotEmail" />';
+                var email = prompt("<spring:message code='phrases.please_enter_the_email_regiestered' />", "");
                 if (email !== null || email !== "") {
-                    //hit endpoint
-                    //alert user that email will be sent
+                    var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    if (emailRegex.exec(email)) {
+                        //hit endpoint
+                        $.post(url, {emailAddress: email})
+                                .done(function() {
+                                // alert user email will be sent                    
+                                }).fail();
+                        // alert user email will be sent
+                        alert("<spring:message code='phrases.email_will_be_sent' />");
+                    } else {
+                        // alert user email format is incorrect
+                        alert("<spring:message code='phrases.email_format_is_incorrect' />");
+                    }
                 }
             }
-
         </script>
         <%@include file="../jspf/registerModal.jspf" %>
         <%@include file="../jspf/fragments/footer.jspf" %>

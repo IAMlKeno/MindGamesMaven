@@ -3,17 +3,21 @@ package com.portfolio.elkeno_jones.mindgamesmaven.mvc;
 import com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDao;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.User;
 import com.portfolio.elkeno_jones.mindgamesmaven.service.SecurityImpl;
+import com.portfolio.elkeno_jones.mindgamesmaven.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Configuration
@@ -33,6 +37,8 @@ public class CoreController {
     private static final String ACCOUNT_VIEW = "account";
     private static final String ACCOUNT_URL = "/account";
     private static final String ACCOUNT_UPDATE_URL = "/account/update";
+    
+    private static final String FORGOT_EMAIL_AJAX = "/ajax/forgotEmail";
 
     private static final String REDIRECT_VIEW = "redirect";
 
@@ -46,6 +52,8 @@ public class CoreController {
 
     @Autowired
     private SecurityImpl sec;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = AUTHENTICATE_URL)
     public String authenticate(Model model, HttpServletRequest req) {
@@ -224,5 +232,13 @@ public class CoreController {
         model.addAttribute("userAccount", user);
 
         return ACCOUNT_VIEW;
+    }
+    
+    @RequestMapping(value = FORGOT_EMAIL_AJAX, method = RequestMethod.POST)
+    public ResponseEntity<?> sendEmailPasswordRecovery(
+            @RequestParam ("emailAddress") String email) throws Exception
+    {
+        userService.sendUserPassword(email);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

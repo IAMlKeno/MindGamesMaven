@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 public class UserDaoImpl implements UserDao {
 
-    @Autowired
+//    @Autowired
     private SessionFactory sessionFactory;
 
     public UserDaoImpl(){}
@@ -50,7 +50,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Transactional
     public User findUserByUsernameOrEmail(String username){
-        User user;
+        User user = null;
         
         try{
             user = (User) sessionFactory.getCurrentSession()
@@ -66,6 +66,9 @@ public class UserDaoImpl implements UserDao {
         } catch (HibernateException he){
             System.out.println("[Hibernate Execption] " + he.getMessage());
             return null;
+        } catch (Exception ex)
+        {
+            System.out.println("######EJONES: " + ex.getMessage());
         }
         
         return user;
