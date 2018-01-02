@@ -29,6 +29,7 @@
                     <option>Actions...</option>
                     <option value="text">Export as Text</option>
                     <option value="email">Email Idea</option>
+                    <option value="delete"><spring:message code="button_label.delete" /></select>
                 </select>
                 <input type="button" class="_export" value="Go" />
             </div>

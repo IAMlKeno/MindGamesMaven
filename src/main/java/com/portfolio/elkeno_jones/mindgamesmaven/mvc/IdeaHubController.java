@@ -6,6 +6,7 @@ import com.portfolio.elkeno_jones.mindgamesmaven.dao.UserDao;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.Feature;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.Idea;
 import com.portfolio.elkeno_jones.mindgamesmaven.model.User;
+import com.portfolio.elkeno_jones.mindgamesmaven.service.IdeaService;
 import com.portfolio.elkeno_jones.mindgamesmaven.service.SecurityImpl;
 import com.portfolio.elkeno_jones.mindgamesmaven.util.JavaMailer;
 import java.io.IOException;
@@ -39,6 +40,8 @@ public class IdeaHubController {
     private SecurityImpl sec;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private IdeaService ideaService;
 
     private static final String ERROR_VIEW = "error";
     private static final String REDIRECT_VIEW = "/redirect";
@@ -47,6 +50,7 @@ public class IdeaHubController {
     private static final String EMAIL_FILE_URL = "/email";
 
     protected static final String AUTHENTICATE_URL = "/auth";
+    protected static final String DELETE_IDEA = "/ajax/delete";
 
     @RequestMapping(value = EXPORT_FILE_URL, method = {RequestMethod.POST, RequestMethod.GET})
     public ResponseEntity<?> downloadTextResource(HttpServletRequest req,
@@ -196,5 +200,20 @@ public class IdeaHubController {
         }
 
         return lines;
+    }
+    
+    @RequestMapping(value = DELETE_IDEA, method = RequestMethod.POST)
+    public ResponseEntity<?> deleteIdea(HttpServletRequest req, 
+            @RequestParam(value = "ideaId", required = true) Integer ideaId) 
+            throws Exception {
+        HttpSession ses = req.getSession();
+        String token = (String) ses.getAttribute("userToken");
+        Integer userId = (Integer) ses.getAttribute("userId");
+
+        if (!sec.checkAccess(token, userId)) {
+            throw new Exception("Not a valid session - sign in to complete action");
+        }
+        ideaService.deleteIdeaAndFeatures(ideaId);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

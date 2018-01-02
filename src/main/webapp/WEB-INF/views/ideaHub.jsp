@@ -165,6 +165,9 @@
                 case "email":
                     openSendToForm(ideaIdVar);
                     break;
+                case "delete":
+                    deleteIdea(ideaIdVar);
+                    break;
             }
         });
 
@@ -173,5 +176,15 @@
             sendToModal.find("input[name='ideaId']").val(ideaId);
             sendToModal.show();
         }
+        
+        function deleteIdea(ideaId) {
+            var proceed = confirm("<spring:message code='phrases.confirm_delete_idea' />");
+            var deleteUrl = '<c:url value="/ajax/delete" />';
+            if (proceed) {
+               $.post(deleteUrl, {ideaId:ideaId})
+                    .done(function(){window.location.reload();})
+                    .fail(function(){alert("Failed to delete idea");});
+            }
+        };
     </script>
     <%@include file="../jspf/fragments/footer.jspf" %>

@@ -5,7 +5,6 @@ import com.portfolio.elkeno_jones.mindgamesmaven.exception.PasswordRecoveryExcep
 import com.portfolio.elkeno_jones.mindgamesmaven.model.User;
 import com.portfolio.elkeno_jones.mindgamesmaven.util.JavaMailer;
 import org.hibernate.HibernateException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class UserServiceImpl implements UserService {
 
-    //@Autowired
-    protected UserDao userDao;//elkeno_q.jones@hotmail.com
+    protected UserDao userDao;
 
     @Transactional(readOnly = true)
     public String loadUserByUsername(String username, String password) {

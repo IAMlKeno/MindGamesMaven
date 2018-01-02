@@ -81,6 +81,10 @@
     <bean id="userService" class="com.portfolio.elkeno_jones.mindgamesmaven.service.UserServiceImpl">
         <property name="userDao" ref="userDao" />
     </bean>
+    <bean id="ideaService" class="com.portfolio.elkeno_jones.mindgamesmaven.service.IdeaServiceImpl">
+        <property name="ideaDao" ref="ideaDao" />
+        <property name="featureDao" ref="featureDao" />
+    </bean>
     <context:component-scan base-package="com.portfolio.elkeno_jones.mindgamesmaven" />
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
