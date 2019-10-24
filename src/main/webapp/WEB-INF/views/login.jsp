@@ -7,6 +7,7 @@
 <c:set var="formUrl"><c:url value='/login' /></c:set>
 <%@include file="../jspf/fragments/head.jspf" %>
 <script src="<c:url value="/resources/modal/modal.js" />" type="text/javascript"></script>
+<script src="<c:url value="/resources/login.js" />" type="text/javascript"></script>
 <link rel="stylesheet" href="<c:url value="/resources/fragments/css/loginStyle.css" />">
 
 <body>
@@ -50,7 +51,8 @@
                             <small><a href="#_"><spring:message code="label.forgot_password" /></a></small>
                         </div>
                         <div class="mdl-card__actions loginActionButtons">
-                            <input type="button" class="mdl-button mdl-js-button 
+                            <input type="button" id="login" 
+                                   class="mdl-button mdl-js-button 
                                    mdl-button--colored mdl-button--raised developIdeaButton" 
                                    value="<spring:message code='label.sign_in' />" 
                                    onclick="validate(this)"/>
