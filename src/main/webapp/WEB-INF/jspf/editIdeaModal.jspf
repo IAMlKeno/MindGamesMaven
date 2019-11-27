@@ -19,7 +19,7 @@
                     <spring:message code="phrases.update_idea_title" />:<br />
                     <div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input type="text" name="theIdeaTitle" id="theIdeaTitle" class="mdl-textfield__input notEmpty" maxlength="50" value="${ideaWrapper.idea.ideaTitle}"/>
+                            <input type="text" name="theIdeaTitle" id="theIdeaTitle" class="mdl-textfield__input notEmpty" maxlength="50" required="required" value="${ideaWrapper.idea.ideaTitle}"/>
                             <label for="theIdeaTitle" class="mdl-textfield__label"><spring:message code="label.idea_title" />...</label>
                         </div>
 
@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <form:input type="text" path="idea.descriptionShort" class="mdl-textfield__input" maxlength="50" />
+                            <form:input type="text" path="idea.descriptionShort" class="mdl-textfield__input" maxlength="50" required="required" />
                             <label for="descriptionShort" class="mdl-textfield__label">
                                 <spring:message code="label.short_description" />
                             </label>
