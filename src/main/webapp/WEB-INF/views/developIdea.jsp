@@ -62,6 +62,14 @@
                 featModal.find("#descriptionLong").val(json[id]);
                 featModal.find("#updateFeatureId").val(id);
 
+                // Let's add is-dirty to update MDL's floating label.
+                if (!featModal.find("#descriptionShort").parent().hasClass('is-dirty')) {
+                    featModal.find("#descriptionShort").parent().toggleClass('is-dirty');
+                }
+                if (!featModal.find("#descriptionLong").parent().hasClass('is-dirty')) {
+                    featModal.find("#descriptionLong").parent().toggleClass('is-dirty');
+                }
+
                 featModal.show();
             }
         }
