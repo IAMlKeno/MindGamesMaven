@@ -25,11 +25,15 @@ $(document).ready(function(){
     $(".modalCancelButton").click(function() {
         $(this).parents(".modal").css("display", "none");
     });
-    
-    // When the user clicks anywhere outside of the modal, close it
-//    $(window).click(function(event) {
-//        if (event.target !== $(".modal")) {
-//            $(".modal").css("display", "none");
-//        }
-//    });
+
+    $('.mdl-textfield input').each(function () {
+        var inputElem = $(this);
+        var userInput = inputElem.val();
+        if (userInput) {
+            var isParentDirty = inputElem.parent().hasClass('is-dirty');
+            if (!isParentDirty) {
+                inputElem.parent().toggleClass('is-dirty');
+            }
+        }
+    });
 });
