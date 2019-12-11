@@ -9,6 +9,10 @@
     background-color: lightgray;
 }
 
+.ideaGrid form {
+    display: inline-flex;
+}
+
 .ideaCard{
     margin: auto;
     display:inline-block;
